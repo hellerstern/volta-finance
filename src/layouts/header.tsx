@@ -7,6 +7,7 @@ import { VoltaLogo } from 'src/components/VoltaLogo';
 import { LocalGasStation } from '@mui/icons-material';
 import { ConnectWalletButton } from 'src/components/Button/ConnectWalletButton';
 import { VoltaLogoSvg } from 'src/config/images';
+import { useNavigate } from 'react-router-dom';
 
 export const Header = () => {
   const { page, setPage } = useStore();
@@ -14,6 +15,8 @@ export const Header = () => {
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setPage(newValue);
   };
+
+  const navigate = useNavigate();
 
   return (
     <HeaderContainer>
@@ -49,6 +52,7 @@ export const Header = () => {
             <CustomTab
               label="Stake"
               {...a11yProps(3)}
+              onClick={() => navigate('/staking')}
               style={{ color: page === 3 ? '#FFFFFF' : '#B1B5C3', fontWeight: page === 0 ? 500 : 400 }}
             />
           </Tabs>
@@ -131,6 +135,7 @@ const HeaderWrapper = styled(Box)(({ theme }) => ({
   justifyContent: 'space-between',
   alignItems: 'center',
   maxWidth: '1280px',
+  padding: '0 40px',
   width: '100%'
 }));
 

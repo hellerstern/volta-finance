@@ -1,12 +1,13 @@
 import { Suspense } from 'react';
-import { Route, Routes, BrowserRouter as Router, Navigate } from 'react-router-dom';
+import { Route, Routes, BrowserRouter as Router } from 'react-router-dom';
 
 import { PUBLIC_ROUTES } from './config/routes';
 
 import { AppThemeProvider } from './Provider';
 import { Layout } from './layouts/layout';
 
-import { Home } from './pages/home';
+import { Home } from './pages/Home';
+import { StakingPage } from './pages/Staking';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
             <Routes>
               <Route path={PUBLIC_ROUTES.default} element={<Home />} />
               <Route path={PUBLIC_ROUTES.home} element={<Home />} />
+              <Route path={PUBLIC_ROUTES.staking} element={<StakingPage />} />
             </Routes>
           </Layout>
         </AppThemeProvider>

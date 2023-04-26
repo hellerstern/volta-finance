@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans&family=Rubik&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=DM+Sans&family=Rubik&display=swap'); */
 
 /* ========================== font guide
 * font-family: 'Barlow', sans-serif; // base font
@@ -10,13 +10,13 @@ body {
   margin: 0;
 
   /* base font */
-  font-family: 'Inter-Medium';
+  font-family: 'Inter-Medium' !important;
   font-size: 12px;
   color: #ffffff;
 }
 
 button {
-  font-family: 'DM Sans';
+  font-family: 'Inter-Medium' !important;
 
   padding: 0;
   margin: 0;
@@ -45,4 +45,16 @@ button {
 @font-face {
   font-family: 'Inter-Medium';
   src: url('assets/font/static/Inter-Medium.ttf') format('openType');
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
 }

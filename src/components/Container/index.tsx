@@ -22,6 +22,7 @@ const Wrapper = styled(Box)({
 });
 
 const ContainerWrapper = styled(Box)({
-  width: '96%',
-  height: '100%'
+  maxWidth: '1280px',
+  width: '100%',
+  padding: '0 40px'
 });
