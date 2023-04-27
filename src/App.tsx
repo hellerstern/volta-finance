@@ -8,6 +8,7 @@ import { Layout } from './layouts/layout';
 
 import { Home } from './pages/Home';
 import { StakingPage } from './pages/Staking';
+import { ManageStake } from './pages/ManageStake';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
             <Routes>
               <Route path={PUBLIC_ROUTES.default} element={<Home />} />
               <Route path={PUBLIC_ROUTES.home} element={<Home />} />
+              <Route path={PUBLIC_ROUTES.manageStake} element={<ManageStake />} />
               <Route path={PUBLIC_ROUTES.staking} element={<StakingPage />} />
             </Routes>
           </Layout>
