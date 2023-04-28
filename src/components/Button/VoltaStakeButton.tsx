@@ -16,5 +16,8 @@ const VoltaStakeButtonContainer = styled(Button)(({ theme }) => ({
   textTransform: 'none',
   '&:hover': {
     backgroundColor: '#00EB88'
+  },
+  [theme.breakpoints.down(768)]: {
+    width: '100%'
   }
 }));

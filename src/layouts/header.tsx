@@ -1,13 +1,14 @@
-import { Box, Button, Tab, Tabs } from '@mui/material';
+import { Box, Button, IconButton, Tab, Tabs } from '@mui/material';
 import { styled } from '@mui/system';
 import { commaSeparators } from '../utils/commaSeparators';
 import { a11yProps } from 'src/components/TabPanel';
 import { useStore } from '../context/StoreContext';
 import { VoltaLogo } from 'src/components/VoltaLogo';
-import { LocalGasStation } from '@mui/icons-material';
+import { LocalGasStation, Menu } from '@mui/icons-material';
 import { ConnectWalletButton } from 'src/components/Button/ConnectWalletButton';
 import { VoltaLogoSvg } from 'src/config/images';
 import { useNavigate } from 'react-router-dom';
+import Marquee from 'react-fast-marquee';
 
 export const Header = () => {
   const { page, setPage } = useStore();
@@ -21,12 +22,17 @@ export const Header = () => {
   return (
     <HeaderContainer>
       <TvlDataContainer>
-        <TvlData name="TVL" value={65615783} />
-        <TvlData name="TVL In Lockers" value={34978821} />
-        <TvlData name="TVL in Strategies" value={30636962} />
+        <Marquee>
+          <TvlData name="TVL" value={65615783} />
+          <TvlData name="TVL In Lockers" value={34978821} />
+          <TvlData name="TVL in Strategies" value={30636962} />
+        </Marquee>
       </TvlDataContainer>
       <HeaderWrapper>
-        <VoltaLogo />
+        <VoltaLogoContainer>
+          <MobileNavButton />
+          <VoltaLogo />
+        </VoltaLogoContainer>
         <TabContainer>
           <Tabs
             TabIndicatorProps={{ style: { height: '0px' } }}
@@ -102,7 +108,8 @@ const TvlData = (props: TvlDataProps) => {
 const TvlDataWrapper = styled(Box)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
-  gap: '8px'
+  gap: '8px',
+  paddingLeft: '27px'
 }));
 
 const TvlDataName = styled(Box)(({ theme }) => ({
@@ -120,7 +127,10 @@ const TvlDataValue = styled(Box)(({ theme }) => ({
 
 const TabContainer = styled(Box)(({ theme }) => ({
   borderBottom: 1,
-  borderColor: 'divider'
+  borderColor: 'divider',
+  [theme.breakpoints.down(1120)]: {
+    display: 'none'
+  }
 }));
 
 const CustomTab = styled(Tab)({
@@ -136,7 +146,8 @@ const HeaderWrapper = styled(Box)(({ theme }) => ({
   alignItems: 'center',
   maxWidth: '1280px',
   padding: '0 40px',
-  width: '100%'
+  width: '100%',
+  height: '70px'
 }));
 
 const HeaderLine = styled(Box)(({ theme }) => ({
@@ -198,4 +209,31 @@ const VoltaLogoButtonContainer = styled(Button)(({ theme }) => ({
 const Img = styled('img')(({ theme }) => ({
   width: '18px',
   height: '18px'
+}));
+
+const VoltaLogoContainer = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  gap: '20px',
+  [theme.breakpoints.down(768)]: {
+    gap: '5px'
+  }
+}));
+
+const MobileNavButton = () => {
+  return (
+    <MobileNavButtonContainer>
+      <Menu />
+    </MobileNavButtonContainer>
+  );
+};
+
+const MobileNavButtonContainer = styled(IconButton)(({ theme }) => ({
+  width: '40px',
+  height: '40px',
+  color: '#ffffff',
+  display: 'none',
+  [theme.breakpoints.down(1120)]: {
+    display: 'block'
+  }
 }));

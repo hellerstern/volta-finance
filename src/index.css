@@ -15,6 +15,10 @@ body {
   color: #ffffff;
 }
 
+::-webkit-scrollbar {
+  display: none;
+}
+
 button {
   font-family: 'Inter-Medium' !important;
 

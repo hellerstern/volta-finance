@@ -10,7 +10,7 @@ export const VoltaLogo = (props: { size?: 'small' }) => {
   return (
     <VoltaLogoContainer onClick={() => navigate('/')}>
       <VoltaLogoImg src={VoltaLogoSvg} alt="volta-logo" imageSize={size} />
-      Volta Finance
+      <span>Volta Finance</span>
     </VoltaLogoContainer>
   );
 };
@@ -26,10 +26,19 @@ const VoltaLogoContainer = styled(Box)(({ theme }) => ({
   fontFamily: 'Inter-Bold',
   fontSize: '20px',
   lineHeight: '28px',
-  cursor: 'pointer'
+  cursor: 'pointer',
+  span: {
+    [theme.breakpoints.down(768)]: {
+      display: 'none'
+    }
+  }
 }));
 
 const VoltaLogoImg = styled('img')<{ imageSize: 'small' | undefined }>(({ theme, imageSize }) => ({
   width: imageSize === 'small' ? '25px' : '36px',
-  height: imageSize === 'small' ? '25px' : '36px'
+  height: imageSize === 'small' ? '25px' : '36px',
+  [theme.breakpoints.down(768)]: {
+    width: '25px',
+    height: '25px'
+  }
 }));

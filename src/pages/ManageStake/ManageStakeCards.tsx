@@ -1,8 +1,17 @@
 import { HelpOutline } from '@mui/icons-material';
-import { Box } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import { styled } from '@mui/system';
 import { VoltaStakeButton } from 'src/components/Button/VoltaStakeButton';
-import { VoltaLogoSvg, WethLogoSvg } from 'src/config/images';
+import {
+  DecentralizedIcon,
+  Volt2CRVLogoSvg,
+  VoltaDaoIcon,
+  VoltaIcon,
+  VoltaLogoSvg,
+  Web3BoostIcon,
+  WethIcon,
+  WethLogoSvg
+} from 'src/config/images';
 
 export const ManageStakeCards = () => {
   return (
@@ -11,6 +20,7 @@ export const ManageStakeCards = () => {
         <TotalStakeCard />
         <ClaimRewardCard />
       </StakeClaimContainer>
+      <StartStakingCard />
     </ManageStakeCardsContainer>
   );
 };
@@ -23,7 +33,10 @@ const ManageStakeCardsContainer = styled(Box)(({ theme }) => ({
 
 const StakeClaimContainer = styled(Box)(({ theme }) => ({
   display: 'flex',
-  gap: '25px'
+  gap: '25px',
+  [theme.breakpoints.down(1120)]: {
+    flexDirection: 'column'
+  }
 }));
 
 const TotalStakeCard = () => {
@@ -47,7 +60,15 @@ const StakeCardContainer = styled(Box)(({ theme }) => ({
   width: '475px',
   height: '200px',
   borderRadius: '8px',
-  background: '#131418'
+  background: '#131418',
+  [theme.breakpoints.down(1120)]: {
+    flexDirection: 'column',
+    width: '100%'
+  },
+  [theme.breakpoints.down(768)]: {
+    gap: '40px',
+    height: 'fit-content'
+  }
 }));
 
 const StakeCardTitle = (props: { name: string }) => {
@@ -87,7 +108,12 @@ const StakeCardTitleIcon = styled(Box)(({ theme }) => ({
 const StakeCardActionContainer = styled(Box)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
-  justifyContent: 'space-between'
+  justifyContent: 'space-between',
+  [theme.breakpoints.down(768)]: {
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    gap: '36px'
+  }
 }));
 
 const StakeCardValue = (props: {
@@ -169,5 +195,193 @@ const ClaimRewardCardContainer = styled(Box)(({ theme }) => ({
   width: '740px',
   height: '200px',
   borderRadius: '8px',
-  background: '#131418'
+  background: '#131418',
+  [theme.breakpoints.down(1120)]: {
+    flexDirection: 'column',
+    width: '100%'
+  },
+  [theme.breakpoints.down(1120)]: {
+    gap: '40px',
+    height: 'fit-content',
+    width: '100%'
+  }
+}));
+
+const StartStakingCard = () => {
+  return (
+    <StartStakingCardContainer>
+      <Volta2CrvLogoImgContainer>
+        <Volta2CrvLogoImg src={Volt2CRVLogoSvg} alt="volt2crv-logo" />
+      </Volta2CrvLogoImgContainer>
+      <StartStakingCardContent>
+        <StartStakingCardPrimaryText>Start staking Volt2CRV</StartStakingCardPrimaryText>
+        <StartStakingCardSecondaryText>
+          From generating passive income to helping govern the network
+        </StartStakingCardSecondaryText>
+        <StartStakingCardButton>How it works ?</StartStakingCardButton>
+      </StartStakingCardContent>
+      <StartStakingCardFooter>
+        <StartStakingCardFooterItemWrapper>
+          <StartStakingCardFooterItem
+            icon={VoltaIcon}
+            subIcon={WethIcon}
+            text={'Earn VOLTA and WETH for facilitating Web3 development'}
+          />
+          <StartStakingCardFooterLine />
+        </StartStakingCardFooterItemWrapper>
+        <StartStakingCardFooterItemWrapper>
+          <StartStakingCardFooterItem icon={DecentralizedIcon} text={'Support decentralized Web3 infrastructure'} />
+          <StartStakingCardFooterLine mobile={1} />
+        </StartStakingCardFooterItemWrapper>
+        <StartStakingCardFooterItemWrapper>
+          <StartStakingCardFooterItem icon={Web3BoostIcon} text={'Boost Web3 integration and adoption'} />
+          <StartStakingCardFooterLine />
+        </StartStakingCardFooterItemWrapper>
+        <StartStakingCardFooterItem icon={VoltaDaoIcon} text={'Earn participation in Volta DAO governance'} />
+      </StartStakingCardFooter>
+    </StartStakingCardContainer>
+  );
+};
+
+const StartStakingCardContainer = styled(Box)(({ theme }) => ({
+  backgroundColor: '#131418',
+  borderRadius: '4px',
+  height: '500px',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  flexDirection: 'column',
+  [theme.breakpoints.down(1120)]: {
+    height: '100%',
+    padding: '50px 0'
+  }
+}));
+
+const Volta2CrvLogoImgContainer = styled(Box)(({ theme }) => ({
+  width: '100px',
+  height: '100px',
+  borderRadius: '50%',
+  background: '#0D0D0D',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center'
+}));
+
+const Volta2CrvLogoImg = styled('img')(({ theme }) => ({
+  width: '50px',
+  height: '50px',
+  objectFit: 'cover'
+}));
+
+const StartStakingCardContent = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  gap: '9px',
+  paddingTop: '30px'
+}));
+
+const StartStakingCardPrimaryText = styled(Box)(({ theme }) => ({
+  fontWeight: '700',
+  fontSize: '30px',
+  lineHeight: '35px'
+}));
+
+const StartStakingCardSecondaryText = styled(Box)(({ theme }) => ({
+  fontWeight: '400',
+  fontSize: '16px',
+  lineHeight: '24px',
+  color: '#A5A5A5',
+  [theme.breakpoints.down(640)]: {
+    width: '270px'
+  }
+}));
+
+const StartStakingCardButton = styled(Button)(({ theme }) => ({
+  border: '1px solid #1D1E1F',
+  borderRadius: '6px',
+  padding: '14px',
+  fontWeight: '600',
+  fontSize: '16px',
+  lineHeight: '14px',
+  textTransform: 'none',
+  '&:hover': {
+    backgroundColor: 'transparent'
+  }
+}));
+
+const StartStakingCardFooter = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  gap: '20px',
+  paddingTop: '60px',
+  [theme.breakpoints.down(1120)]: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(2, 2fr)'
+  },
+  [theme.breakpoints.down(640)]: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(1, 4fr)',
+    gap: '50px'
+  }
+}));
+
+const StartStakingCardFooterItem = (props: { icon: string; subIcon?: string; text: string }) => {
+  return (
+    <StartStakingCardFooterItemContainer>
+      <StartStakingCardFooterItemIconContainer>
+        <StartStakingCardFooterItemIcon src={props.icon} alt="item-icon" />
+        {props.subIcon !== undefined && (
+          <StartStakingCardFooterItemIcon src={props.subIcon} sx={{ marginLeft: '-2px' }} alt="item-icon" />
+        )}
+      </StartStakingCardFooterItemIconContainer>
+      <StartStakingCardFooterItemText>{props.text}</StartStakingCardFooterItemText>
+    </StartStakingCardFooterItemContainer>
+  );
+};
+
+const StartStakingCardFooterItemContainer = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  flexDirection: 'column',
+
+  gap: '10px'
+}));
+
+const StartStakingCardFooterItemIconContainer = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center'
+}));
+
+const StartStakingCardFooterItemIcon = styled('img')(({ theme }) => ({
+  width: 'auto',
+  height: '20px'
+}));
+
+const StartStakingCardFooterItemText = styled(Box)(({ theme }) => ({
+  width: '210px',
+  textAlign: 'center',
+  fontWeight: '400',
+  fontSize: '14px',
+  lineHeight: '20px',
+  color: '#A5A5A5'
+}));
+
+const StartStakingCardFooterLine = styled(Box)<{ mobile?: number }>(({ theme, mobile }) => ({
+  width: '1.6px',
+  height: '70px',
+  backgroundColor: '#1D1E1F',
+  [theme.breakpoints.down(1120)]: {
+    display: mobile === 1 ? 'none' : 'block'
+  },
+  [theme.breakpoints.down(640)]: {
+    display: 'none'
+  }
+}));
+
+const StartStakingCardFooterItemWrapper = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  gap: '20px',
+  justifyContent: 'center'
 }));
