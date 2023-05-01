@@ -53,5 +53,8 @@ const StakingPageExplain = styled(Box)(({ theme }) => ({
     color: '#00EB88',
     cursor: 'pointer',
     textDecoration: 'underline'
+  },
+  [theme.breakpoints.down(890)]: {
+    width: 'auto'
   }
 }));

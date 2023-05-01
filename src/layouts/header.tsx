@@ -147,7 +147,10 @@ const HeaderWrapper = styled(Box)(({ theme }) => ({
   maxWidth: '1280px',
   padding: '0 40px',
   width: '100%',
-  height: '70px'
+  height: '70px',
+  [theme.breakpoints.down(480)]: {
+    padding: '0 20px'
+  }
 }));
 
 const HeaderLine = styled(Box)(({ theme }) => ({

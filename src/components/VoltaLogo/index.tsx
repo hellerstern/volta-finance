@@ -3,19 +3,19 @@ import { styled } from '@mui/system';
 import { useNavigate } from 'react-router-dom';
 import { VoltaLogoSvg } from 'src/config/images';
 
-export const VoltaLogo = (props: { size?: 'small' }) => {
-  const { size } = props;
+export const VoltaLogo = (props: { size?: 'small'; name?: 'footer' }) => {
+  const { size, name } = props;
   const navigate = useNavigate();
 
   return (
-    <VoltaLogoContainer onClick={() => navigate('/')}>
+    <VoltaLogoContainer onClick={() => navigate('/')} name={name}>
       <VoltaLogoImg src={VoltaLogoSvg} alt="volta-logo" imageSize={size} />
       <span>Volta Finance</span>
     </VoltaLogoContainer>
   );
 };
 
-const VoltaLogoContainer = styled(Box)(({ theme }) => ({
+const VoltaLogoContainer = styled(Box)<{ name?: string }>(({ theme, name }) => ({
   display: 'flex',
   alignItems: 'center',
   gap: '12px',
@@ -29,7 +29,7 @@ const VoltaLogoContainer = styled(Box)(({ theme }) => ({
   cursor: 'pointer',
   span: {
     [theme.breakpoints.down(768)]: {
-      display: 'none'
+      display: name !== 'footer' && 'none'
     }
   }
 }));

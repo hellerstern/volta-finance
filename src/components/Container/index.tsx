@@ -21,8 +21,11 @@ const Wrapper = styled(Box)({
   justifyContent: 'center'
 });
 
-const ContainerWrapper = styled(Box)({
+const ContainerWrapper = styled(Box)(({ theme }) => ({
   maxWidth: '1280px',
   width: '100%',
-  padding: '0 40px'
-});
+  padding: '0 40px',
+  [theme.breakpoints.down(480)]: {
+    padding: '0 20px'
+  }
+}));

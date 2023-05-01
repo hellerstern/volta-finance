@@ -2,7 +2,7 @@ import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { styled } from '@mui/system';
 import { Box, Button } from '@mui/material';
 import { IoWarningOutline } from 'react-icons/io5';
-import { AccountBalance, AccountBalanceWallet } from '@mui/icons-material';
+import { AccountBalanceWallet } from '@mui/icons-material';
 
 export const ConnectWalletButton = () => {
   return (

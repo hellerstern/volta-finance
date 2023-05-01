@@ -35,10 +35,10 @@ export const StakingVoltaCard = () => {
         <StakeVoltaChooserContainer>
           <StakeVoltaChooserTitle>Stake Volta:</StakeVoltaChooserTitle>
           <StakeVoltaChooserWrapper>
-            <StakeChooser selected={isStake} onClick={() => setStake(!isStake)} disableRipple>
+            <StakeChooser selected={isStake} onClick={() => setStake(true)} disableRipple>
               Stake
             </StakeChooser>
-            <UnStakeChooser selected={!isStake} onClick={() => setStake(!isStake)} disableRipple>
+            <UnStakeChooser selected={!isStake} onClick={() => setStake(false)} disableRipple>
               Unstake
             </UnStakeChooser>
           </StakeVoltaChooserWrapper>
@@ -101,20 +101,20 @@ export const StakingVolt2CRVCard = () => {
           <Img src={Volt2CRVLogoSvg} alt="volta-logo" />
           <StakeVoltaCardTitle>
             <StakeVoltaCardPrimaryTitle>Stake Volt2CRV</StakeVoltaCardPrimaryTitle>
-            <StakeVoltaCardSecondaryTitle>Earn Volta to Earn WETH</StakeVoltaCardSecondaryTitle>
+            <StakeVoltaCardSecondaryTitle>Earn Volta and WETH</StakeVoltaCardSecondaryTitle>
           </StakeVoltaCardTitle>
         </StakeVoltaCardTitleContainer>
-        <AddLiquidityButton endIcon={<NorthEast />}>Add Liquidity</AddLiquidityButton>
+        <DesktopAddLiquidityButton endIcon={<NorthEast />}>Add Liquidity</DesktopAddLiquidityButton>
       </StakeVoltaCardHeader>
       <StakeHeaderLine />
       <StakeVoltaCardContent>
         <StakeVoltaChooserContainer>
           <StakeVoltaChooserTitle>Stake Volt2CRV:</StakeVoltaChooserTitle>
           <StakeVoltaChooserWrapper>
-            <StakeChooser selected={isStake} onClick={() => setStake(!isStake)} disableRipple>
+            <StakeChooser selected={isStake} onClick={() => setStake(true)} disableRipple>
               Stake
             </StakeChooser>
-            <UnStakeChooser selected={!isStake} onClick={() => setStake(!isStake)} disableRipple>
+            <UnStakeChooser selected={!isStake} onClick={() => setStake(false)} disableRipple>
               Unstake
             </UnStakeChooser>
           </StakeVoltaChooserWrapper>
@@ -157,6 +157,7 @@ export const StakingVolt2CRVCard = () => {
         </StakeVoltaRewardContainer>
         <StakeVoltaAction>
           <StakeVoltaButton>Stake Volta</StakeVoltaButton>
+          <MobileAddLiquidityButton endIcon={<NorthEast />}>Add Liquidity</MobileAddLiquidityButton>
           <ManageButton>Manage</ManageButton>
         </StakeVoltaAction>
       </StakeVoltaCardContent>
@@ -176,6 +177,9 @@ const StakeVoltaCardContainer = styled(Box)(({ theme }) => ({
   },
   [theme.breakpoints.down(1150)]: {
     width: '600px'
+  },
+  [theme.breakpoints.down(700)]: {
+    width: 'auto'
   }
 }));
 
@@ -183,7 +187,10 @@ const StakeVoltaCardHeader = styled(Box)(({ theme }) => ({
   padding: '20px 34px',
   display: 'flex',
   alignItems: 'center',
-  justifyContent: 'space-between'
+  justifyContent: 'space-between',
+  [theme.breakpoints.down(540)]: {
+    padding: '24px 18px'
+  }
 }));
 
 const Img = styled('img')(({ theme }) => ({
@@ -202,7 +209,10 @@ const StakeVoltaCardPrimaryTitle = styled(Box)(({ theme }) => ({
   fontSize: '17px',
   fontWeight: '700',
   lineHeight: '20px',
-  color: '#FFFFFF'
+  color: '#FFFFFF',
+  [theme.breakpoints.down(480)]: {
+    fontSize: '15px'
+  }
 }));
 
 const StakeVoltaCardSecondaryTitle = styled(Box)(({ theme }) => ({
@@ -222,7 +232,10 @@ const StakeVoltaCardContent = styled(Box)(({ theme }) => ({
   padding: '30px 34px',
   display: 'flex',
   gap: '35px',
-  flexDirection: 'column'
+  flexDirection: 'column',
+  [theme.breakpoints.down(450)]: {
+    padding: '26px 18px'
+  }
 }));
 
 const StakeVoltaChooserContainer = styled(Box)(({ theme }) => ({
@@ -234,7 +247,10 @@ const StakeVoltaChooserContainer = styled(Box)(({ theme }) => ({
 const StakeVoltaChooserTitle = styled(Box)(({ theme }) => ({
   fontSize: '16px',
   lineHeight: '20px',
-  fontWeight: '500'
+  fontWeight: '500',
+  [theme.breakpoints.down(450)]: {
+    fontSize: '14px'
+  }
 }));
 
 const StakeVoltaChooserWrapper = styled(Box)(({ theme }) => ({
@@ -250,7 +266,11 @@ const StakeChooser = styled(Button)<{ selected: boolean }>(({ theme, selected })
   fontSize: '16px',
   lineHeight: '30px',
   fontWeight: 600,
-  textTransform: 'none'
+  textTransform: 'none',
+  [theme.breakpoints.down(450)]: {
+    padding: '0px 16px',
+    fontSize: '14px'
+  }
 }));
 
 const UnStakeChooser = styled(Button)<{ selected: boolean }>(({ theme, selected }) => ({
@@ -262,7 +282,11 @@ const UnStakeChooser = styled(Button)<{ selected: boolean }>(({ theme, selected 
   fontSize: '16px',
   lineHeight: '30px',
   fontWeight: 600,
-  textTransform: 'none'
+  textTransform: 'none',
+  [theme.breakpoints.down(450)]: {
+    padding: '0px 16px',
+    fontSize: '14px'
+  }
 }));
 
 const StakeVoltaInputContainer = styled(Box)(({ theme }) => ({
@@ -423,11 +447,29 @@ const StakeVoltaCardTitleContainer = styled(Box)(({ theme }) => ({
   gap: '20px'
 }));
 
-const AddLiquidityButton = styled(Button)(({ theme }) => ({
+const DesktopAddLiquidityButton = styled(Button)(({ theme }) => ({
   border: '1px solid #356DF3',
   borderRadius: '4px',
   textTransform: 'none',
   paddingLeft: '16px',
   paddingRight: '16px',
-  color: '#356DF3'
+  color: '#356DF3',
+  [theme.breakpoints.down(540)]: {
+    display: 'none'
+  }
+}));
+
+const MobileAddLiquidityButton = styled(Button)(({ theme }) => ({
+  border: '1px solid #356DF3',
+  borderRadius: '4px',
+  textTransform: 'none',
+  paddingLeft: '16px',
+  paddingRight: '16px',
+  color: '#356DF3',
+  display: 'none',
+  height: '48px',
+  [theme.breakpoints.down(540)]: {
+    display: 'flex',
+    alignItems: 'center'
+  }
 }));

@@ -3,6 +3,7 @@ import { styled } from '@mui/system';
 import { StakingAbout } from './StakingAbout';
 import { StakingBadges } from './StakingBadges';
 import { StakingCards } from './StakingCards';
+
 export const StakingPage = () => {
   return (
     <StakingPageContainer>

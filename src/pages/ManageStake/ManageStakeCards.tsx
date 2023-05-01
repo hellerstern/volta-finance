@@ -1,6 +1,8 @@
 import { HelpOutline } from '@mui/icons-material';
 import { Box, Button } from '@mui/material';
 import { styled } from '@mui/system';
+import { ClaimButton } from 'src/components/Button/ClaimButton';
+import { StakeButton } from 'src/components/Button/StakeButton';
 import { VoltaStakeButton } from 'src/components/Button/VoltaStakeButton';
 import {
   DecentralizedIcon,
@@ -45,7 +47,7 @@ const TotalStakeCard = () => {
       <StakeCardTitle name="Total Staked" />
       <StakeCardActionContainer>
         <StakeCardValue name="Volta" icon={VoltaLogoSvg} primary={4.789} secondary={26.532} />
-        <VoltaStakeButton>Stake</VoltaStakeButton>
+        <StakeButton />
       </StakeCardActionContainer>
     </StakeCardContainer>
   );
@@ -68,6 +70,9 @@ const StakeCardContainer = styled(Box)(({ theme }) => ({
   [theme.breakpoints.down(768)]: {
     gap: '40px',
     height: 'fit-content'
+  },
+  [theme.breakpoints.down(450)]: {
+    padding: '23px 19px'
   }
 }));
 
@@ -180,7 +185,7 @@ const ClaimRewardCard = () => {
       <StakeCardActionContainer>
         <StakeCardValue name="WETH" icon={WethLogoSvg} primary={5.6789} secondary={7.894} />
         <StakeCardValue name="Volta" icon={VoltaLogoSvg} primary={'7.890'} secondary={45.744} />
-        <VoltaStakeButton>Claim</VoltaStakeButton>
+        <ClaimButton />
       </StakeCardActionContainer>
     </ClaimRewardCardContainer>
   );
@@ -204,6 +209,9 @@ const ClaimRewardCardContainer = styled(Box)(({ theme }) => ({
     gap: '40px',
     height: 'fit-content',
     width: '100%'
+  },
+  [theme.breakpoints.down(450)]: {
+    padding: '23px 19px'
   }
 }));
 
@@ -284,7 +292,10 @@ const StartStakingCardContent = styled(Box)(({ theme }) => ({
 const StartStakingCardPrimaryText = styled(Box)(({ theme }) => ({
   fontWeight: '700',
   fontSize: '30px',
-  lineHeight: '35px'
+  lineHeight: '35px',
+  [theme.breakpoints.down(450)]: {
+    fontSize: '20px'
+  }
 }));
 
 const StartStakingCardSecondaryText = styled(Box)(({ theme }) => ({
@@ -292,8 +303,12 @@ const StartStakingCardSecondaryText = styled(Box)(({ theme }) => ({
   fontSize: '16px',
   lineHeight: '24px',
   color: '#A5A5A5',
+  textAlign: 'center',
   [theme.breakpoints.down(640)]: {
     width: '270px'
+  },
+  [theme.breakpoints.down(450)]: {
+    fontSize: '14px'
   }
 }));
 
