@@ -54,7 +54,6 @@ const DesktopAllRightReserve = styled(Box)(({ theme }) => ({
   lineHeight: '18px',
   color: '#CDCDCD',
   opacity: '0.8',
-  width: '100%',
   textAlign: 'left',
   [theme.breakpoints.down(1120)]: {
     display: 'none'
@@ -68,8 +67,8 @@ const MobileAllRightReserve = styled(Box)(({ theme }) => ({
   color: '#CDCDCD',
   opacity: '0.8',
   display: 'none',
-  width: '100%',
   textAlign: 'left',
+  width: '100%',
   [theme.breakpoints.down(1120)]: {
     display: 'block'
   }
