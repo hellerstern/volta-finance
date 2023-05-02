@@ -9,4 +9,9 @@ import Web3BoostIcon from '../assets/icons/web3-boost-icon.svg'
 import DecentralizedIcon from '../assets/icons/decentralized-icon.svg'
 import VoltaDaoIcon from '../assets/icons/volta-dao-icon.svg'
 
-export { VoltaLogoSvg, CRVLogoSvg, Volt2CRVLogoSvg, WethLogoSvg, VoltaIcon, WethIcon, Web3BoostIcon, DecentralizedIcon, VoltaDaoIcon }
+// Landing page
+import DatabaseLogoSvg from '../assets/logos/database-logo.svg'
+import PercentLogoSvg from '../assets/logos/percent-logo.svg'
+import AntenaLogoSvg from '../assets/logos/antena-logo.svg'
+
+export { VoltaLogoSvg, CRVLogoSvg, Volt2CRVLogoSvg, WethLogoSvg, VoltaIcon, WethIcon, Web3BoostIcon, DecentralizedIcon, VoltaDaoIcon, DatabaseLogoSvg, PercentLogoSvg, AntenaLogoSvg }
