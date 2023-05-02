@@ -13,5 +13,14 @@ import VoltaDaoIcon from '../assets/icons/volta-dao-icon.svg'
 import DatabaseLogoSvg from '../assets/logos/database-logo.svg'
 import PercentLogoSvg from '../assets/logos/percent-logo.svg'
 import AntenaLogoSvg from '../assets/logos/antena-logo.svg'
+import VoltGNSLogoSvg from '../assets/logos/voltgns-logo.svg'
+import GDAILogoSvg from '../assets/logos/gdai-logo.svg'
+import CheckIcon1 from '../assets/icons/check-icon1.svg'
+import CheckIcon2 from '../assets/icons/check-icon2.svg'
+import DiscordLogoSvg from '../assets/logos/discord-logo.svg'
+import TelegramLogoSvg from '../assets/logos/telegram-logo.svg'
+import TwitterLogoSvg from '../assets/logos/twitter-logo.svg'
+import MediumLogoSvg from '../assets/logos/medium-logo.svg'
+import GitbookLogoSvg from '../assets/logos/gitbook-logo.svg'
 
-export { VoltaLogoSvg, CRVLogoSvg, Volt2CRVLogoSvg, WethLogoSvg, VoltaIcon, WethIcon, Web3BoostIcon, DecentralizedIcon, VoltaDaoIcon, DatabaseLogoSvg, PercentLogoSvg, AntenaLogoSvg }
+export { VoltaLogoSvg, CRVLogoSvg, Volt2CRVLogoSvg, WethLogoSvg, VoltaIcon, WethIcon, Web3BoostIcon, DecentralizedIcon, VoltaDaoIcon, DatabaseLogoSvg, PercentLogoSvg, AntenaLogoSvg, VoltGNSLogoSvg, GDAILogoSvg, CheckIcon1, CheckIcon2, DiscordLogoSvg, TelegramLogoSvg, TwitterLogoSvg, MediumLogoSvg, GitbookLogoSvg }

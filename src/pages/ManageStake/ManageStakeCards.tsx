@@ -3,7 +3,6 @@ import { Box, Button } from '@mui/material';
 import { styled } from '@mui/system';
 import { ClaimButton } from 'src/components/Button/ClaimButton';
 import { StakeButton } from 'src/components/Button/StakeButton';
-import { VoltaStakeButton } from 'src/components/Button/VoltaStakeButton';
 import {
   DecentralizedIcon,
   Volt2CRVLogoSvg,

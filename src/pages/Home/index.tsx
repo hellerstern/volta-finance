@@ -4,6 +4,7 @@ import { Heading } from './Heading';
 import { AboutVoltaCard } from './AboutVoltaCard';
 import { UsecaseVolta } from './UsecaseVolta';
 import { Howtouse } from './Howtouse';
+import { VoltaCommunity } from './VoltaCommunity';
 
 export const Home = () => {
   return (
@@ -12,6 +13,7 @@ export const Home = () => {
       <AboutVoltaCard />
       <UsecaseVolta />
       <Howtouse />
+      <VoltaCommunity />
     </HomePageContainer>
   );
 };
