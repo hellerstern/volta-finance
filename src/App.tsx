@@ -9,6 +9,7 @@ import { Layout } from './layouts/layout';
 import { Home } from './pages/Home';
 import { StakingPage } from './pages/Staking';
 import { ManageStake } from './pages/ManageStake';
+import { SearchPage } from './pages/Search';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
               <Route path={PUBLIC_ROUTES.home} element={<Home />} />
               <Route path={PUBLIC_ROUTES.manageStake} element={<ManageStake />} />
               <Route path={PUBLIC_ROUTES.staking} element={<StakingPage />} />
+              <Route path={PUBLIC_ROUTES.search} element={<SearchPage />} />
             </Routes>
           </Layout>
         </AppThemeProvider>

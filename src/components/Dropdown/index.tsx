@@ -5,21 +5,16 @@ import Menu, { MenuProps } from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { KeyboardArrowDown, KeyboardArrowUp } from '@mui/icons-material';
 
-interface CustomizedMenusProps {
-  title: string;
-  arr: object;
-}
-
 const StyledMenu = styled((props: MenuProps) => (
   <Menu
     elevation={0}
     anchorOrigin={{
       vertical: 'bottom',
-      horizontal: 'right'
+      horizontal: 'left'
     }}
     transformOrigin={{
       vertical: 'top',
-      horizontal: 'right'
+      horizontal: 'left'
     }}
     {...props}
   />
@@ -48,7 +43,15 @@ const StyledMenu = styled((props: MenuProps) => (
   }
 }));
 
-export default function CustomizedMenus() {
+interface CommonDropProps {
+  arrayData: any;
+  name: string;
+  state: string;
+  setState: any;
+}
+
+export const CommonDropDown = (props: CommonDropProps) => {
+  const { arrayData, name, state, setState } = props;
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const isOpen = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -56,6 +59,11 @@ export default function CustomizedMenus() {
   };
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleMenuClicked = (e: React.MouseEvent<HTMLElement>) => {
+    handleClose();
+    setState(e.currentTarget.innerText);
   };
 
   //   const handleMenu = (func: () => void) => {
@@ -75,7 +83,7 @@ export default function CustomizedMenus() {
         onClick={handleClick}
         endIcon={isOpen ? <KeyboardArrowUp /> : <KeyboardArrowDown />}
       >
-        EN/USD
+        {state}
       </Dropdown>
       <StyledMenu
         id="demo-customized-menu"
@@ -86,19 +94,33 @@ export default function CustomizedMenus() {
         open={isOpen}
         onClose={handleClose}
       >
-        <MenuItem onClick={() => handleClose()}>Edit</MenuItem>
-        <MenuItem onClick={() => handleClose()}>Duplicate</MenuItem>
-        <MenuItem onClick={() => handleClose()}>Archive</MenuItem>
-        <MenuItem onClick={() => handleClose()}>More</MenuItem>
+        {arrayData.map((item: any, index: number) => (
+          <CustomMenuItem onClick={handleMenuClicked} key={index}>
+            {item}
+          </CustomMenuItem>
+        ))}
       </StyledMenu>
     </>
   );
-}
+};
 
 const Dropdown = styled(Button)({
-  background: 'none',
+  background: '#222630',
+  borderRadius: '2px',
+  fontSize: '12px',
   color: '#FFFFFF',
+  textTransform: 'none',
+  padding: '10px',
+  width: '100%',
+  height: '36px',
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
   '&:hover': {
-    background: 'none'
+    background: '#222630'
   }
 });
+
+const CustomMenuItem = styled(MenuItem)(({ theme }) => ({
+  fontSize: '12px'
+}));
