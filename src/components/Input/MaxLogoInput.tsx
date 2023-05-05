@@ -85,7 +85,10 @@ const StakeVoltaInputWrapper = styled(Box)(({ theme }) => ({
   width: '100%',
   borderRadius: '6px 0 0 6px',
   border: '1px solid #1D1E1F',
-  padding: '13px 16px'
+  padding: '13px 16px',
+  [theme.breakpoints.down(480)]: {
+    padding: '3px 10px'
+  }
 }));
 
 const StakeVoltaInput = styled('input')(({ theme }) => ({
@@ -95,7 +98,6 @@ const StakeVoltaInput = styled('input')(({ theme }) => ({
   textDecoration: 'none',
   color: '#A5A5A5',
   fontSize: '18px',
-  lineHeight: '28px',
   fontWieght: '500',
   backgroundColor: 'transparent',
   border: 'none'
