@@ -4,6 +4,7 @@ import { styled } from '@mui/system';
 import { Search } from '@mui/icons-material';
 import { VoltaInput } from 'src/components/Input';
 import { CommonSelect } from 'src/components/Select';
+import { SearchBoardTable } from './SearchBoardTable';
 
 const networkArr = ['All', 'Ethereum', 'Arbitrum'];
 const extraCoinArr = ['BUSD', 'USDT', 'BNB'];
@@ -59,6 +60,7 @@ export const SearchBoard = () => {
           </DesktopContainer>
         </SelectSearch>
       </SearchBoardAction>
+      <SearchBoardTable />
     </SearchBoardContainer>
   );
 };

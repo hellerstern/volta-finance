@@ -85,3 +85,42 @@ input[type=number] {
   border-radius: 10px !important;
   background-color: #131418 !important;
 }
+
+.MuiTableCell-root {
+  font-family: 'Inter-Medium' !important;
+}
+
+table {
+  border-collapse: separate !important;
+  border-spacing: 0 10px !important; 
+}
+
+tbody {
+  display: block;
+}
+
+tr td:first-child { 
+  border-top-left-radius: 12px !important;
+  border-bottom-left-radius: 12px !important;
+  border-left: 8px solid #131418 !important;
+}
+
+tr td:last-child { 
+  border-top-right-radius: 12px !important; 
+  border-bottom-right-radius: 12px !important;
+  border-right: 8px solid #131418!important;
+}
+/* 
+tr:last-child td:first-child { 
+  border-top-left-radius: 10px !important; 
+  border-bottom-left-radius: 10px !important;
+  border-spacing: 10px !important;
+}
+tr:last-child td:last-child { 
+  border-bottom-right-radius: 10px !important; 
+  border-bottom
+  border-spacing: 10px !important;
+} */
+
+/* tr:first-child td { border-top-style: solid !important; }
+tr td:first-child { border-left-style: solid !important; } */

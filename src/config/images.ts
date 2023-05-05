@@ -23,4 +23,8 @@ import TwitterLogoSvg from '../assets/logos/twitter-logo.svg'
 import MediumLogoSvg from '../assets/logos/medium-logo.svg'
 import GitbookLogoSvg from '../assets/logos/gitbook-logo.svg'
 
-export { VoltaLogoSvg, CRVLogoSvg, Volt2CRVLogoSvg, WethLogoSvg, VoltaIcon, WethIcon, Web3BoostIcon, DecentralizedIcon, VoltaDaoIcon, DatabaseLogoSvg, PercentLogoSvg, AntenaLogoSvg, VoltGNSLogoSvg, GDAILogoSvg, CheckIcon1, CheckIcon2, DiscordLogoSvg, TelegramLogoSvg, TwitterLogoSvg, MediumLogoSvg, GitbookLogoSvg }
+// Search Page
+import VoltLogoSvg from '../assets/logos/volt-logo.svg'
+import ArbitrumLogoSvg from '../assets/logos/arbitrum-logo.svg'
+
+export { VoltaLogoSvg, CRVLogoSvg, Volt2CRVLogoSvg, WethLogoSvg, VoltaIcon, WethIcon, Web3BoostIcon, DecentralizedIcon, VoltaDaoIcon, DatabaseLogoSvg, PercentLogoSvg, AntenaLogoSvg, VoltGNSLogoSvg, GDAILogoSvg, CheckIcon1, CheckIcon2, DiscordLogoSvg, TelegramLogoSvg, TwitterLogoSvg, MediumLogoSvg, GitbookLogoSvg, VoltLogoSvg, ArbitrumLogoSvg }

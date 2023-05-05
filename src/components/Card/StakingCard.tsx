@@ -1,23 +1,13 @@
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { Box, Button } from '@mui/material';
 import { styled } from '@mui/system';
 import { Volt2CRVLogoSvg, VoltaLogoSvg } from 'src/config/images';
 import { NorthEast } from '@mui/icons-material';
+import { MaxLogoInput } from '../Input/MaxLogoInput';
 
 export const StakingVoltaCard = () => {
   const [isStake, setStake] = useState(true);
   const [stakeAmount, setStakeAmount] = useState(0);
-
-  const stakeRef = useRef<HTMLInputElement>(null);
-
-  const handleChangeStakeAmount = (e: any) => {
-    const value = e.target.value;
-    setStakeAmount(value);
-  };
-
-  const handleClickInside = () => {
-    stakeRef.current?.focus();
-  };
 
   return (
     <StakeVoltaCardContainer>
@@ -43,24 +33,14 @@ export const StakingVoltaCard = () => {
             </UnStakeChooser>
           </StakeVoltaChooserWrapper>
         </StakeVoltaChooserContainer>
-        <StakeVoltaInputContainer onClick={handleClickInside}>
-          <StakeVoltaInputTitle>
-            <StakeVoltaInputText>Amount</StakeVoltaInputText>
-            <StakeVoltaInputText>Balance: 0.789 VoltGNS</StakeVoltaInputText>
-          </StakeVoltaInputTitle>
-          <StakeVoltaInputArea>
-            <StakeVoltaInputWrapper>
-              <StakeVoltaInput value={stakeAmount} onChange={handleChangeStakeAmount} type="number" ref={stakeRef} />
-              <MaxButton>Max</MaxButton>
-            </StakeVoltaInputWrapper>
-            <StakeVoltaInputMark>
-              <InputMarkImageContainer>
-                <InputMarkImage src={VoltaLogoSvg} alt="input-mark" />
-              </InputMarkImageContainer>
-              Volta
-            </StakeVoltaInputMark>
-          </StakeVoltaInputArea>
-        </StakeVoltaInputContainer>
+        <MaxLogoInput
+          primaryText="Amount"
+          secondaryText={`Balance: ${0.789} VoltGNS`}
+          state={stakeAmount}
+          setState={setStakeAmount}
+          logo={VoltaLogoSvg}
+          logoText="Volta"
+        />
         <StakeVoltaRewardContainer>
           <StakeVoltaRewardAPR>WETH rewards APR:</StakeVoltaRewardAPR>
           <StakeVoltaNetworkFeeContainer>
@@ -82,17 +62,6 @@ export const StakingVoltaCard = () => {
 export const StakingVolt2CRVCard = () => {
   const [isStake, setStake] = useState(true);
   const [stakeAmount, setStakeAmount] = useState(0);
-
-  const stakeRef = useRef<HTMLInputElement>(null);
-
-  const handleChangeStakeAmount = (e: any) => {
-    const value = e.target.value;
-    setStakeAmount(value);
-  };
-
-  const handleClickInside = () => {
-    stakeRef.current?.focus();
-  };
 
   return (
     <StakeVoltaCardContainer>
@@ -119,24 +88,14 @@ export const StakingVolt2CRVCard = () => {
             </UnStakeChooser>
           </StakeVoltaChooserWrapper>
         </StakeVoltaChooserContainer>
-        <StakeVoltaInputContainer onClick={handleClickInside}>
-          <StakeVoltaInputTitle>
-            <StakeVoltaInputText>Amount</StakeVoltaInputText>
-            <StakeVoltaInputText>Balance: 0.789 VoltGNS</StakeVoltaInputText>
-          </StakeVoltaInputTitle>
-          <StakeVoltaInputArea>
-            <StakeVoltaInputWrapper>
-              <StakeVoltaInput value={stakeAmount} onChange={handleChangeStakeAmount} type="number" ref={stakeRef} />
-              <MaxButton>Max</MaxButton>
-            </StakeVoltaInputWrapper>
-            <StakeVoltaInputMark>
-              <InputMarkImageContainer>
-                <InputMarkImage src={Volt2CRVLogoSvg} alt="input-mark" />
-              </InputMarkImageContainer>
-              Volt2CRV
-            </StakeVoltaInputMark>
-          </StakeVoltaInputArea>
-        </StakeVoltaInputContainer>
+        <MaxLogoInput
+          primaryText="Amount"
+          secondaryText={`Balance: ${0.789} VoltGNS`}
+          state={stakeAmount}
+          setState={setStakeAmount}
+          logo={Volt2CRVLogoSvg}
+          logoText="Volt2CRV"
+        />
         <StakeVoltaRewardContainer>
           <StakeVoltaRewardAPR>VOLTA rewards APR:</StakeVoltaRewardAPR>
           <StakeVoltaNetworkFeeContainer>
@@ -287,94 +246,6 @@ const UnStakeChooser = styled(Button)<{ selected: boolean }>(({ theme, selected 
     padding: '0px 16px',
     fontSize: '14px'
   }
-}));
-
-const StakeVoltaInputContainer = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '4px',
-  cursor: 'pointer'
-}));
-
-const StakeVoltaInputTitle = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-between'
-}));
-
-const StakeVoltaInputText = styled(Box)(({ theme }) => ({
-  fontSize: '14px',
-  lineHeight: '16px',
-  color: '#A5A5A5'
-}));
-
-const StakeVoltaInputArea = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  height: '50px'
-}));
-
-const StakeVoltaInputWrapper = styled(Box)(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-  width: '100%',
-  borderRadius: '6px 0 0 6px',
-  border: '1px solid #1D1E1F',
-  padding: '13px 16px'
-}));
-
-const StakeVoltaInput = styled('input')(({ theme }) => ({
-  width: '80%',
-  height: '100%',
-  outline: 'none',
-  textDecoration: 'none',
-  color: '#A5A5A5',
-  fontSize: '18px',
-  lineHeight: '28px',
-  fontWieght: '500',
-  backgroundColor: 'transparent',
-  border: 'none'
-}));
-
-const MaxButton = styled(Button)(({ theme }) => ({
-  backgroundColor: '#0D0D0D',
-  borderRadius: '4px',
-  color: 'rgba(255, 255, 255, 0.92)',
-  fontSize: '12px',
-  lineHeight: '16px',
-  fontWeight: '500'
-}));
-
-const StakeVoltaInputMark = styled(Box)(({ theme }) => ({
-  width: 'auto',
-  height: '100%',
-  padding: '13px 11px',
-  display: 'flex',
-  alignItems: 'center',
-  gap: '10px',
-  fontSize: '14px',
-  lineHeight: '20px',
-  fontWeight: '600',
-  borderRadius: '0px 6px 6px 0px',
-  border: '1px solid #1D1E1F',
-  borderLeft: '0px'
-}));
-
-const InputMarkImageContainer = styled(Box)(({ theme }) => ({
-  minWidth: '24px',
-  maxWidth: '24px',
-  minHeight: '24px',
-  maxHeight: '24px',
-  borderRadius: '50%',
-  backgroundColor: '#090A0A',
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center'
-}));
-
-const InputMarkImage = styled('img')(({ theme }) => ({
-  width: '16px',
-  height: '16px'
 }));
 
 const StakeVoltaRewardContainer = styled(Box)(({ theme }) => ({
