@@ -4,6 +4,7 @@ export const PUBLIC_ROUTES = {
   staking: '/staking',
   manageStake: "/manage-stake",
   search: '/search',
+  swap: 'swap',
   error404: '/error404'
 };
 

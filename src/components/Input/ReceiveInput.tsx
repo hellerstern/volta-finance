@@ -1,20 +1,19 @@
 import { useRef } from 'react';
-import { Box, Button } from '@mui/material';
+import { Box } from '@mui/material';
 import { styled } from '@mui/system';
 
-interface MaxLogoInputProps {
+interface ReceiveInputProps {
   primaryText: string;
   secondaryText: string;
   state: number | string;
   setState: (value: any) => void;
-  onMaxClick?: () => void;
   logo: string;
   logoText: string;
   type?: string;
 }
 
-export const MaxLogoInput = (props: MaxLogoInputProps) => {
-  const { primaryText, secondaryText, state, setState, onMaxClick, logo, logoText, type } = props;
+export const ReceiveInput = (props: ReceiveInputProps) => {
+  const { primaryText, secondaryText, state, setState, logo, logoText, type } = props;
 
   const stakeRef = useRef<HTMLInputElement>(null);
 
@@ -28,57 +27,56 @@ export const MaxLogoInput = (props: MaxLogoInputProps) => {
   };
 
   return (
-    <StakeVoltaInputContainer onClick={handleClickInside}>
-      <StakeVoltaInputTitle>
-        <StakeVoltaInputText>{primaryText}</StakeVoltaInputText>
-        <StakeVoltaInputText>{secondaryText}</StakeVoltaInputText>
-      </StakeVoltaInputTitle>
-      <StakeVoltaInputArea>
-        <StakeVoltaInputWrapper>
-          <StakeVoltaInput
+    <ReceiveInputContainer onClick={handleClickInside}>
+      <ReceiveInputTitle>
+        <ReceiveInputText>{primaryText}</ReceiveInputText>
+        <ReceiveInputText>{secondaryText}</ReceiveInputText>
+      </ReceiveInputTitle>
+      <ReceiveInputArea>
+        <ReceiveInputWrapper>
+          <ReceiveInputField
             value={state}
             onChange={handleChangeStakeAmount}
             type={type !== undefined ? type : 'text'}
             ref={stakeRef}
           />
-          <MaxButton onClick={onMaxClick}>Max</MaxButton>
-        </StakeVoltaInputWrapper>
-        <StakeVoltaInputMark>
+        </ReceiveInputWrapper>
+        <ReceiveInputMark>
           <InputMarkImageContainer>
             <InputMarkImage src={logo} alt="input-mark" />
           </InputMarkImageContainer>
           {logoText}
-        </StakeVoltaInputMark>
-      </StakeVoltaInputArea>
-    </StakeVoltaInputContainer>
+        </ReceiveInputMark>
+      </ReceiveInputArea>
+    </ReceiveInputContainer>
   );
 };
 
-const StakeVoltaInputContainer = styled(Box)(({ theme }) => ({
+const ReceiveInputContainer = styled(Box)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   gap: '4px',
   cursor: 'pointer'
 }));
 
-const StakeVoltaInputTitle = styled(Box)(({ theme }) => ({
+const ReceiveInputTitle = styled(Box)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between'
 }));
 
-const StakeVoltaInputText = styled(Box)(({ theme }) => ({
+const ReceiveInputText = styled(Box)(({ theme }) => ({
   fontSize: '14px',
   lineHeight: '16px',
   color: '#A5A5A5'
 }));
 
-const StakeVoltaInputArea = styled(Box)(({ theme }) => ({
+const ReceiveInputArea = styled(Box)(({ theme }) => ({
   display: 'flex',
   height: '50px'
 }));
 
-const StakeVoltaInputWrapper = styled(Box)(({ theme }) => ({
+const ReceiveInputWrapper = styled(Box)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
@@ -91,31 +89,19 @@ const StakeVoltaInputWrapper = styled(Box)(({ theme }) => ({
   }
 }));
 
-const StakeVoltaInput = styled('input')(({ theme }) => ({
+const ReceiveInputField = styled('input')(({ theme }) => ({
   width: '80%',
   height: '100%',
   outline: 'none',
   textDecoration: 'none',
-  color: '#A5A5A5',
+  color: '#FFFFFF',
   fontSize: '18px',
   fontWieght: '500',
   backgroundColor: 'transparent',
   border: 'none'
 }));
 
-const MaxButton = styled(Button)(({ theme }) => ({
-  backgroundColor: '#0D0D0D',
-  borderRadius: '4px',
-  color: 'rgba(255, 255, 255, 0.92)',
-  fontSize: '12px',
-  lineHeight: '16px',
-  fontWeight: '500',
-  '&:hover': {
-    color: '#00EB88'
-  }
-}));
-
-const StakeVoltaInputMark = styled(Box)(({ theme }) => ({
+const ReceiveInputMark = styled(Box)(({ theme }) => ({
   width: 'auto',
   height: '100%',
   padding: '13px 11px',

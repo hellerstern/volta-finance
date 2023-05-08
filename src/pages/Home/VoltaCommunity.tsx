@@ -24,23 +24,23 @@ export const VoltaCommunity = () => {
           />
           <LinkLine />
         </VoltaCommunityLinkWrapper>
-        <VoltaCommunityLinkWrapper isMobile={true}>
+        <VoltaCommunityLinkWrapper ismobile={1}>
           <VoltaCommunityLink
             icon={TelegramLogoSvg}
             text="Contact us on"
             boldText="Telegram"
             link="https://t.me/VoltaFinance"
           />
-          <LinkLine isMobile={true} />
+          <LinkLine ismobile={1} />
         </VoltaCommunityLinkWrapper>
-        <VoltaCommunityLinkWrapper isTablet={true}>
+        <VoltaCommunityLinkWrapper istablet={1}>
           <VoltaCommunityLink
             icon={TwitterLogoSvg}
             text="twitter.com"
             boldText="volta_protocol"
             link="https://twitter.com/volta_protocol"
           />
-          <LinkLine isTablet={true} />
+          <LinkLine istablet={1} />
         </VoltaCommunityLinkWrapper>
         <VoltaCommunityLinkWrapper>
           <VoltaCommunityLink
@@ -49,7 +49,7 @@ export const VoltaCommunity = () => {
             boldText="@volta_protocol"
             link="https://medium.com/@volta_protocol"
           />
-          <LinkLine isMobile={true} />
+          <LinkLine ismobile={1} />
         </VoltaCommunityLinkWrapper>
         <VoltaCommunityLinkWrapper>
           <VoltaCommunityLink
@@ -174,28 +174,28 @@ const VoltaCommunityLinkText = styled(Box)(({ theme }) => ({
   }
 }));
 
-const LinkLine = styled(Box)<{ isTablet?: boolean; isMobile?: boolean }>(({ theme, isTablet, isMobile }) => ({
+const LinkLine = styled(Box)<{ istablet?: number; ismobile?: number }>(({ theme, istablet, ismobile }) => ({
   width: '1px',
   height: '72px',
   backgroundColor: '#272727',
-  display: isTablet === true ? 'none' : 'block',
+  display: istablet === 1 ? 'none' : 'block',
   [theme.breakpoints.down(1240)]: {
-    display: isMobile === true ? 'none' : 'block'
+    display: ismobile === 1 ? 'none' : 'block'
   },
   [theme.breakpoints.down(840)]: {
     display: 'none'
   }
 }));
 
-const VoltaCommunityLinkWrapper = styled(Box)<{ isMobile?: boolean; isTablet?: boolean }>(
-  ({ theme, isMobile, isTablet }) => ({
+const VoltaCommunityLinkWrapper = styled(Box)<{ ismobile?: number; istablet?: number }>(
+  ({ theme, ismobile, istablet }) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
-    width: isTablet === true ? '270px' : '372px',
+    width: istablet === 1 ? '270px' : '372px',
     height: '72px',
     [theme.breakpoints.down(1240)]: {
-      width: isMobile === true ? '270px' : '330px'
+      width: ismobile === 1 ? '270px' : '330px'
     },
     [theme.breakpoints.down(840)]: {
       width: '275px'
