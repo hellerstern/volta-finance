@@ -32,4 +32,7 @@ import USDCLogoSvg from '../assets/logos/usdc-logo.svg'
 import VoltaTokenSvg from '../assets/logos/volta-swap-logo.svg'
 import USDTLogoSvg from '../assets/logos/usdt-logo.svg'
 
-export { VoltaLogoSvg, CRVLogoSvg, Volt2CRVLogoSvg, WethLogoSvg, VoltaIcon, WethIcon, Web3BoostIcon, DecentralizedIcon, VoltaDaoIcon, DatabaseLogoSvg, PercentLogoSvg, AntenaLogoSvg, VoltGNSLogoSvg, GDAILogoSvg, CheckIcon1, CheckIcon2, DiscordLogoSvg, TelegramLogoSvg, TwitterLogoSvg, MediumLogoSvg, GitbookLogoSvg, VoltLogoSvg, ArbitrumLogoSvg, USDCLogoSvg, VoltaTokenSvg, USDTLogoSvg }
+// Vaults Page
+import SearchIconSvg from '../assets/icons/search.svg'
+
+export { VoltaLogoSvg, CRVLogoSvg, Volt2CRVLogoSvg, WethLogoSvg, VoltaIcon, WethIcon, Web3BoostIcon, DecentralizedIcon, VoltaDaoIcon, DatabaseLogoSvg, PercentLogoSvg, AntenaLogoSvg, VoltGNSLogoSvg, GDAILogoSvg, CheckIcon1, CheckIcon2, DiscordLogoSvg, TelegramLogoSvg, TwitterLogoSvg, MediumLogoSvg, GitbookLogoSvg, VoltLogoSvg, ArbitrumLogoSvg, USDCLogoSvg, VoltaTokenSvg, USDTLogoSvg, SearchIconSvg }

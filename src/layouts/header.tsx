@@ -48,6 +48,7 @@ export const Header = () => {
             <CustomTab
               label="Vaults"
               {...a11yProps(1)}
+              onClick={() => navigate('/vaults')}
               style={{ color: page === 1 ? '#FFFFFF' : '#B1B5C3', fontWeight: page === 0 ? 500 : 400 }}
             />
             <CustomTab

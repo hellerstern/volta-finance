@@ -5,6 +5,7 @@ export const PUBLIC_ROUTES = {
   manageStake: "/manage-stake",
   search: '/search',
   swap: 'swap',
+  vaults: '/vaults',
   error404: '/error404'
 };
 
