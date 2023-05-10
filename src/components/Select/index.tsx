@@ -21,7 +21,7 @@ export function CommonSelect(props: CommonSelectProps) {
 
   return (
     <Box sx={{ minWidth: 120 }}>
-      <FormControl fullWidth size="small">
+      <FormControl fullWidth size="small" sx={{ '& .MuiInputBase-root': { border: 'none !important' } }}>
         <InputLabel id="demo-simple-select-label">{label}</InputLabel>
         <Select
           labelId="demo-simple-select-label"
