@@ -8,15 +8,15 @@ export const ManageVaultsBreadcrumb = () => {
   return (
     <ManageVaultsBreadcrumbContainer>
       <CurrentBreadcrumbContainer>
-        <KeyboardArrowLeft sx={{ cursor: 'pointer' }} onClick={() => navigate('/staking')} />
+        <KeyboardArrowLeft sx={{ cursor: 'pointer' }} onClick={() => navigate('/vaults')} />
         <PrimaryText>VoltGNS #55 Vault</PrimaryText>
       </CurrentBreadcrumbContainer>
       <AllBreadcrumbContainer>
         <CustomBreadcrumbs separator="/" aria-label="breadcrumb">
-          <Link underline="hover" key="1" color="#01A9F7" href="/manage-stake">
+          <Link underline="hover" key="1" color="#01A9F7" href="/manage-vaults">
             Vaults
           </Link>
-          <Link underline="hover" key="2" color="inherit" href="/manage-stake">
+          <Link underline="hover" key="2" color="inherit" href="/manage-vaults">
             Manage Vaults
           </Link>
           <CurrentPage key="3">VoltGNS-55-Vault</CurrentPage>
