@@ -12,6 +12,7 @@ import { ManageStake } from './pages/ManageStake';
 import { SearchPage } from './pages/Search';
 import { VoltaSwap } from './pages/Swap';
 import { Vaults } from './pages/Vaults';
+import { ManageVaults } from './pages/ManageValuts';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
               <Route path={PUBLIC_ROUTES.swap} element={<VoltaSwap />} />
               <Route path={PUBLIC_ROUTES.search} element={<SearchPage />} />
               <Route path={PUBLIC_ROUTES.vaults} element={<Vaults />} />
+              <Route path={PUBLIC_ROUTES.manageVaults} element={<ManageVaults />} />
             </Routes>
           </Layout>
         </AppThemeProvider>

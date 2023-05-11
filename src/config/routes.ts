@@ -6,6 +6,7 @@ export const PUBLIC_ROUTES = {
   search: '/search',
   swap: 'swap',
   vaults: '/vaults',
+  manageVaults: "/manage-vaults",
   error404: '/error404'
 };
 
