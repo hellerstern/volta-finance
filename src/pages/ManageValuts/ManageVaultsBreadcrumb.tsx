@@ -12,17 +12,15 @@ export const ManageVaultsBreadcrumb = () => {
         <PrimaryText>VoltGNS #55 Vault</PrimaryText>
       </CurrentBreadcrumbContainer>
       <AllBreadcrumbContainer>
-        <Breadcrumbs separator="/" aria-label="breadcrumb">
+        <CustomBreadcrumbs separator="/" aria-label="breadcrumb">
           <Link underline="hover" key="1" color="#01A9F7" href="/manage-stake">
             Vaults
           </Link>
           <Link underline="hover" key="2" color="inherit" href="/manage-stake">
             Manage Vaults
           </Link>
-          <Typography key="3" color="text.primary">
-            VoltGNS-55-Vault
-          </Typography>
-        </Breadcrumbs>
+          <CurrentPage key="3">VoltGNS-55-Vault</CurrentPage>
+        </CustomBreadcrumbs>
       </AllBreadcrumbContainer>
     </ManageVaultsBreadcrumbContainer>
   );
@@ -45,11 +43,32 @@ const PrimaryText = styled(Box)(({ theme }) => ({
   fontSize: '20px',
   lineHeight: '28px',
   color: 'rgba(255, 255, 255, 0.92)',
-  fontWeight: '700'
+  fontWeight: '700',
+  [theme.breakpoints.down(640)]: {
+    fontSize: '17px'
+  }
 }));
 
 const AllBreadcrumbContainer = styled(Box)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   gap: '7px'
+}));
+
+const CustomBreadcrumbs = styled(Breadcrumbs)(({ theme }) => ({
+  fontSize: '14px',
+  fontWeight: '400',
+  color: '#A5A5A5',
+  [theme.breakpoints.down(640)]: {
+    fontSize: '13px'
+  }
+}));
+
+const CurrentPage = styled(Box)(({ theme }) => ({
+  fontSize: '14px',
+  fontWeight: '400',
+  color: '#A5A5A5',
+  [theme.breakpoints.down(640)]: {
+    fontSize: '13px'
+  }
 }));

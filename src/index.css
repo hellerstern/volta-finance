@@ -8,11 +8,13 @@
 
 body {
   margin: 0;
-
-  /* base font */
-  font-family: 'Inter-Medium' !important;
   font-size: 12px;
   color: #ffffff;
+}
+
+* {
+ /* base font */
+  font-family: 'Inter-Medium' !important;
 }
 
 ::-webkit-scrollbar {

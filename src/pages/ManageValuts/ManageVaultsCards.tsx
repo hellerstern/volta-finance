@@ -1,4 +1,5 @@
-import { BackdropProps, Box, Button, ButtonGroup, Slider } from '@mui/material';
+import { Campaign } from '@mui/icons-material';
+import { Box, Button, ButtonGroup, Slider } from '@mui/material';
 import { styled } from '@mui/system';
 import { useState } from 'react';
 import { MaxLogoInput } from 'src/components/Input/MaxLogoInput';
@@ -8,13 +9,17 @@ export const ManageVaultsCards = () => {
   return (
     <ManageVaultsCardsContainer>
       <VoltGNSCard />
+      <DetailsCard />
     </ManageVaultsCardsContainer>
   );
 };
 
 const ManageVaultsCardsContainer = styled(Box)(({ theme }) => ({
   display: 'flex',
-  gap: '25px'
+  gap: '25px',
+  [theme.breakpoints.down(1120)]: {
+    flexDirection: 'column'
+  }
 }));
 
 const marks = [
@@ -34,7 +39,6 @@ const marks = [
 
 const VoltGNSCard = () => {
   const [choose, setChoose] = useState(0);
-
   return (
     <VoltGNSCardContainer>
       <VoltGNSCardHeader>
@@ -70,10 +74,14 @@ const VoltGNSCard = () => {
 
 const VoltGNSCardContainer = styled(Box)(({ theme }) => ({
   width: '740px',
+  height: 'fit-content',
   display: 'flex',
   flexDirection: 'column',
   backgroundColor: '#131418',
-  borderRadius: '8px'
+  borderRadius: '8px',
+  [theme.breakpoints.down(1120)]: {
+    width: '100%'
+  }
 }));
 
 const VoltGNSCardHeader = styled(Box)(({ theme }) => ({
@@ -81,13 +89,19 @@ const VoltGNSCardHeader = styled(Box)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
-  borderBottom: '1px solid #1D1E1F'
+  borderBottom: '1px solid #1D1E1F',
+  [theme.breakpoints.down(640)]: {
+    padding: '18px'
+  }
 }));
 
 const VoltGNSCardName = styled(Box)(({ theme }) => ({
   fontWeight: '600',
   fontSize: '20px',
-  color: '#FFFFFF'
+  color: '#FFFFFF',
+  [theme.breakpoints.down(640)]: {
+    fontSize: '17px'
+  }
 }));
 
 const VoltGNSCardId = styled(Box)(({ theme }) => ({
@@ -98,7 +112,10 @@ const VoltGNSCardId = styled(Box)(({ theme }) => ({
     fontWeight: '600',
     fontSize: '18px',
     color: '#FFFFFF',
-    margin: 0
+    margin: 0,
+    [theme.breakpoints.down(400)]: {
+      display: 'none'
+    }
   },
   span: {
     backgroundColor: '#1D1E1F',
@@ -114,7 +131,10 @@ const VoltGNSCardContentContainer = styled(Box)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   gap: '45px',
-  padding: '26px 34px'
+  padding: '26px 34px',
+  [theme.breakpoints.down(640)]: {
+    padding: '18px'
+  }
 }));
 
 const ChooserContainer = styled(ButtonGroup)(({ theme }) => ({
@@ -132,6 +152,10 @@ const ChooserButton = styled(Button)<{ selected: number }>(({ theme, selected })
   height: '32px',
   '&:hover': {
     backgroundColor: 'rgba(255, 255, 255, 0.02)'
+  },
+  [theme.breakpoints.down(640)]: {
+    fontSize: '14px',
+    padding: '0px 8px'
   }
 }));
 
@@ -217,6 +241,8 @@ const DepositButton = styled(Button)(({ theme }) => ({
 const VoltGNSCardContent = (props: { selected: number }) => {
   const { selected } = props;
   const [deposit, setDeposit] = useState(0);
+  const isDesktop = window.matchMedia('(min-width: 480px)').matches;
+
   function valuetext(value: number) {
     return `${value}x`;
   }
@@ -232,10 +258,11 @@ const VoltGNSCardContent = (props: { selected: number }) => {
           logo={VoltLogoSvg}
           state={deposit}
           setState={setDeposit}
-          logoText="Volt/VoltGNS"
+          logoText={isDesktop ? 'Volt/VoltGNS' : 'Volt'}
         />
         <MaxDepositText>
-          Max.deposit: <span>1.878 Volt</span>
+          Max.{selected === 0 ? 'Deposit' : selected === 1 ? 'Borrow' : selected === 2 ? 'Repay' : 'Withdraw'}:{' '}
+          <span>1.878 Volt</span>
         </MaxDepositText>
       </InputContainer>
       <RatioContainer>
@@ -287,4 +314,123 @@ const VoltGNSCardContentWrapper = styled(Box)(({ theme }) => ({
   flexDirection: 'column',
   gap: '45px',
   transition: 'all linear 0.6s'
+}));
+
+const DetailsCard = () => {
+  return (
+    <DetailsCardContainer>
+      <DetailsCardHeader>Details</DetailsCardHeader>
+      <DetailsCardContent>
+        <DetailsItem name="Collateral" value={'0.00 VoltGNS'} />
+        <DetailsItem name="Collateral value" value={'--'} />
+        <DetailsItem name="Max collateral amount" value={'--'} />
+        <DetailsItem name="Liquidation price" value={'--'} />
+        <DetailsItem name="Dept" value={'0.00 Volt'} />
+        <DetailsItem name="Dept value" value={'--'} />
+        <DetailsItem name="Current collateral percentage" value={<MaxBadge>Max</MaxBadge>} />
+        <DetailsItem name="Collateral" value={'150%'} />
+        <DetailsItem name="Minimum dept" value={'0.00 VoltGNS'} />
+        <Premonition>
+          <PremonitionTitle>
+            <Campaign />
+            Premonition about risks
+          </PremonitionTitle>
+          <PremonitionContent>
+            Leveraged vaults borrow funds from in one currency and invest them into a strategy. In general the strategy
+            will involve some amount of risk, meaning that the assets in the leveraged vault could decline in value. If
+            the value of the assets in the vault falls too low, the vault is at risk of becoming insolvent.
+          </PremonitionContent>
+        </Premonition>
+      </DetailsCardContent>
+    </DetailsCardContainer>
+  );
+};
+
+const DetailsCardContainer = styled(Box)(({ theme }) => ({
+  width: '475px',
+  backgroundColor: '#131418',
+  borderRadius: '8px',
+  [theme.breakpoints.down(1120)]: {
+    width: '100%'
+  }
+}));
+
+const DetailsCardHeader = styled(Box)(({ theme }) => ({
+  padding: '26px 34px',
+  borderBottom: '1px solid #1D1E1F',
+  fontWeight: '600',
+  fontSize: '20px',
+  [theme.breakpoints.down(640)]: {
+    padding: '18px'
+  }
+}));
+
+const DetailsCardContent = styled(Box)(({ theme }) => ({
+  padding: '34px',
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '20px',
+  [theme.breakpoints.down(640)]: {
+    padding: '18px'
+  }
+}));
+
+const MaxBadge = styled(Box)(({ theme }) => ({
+  background: 'linear-gradient(90deg, #00FE90 0%, #00A2FF 100%)',
+  borderRadius: '4px 4px 4px 0px',
+  padding: '3px 6px',
+  fontWeight: '600',
+  fontSize: '12px',
+  color: '#000000'
+}));
+
+const DetailsItem = (props: { name: string; value: React.ReactNode | string }) => {
+  return (
+    <DetailsItemContainer>
+      <DetailsItemName>{props.name}</DetailsItemName>
+      <DetailsItemValue>{props.value}</DetailsItemValue>
+    </DetailsItemContainer>
+  );
+};
+
+const DetailsItemContainer = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between'
+}));
+
+const DetailsItemName = styled(Box)(({ theme }) => ({
+  fontSize: '14px',
+  fontWeight: '500',
+  color: '#a5a5a5'
+}));
+
+const DetailsItemValue = styled(Box)(({ theme }) => ({
+  fontWeight: '600',
+  fontSize: '14px',
+  color: '#FFFFFF'
+}));
+
+const Premonition = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '11px',
+  padding: '19px 16px',
+  borderRadius: '4px',
+  border: '1px solid #F7A600'
+}));
+
+const PremonitionTitle = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  gap: '8px',
+  color: '#F7A600',
+  fontSize: '700',
+  fontWeight: '700'
+}));
+
+const PremonitionContent = styled(Box)(({ theme }) => ({
+  fontWeight: '500',
+  fontSize: '13px',
+  color: '#A5A5A5'
 }));
