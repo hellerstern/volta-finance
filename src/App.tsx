@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import { Route, Routes, BrowserRouter as Router } from 'react-router-dom';
+import { Route, Routes, BrowserRouter as Router, Navigate } from 'react-router-dom';
 
 import { PUBLIC_ROUTES } from './config/routes';
 
@@ -13,6 +13,7 @@ import { SearchPage } from './pages/Search';
 import { VoltaSwap } from './pages/Swap';
 import { Vaults } from './pages/Vaults';
 import { ManageVaults } from './pages/ManageValuts';
+import { NotFoundPage } from './pages/404';
 
 function App() {
   return (
@@ -29,6 +30,8 @@ function App() {
               <Route path={PUBLIC_ROUTES.search} element={<SearchPage />} />
               <Route path={PUBLIC_ROUTES.vaults} element={<Vaults />} />
               <Route path={PUBLIC_ROUTES.manageVaults} element={<ManageVaults />} />
+              <Route path={PUBLIC_ROUTES.error404} element={<NotFoundPage />} />
+              <Route path="*" element={<Navigate to={PUBLIC_ROUTES.error404} replace />} />
             </Routes>
           </Layout>
         </AppThemeProvider>
