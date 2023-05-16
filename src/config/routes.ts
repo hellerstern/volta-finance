@@ -3,7 +3,7 @@ export const PUBLIC_ROUTES = {
   home: '/home',
   staking: '/staking',
   manageStake: "/manage-stake",
-  search: '/search',
+  wrapper: '/wrapper',
   swap: 'swap',
   vaults: '/vaults',
   manageVaults: "/manage-vaults",

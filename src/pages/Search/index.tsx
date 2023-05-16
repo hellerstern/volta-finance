@@ -3,16 +3,16 @@ import { styled } from '@mui/system';
 import { SearchCards } from './SearchCards';
 import { SearchBoard } from './SearchBoard';
 
-export const SearchPage = () => {
+export const WrapperPage = () => {
   return (
-    <SearchContainer>
+    <WrapperContainer>
       <SearchCards />
       <SearchBoard />
-    </SearchContainer>
+    </WrapperContainer>
   );
 };
 
-const SearchContainer = styled(Box)(({ theme }) => ({
+const WrapperContainer = styled(Box)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   gap: '60px',

@@ -104,9 +104,9 @@ const StakeVoltaInput = styled('input')(({ theme }) => ({
 }));
 
 const MaxButton = styled(Button)(({ theme }) => ({
-  backgroundColor: '#0D0D0D',
+  backgroundColor: '#131418',
   borderRadius: '4px',
-  color: 'rgba(255, 255, 255, 0.92)',
+  color: '#00EB88',
   fontSize: '12px',
   lineHeight: '16px',
   fontWeight: '500',

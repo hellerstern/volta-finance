@@ -43,6 +43,7 @@ export const Header = () => {
             <CustomTab
               label="Wrapper"
               {...a11yProps(0)}
+              onClick={() => navigate('/wrapper')}
               style={{ color: page === 0 ? '#FFFFFF' : '#B1B5C3', fontWeight: page === 0 ? 500 : 400 }}
             />
             <CustomTab
@@ -53,6 +54,7 @@ export const Header = () => {
             />
             <CustomTab
               label="Swap"
+              onClick={() => navigate('/swap')}
               {...a11yProps(2)}
               style={{ color: page === 2 ? '#FFFFFF' : '#B1B5C3', fontWeight: page === 0 ? 500 : 400 }}
             />

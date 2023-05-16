@@ -2,11 +2,12 @@ import { useState } from 'react';
 import { Box, Button, Collapse, Step, StepLabel, Stepper, Tab, TableContainer, Tabs } from '@mui/material';
 import { styled } from '@mui/system';
 import { ArbitrumLogoSvg, VoltLogoSvg } from 'src/config/images';
-import { ArrowDropDown, ArrowDropUp, HelpOutline } from '@mui/icons-material';
+import { ArrowDropDown, ArrowDropUp, HelpOutline, Launch } from '@mui/icons-material';
 import { TabPanel, a11yProps } from 'src/components/TabPanel';
 import { SwitchButton } from 'src/components/Switch';
 import { MaxLogoInput } from 'src/components/Input/MaxLogoInput';
 import { StepConnectButton } from 'src/components/Button/StepConnectButton';
+import { ALink } from 'src/components/ALink';
 
 const isDesktop = window.matchMedia('(min-width: 480px)').matches;
 
@@ -14,8 +15,6 @@ const Row = (props: { state: number; setState: (value: number) => void; id: numb
   const { state, setState, id } = props;
 
   const [value, setValue] = useState(0);
-  const [isOptimized, setOptimized] = useState(true);
-  const [gnsAmount, setGnsAmount] = useState(0);
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
@@ -66,54 +65,13 @@ const Row = (props: { state: number; setState: (value: number) => void; id: numb
             </Tabs>
           </Box>
           <TabPanel value={value} index={0}>
-            <TabPanelContainer>
-              <TabletTableFieldContainer>
-                <TabletTableField
-                  title="Claimable"
-                  content={<MyDepsoitText>$5.78 Volt{isDesktop && <span>≈ 1.005 GNS</span>}</MyDepsoitText>}
-                />
-                <TabletTableField title="My Deposits" content={<MyDepsoitText>$0</MyDepsoitText>} />
-              </TabletTableFieldContainer>
-              <MobileTableFieldContainer>
-                <TabletTableField title="APR" content={<APRField aprPro={25.08} proj={30.97} boost={2.5} />} />
-              </MobileTableFieldContainer>
-              <TabPanelAction>
-                <GNSContainer>
-                  <GetGNSButton>{isDesktop ? 'Get GNS/Volt GNS' : 'Get Volt GNS'}</GetGNSButton>
-                  <GasOptimizeContainer>
-                    <GasOptimizeTitle>GAS OPTIMIZED</GasOptimizeTitle>
-                    <HelpOutline sx={{ width: '13px', height: '13px' }} />
-                    <SwitchButton isChecked={isOptimized} setChecked={setOptimized} />
-                  </GasOptimizeContainer>
-                </GNSContainer>
-                <MaxLogoInput
-                  primaryText="Amount GNS"
-                  secondaryText={`Balance: ${0}`}
-                  state={gnsAmount}
-                  setState={setGnsAmount}
-                  logo={VoltLogoSvg}
-                  logoText="Volt/VoltGNS"
-                />
-                <StepAction />
-              </TabPanelAction>
-              <TabPanelText>
-                <p>
-                  Deposit liquidity into the Volt GNS pool (without staking in the GNS gauge), and then stake your
-                  tokens here to earn VoltGNS on top of native rewards.
-                </p>
-                <p>
-                  Performance fee : 15% of GNS rewards <br />
-                  Harvest fee: 1% <br />
-                  No withdrawal fee, no management fee
-                </p>
-              </TabPanelText>
-            </TabPanelContainer>
+            <DepositTabPanel />
           </TabPanel>
           <TabPanel value={value} index={1}>
-            Item Two
+            <WithdrawTabPanel />
           </TabPanel>
           <TabPanel value={value} index={2}>
-            Item Three
+            <InfoTabPanel />
           </TabPanel>
         </AdditionContainer>
         <TableRowLine />
@@ -156,6 +114,140 @@ export const SearchBoardTable = () => {
         <Row state={state} setState={setState} id={4} />
       </CustomTableBody>
     </SearchBoardTableContainer>
+  );
+};
+
+export const DepositTabPanel = () => {
+  const [isOptimized, setOptimized] = useState(true);
+  const [gnsAmount, setGnsAmount] = useState(0);
+
+  return (
+    <TabPanelContainer>
+      <TabletTableFieldContainer>
+        <TabletTableField
+          title="Claimable"
+          content={<MyDepsoitText>$5.78 Volt{isDesktop && <span>≈ 1.005 GNS</span>}</MyDepsoitText>}
+        />
+        <TabletTableField title="My Deposits" content={<MyDepsoitText>$0</MyDepsoitText>} />
+      </TabletTableFieldContainer>
+      <MobileTableFieldContainer>
+        <TabletTableField title="APR" content={<APRField aprPro={25.08} proj={30.97} boost={2.5} />} />
+      </MobileTableFieldContainer>
+      <TabPanelAction>
+        <GNSContainer>
+          <GetGNSButton>{isDesktop ? 'Get GNS/Volt GNS' : 'Get Volt GNS'}</GetGNSButton>
+          <GasOptimizeContainer>
+            <GasOptimizeTitle>GAS OPTIMIZED</GasOptimizeTitle>
+            <HelpOutline sx={{ width: '13px', height: '13px' }} />
+            <SwitchButton isChecked={isOptimized} setChecked={setOptimized} />
+          </GasOptimizeContainer>
+        </GNSContainer>
+        <MaxLogoInput
+          primaryText="Amount GNS"
+          secondaryText={`Balance: ${0}`}
+          state={gnsAmount}
+          setState={setGnsAmount}
+          logo={VoltLogoSvg}
+          logoText="Volt/VoltGNS"
+        />
+        <StepAction buttonName="Deposit & Stake" step={0} />
+      </TabPanelAction>
+      <TabPanelText>
+        <p>
+          Deposit liquidity into the Volt GNS pool (without staking in the GNS gauge), and then stake your tokens here
+          to earn VoltGNS on top of native rewards.
+        </p>
+        <p>
+          Performance fee : 15% of GNS rewards <br />
+          Harvest fee: 1% <br />
+          No withdrawal fee, no management fee
+        </p>
+      </TabPanelText>
+    </TabPanelContainer>
+  );
+};
+
+export const WithdrawTabPanel = () => {
+  const [isOptimized, setOptimized] = useState(true);
+  const [gnsAmount, setGnsAmount] = useState(0);
+
+  return (
+    <TabPanelContainer>
+      <TabletTableFieldContainer>
+        <TabletTableField
+          title="Claimable"
+          content={<MyDepsoitText>$5.78 Volt{isDesktop && <span>≈ 1.005 GNS</span>}</MyDepsoitText>}
+        />
+        <TabletTableField title="My Deposits" content={<MyDepsoitText>$0</MyDepsoitText>} />
+      </TabletTableFieldContainer>
+      <MobileTableFieldContainer>
+        <TabletTableField title="APR" content={<APRField aprPro={25.08} proj={30.97} boost={2.5} />} />
+      </MobileTableFieldContainer>
+      <TabPanelAction>
+        <GNSContainer>
+          <GNSTitle>Withdraw VoltGNS:</GNSTitle>
+          <GasOptimizeContainer>
+            <GasOptimizeTitle>GAS OPTIMIZED</GasOptimizeTitle>
+            <HelpOutline sx={{ width: '13px', height: '13px' }} />
+            <SwitchButton isChecked={isOptimized} setChecked={setOptimized} />
+          </GasOptimizeContainer>
+        </GNSContainer>
+        <MaxLogoInput
+          primaryText="Amount GNS"
+          secondaryText={`Balance: ${0}`}
+          state={gnsAmount}
+          setState={setGnsAmount}
+          logo={VoltLogoSvg}
+          logoText="Volt/VoltGNS"
+        />
+        <WithdrawInfoContainer>
+          <MaxWithdrawContainer>
+            <WithdrawInfoName>Max.withdraw: </WithdrawInfoName>
+            <WithdrawInfoValue>1.878 VoltGNS </WithdrawInfoValue>
+          </MaxWithdrawContainer>
+          <WithdrawFeeContainer>
+            <WithdrawInfoName>Max.withdraw: </WithdrawInfoName>
+            <WithdrawInfoValue sx={{ fontWeight: '600' }}>~ 0.00 % </WithdrawInfoValue>
+          </WithdrawFeeContainer>
+        </WithdrawInfoContainer>
+      </TabPanelAction>
+      <TabPanelContent>
+        <TabPanelText>
+          <p>
+            Before proceeding, make sure you have the correct amount of tokens in your account and that you have
+            sufficient funds to cover any associated fees.
+          </p>
+        </TabPanelText>
+        <StepAction buttonName="Withdraw" step={0} />
+      </TabPanelContent>
+    </TabPanelContainer>
+  );
+};
+
+export const InfoTabPanel = () => {
+  return (
+    <TabPanelContainer>
+      <TabletTableFieldContainer>
+        <TabletTableField
+          title="Claimable"
+          content={<MyDepsoitText>$5.78 Volt{isDesktop && <span>≈ 1.005 GNS</span>}</MyDepsoitText>}
+        />
+        <TabletTableField title="My Deposits" content={<MyDepsoitText>$0</MyDepsoitText>} />
+      </TabletTableFieldContainer>
+      <MobileTableFieldContainer>
+        <TabletTableField title="APR" content={<APRField aprPro={25.08} proj={30.97} boost={2.5} />} />
+      </MobileTableFieldContainer>
+      <InfoTabPanelContainer>
+        <InfoItem name="Vault" address="0xBbD4cC62a2C748206A03Adeb100027872601fc43" />
+        <InfoItem name="cvxcrv-crv-f" address="0xBbD4cC62a2C748206A03Adeb100027872601fc43" />
+        <InfoItem name="Liquidity gauge" address="0xBbD4cC62a2C748206A03Adeb100027872601fc43" />
+        <InfoItem name="cvxCRV/CRV liquidity " address="0xBbD4cC62a2C748206A03Adeb100027872601fc43" />
+        <InfoItem name="Strategy" address="0xBbD4cC62a2C748206A03Adeb100027872601fc43" />
+        <InfoItem name="Gauge controller" address="0xBbD4cC62a2C748206A03Adeb100027872601fc43" />
+        <InfoItem name="Volta Distributor" address="0xBbD4cC62a2C748206A03Adeb100027872601fc43" />
+        <InfoItem name="Volta finance gauge " address="0xBbD4cC62a2C748206A03Adeb100027872601fc43" />
+      </InfoTabPanelContainer>
+    </TabPanelContainer>
   );
 };
 
@@ -440,16 +532,16 @@ const MobileTableFieldContainer = styled(Box)(({ theme }) => ({
   }
 }));
 
-const StepAction = () => {
+const StepAction = (props: { buttonName: string; step: number }) => {
   const steps = [
     // eslint-disable-next-line react/jsx-key
     <StepConnectButton isApproved={false} />,
     // eslint-disable-next-line react/jsx-key
-    <DepositButton>Deposit & Stake</DepositButton>
+    <StepActionButton>{props.buttonName}</StepActionButton>
   ];
   return (
     <StepActionContainer>
-      <Stepper alternativeLabel activeStep={0}>
+      <Stepper alternativeLabel activeStep={props.step}>
         {steps.map((item, index) => (
           <Step key={index}>
             <StepLabel>{item}</StepLabel>
@@ -467,7 +559,7 @@ const StepActionContainer = styled(Box)(({ theme }) => ({
   gap: '8px'
 }));
 
-const DepositButton = styled(Button)(({ theme }) => ({
+const StepActionButton = styled(Button)(({ theme }) => ({
   backgroundColor: '#131418',
   borderRadius: '6px',
   width: '295px',
@@ -483,5 +575,103 @@ const DepositButton = styled(Button)(({ theme }) => ({
   [theme.breakpoints.down(768)]: {
     width: '140px',
     fontSize: '14px'
+  }
+}));
+
+const GNSTitle = styled(Box)(({ theme }) => ({
+  fontSize: '14px',
+  fontWeight: '500',
+  color: '#FFFFFF'
+}));
+
+const TabPanelContent = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'space-between',
+  alignItems: 'center'
+}));
+
+const WithdrawInfoContainer = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '22px'
+}));
+
+const MaxWithdrawContainer = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  gap: '7px'
+}));
+
+const WithdrawInfoName = styled(Box)(({ theme }) => ({
+  fontSize: '14px',
+  fontWeight: '500',
+  color: '#A5A5A5'
+}));
+
+const WithdrawInfoValue = styled(Box)(({ theme }) => ({
+  fontWeight: '400',
+  fontSize: '14px',
+  color: '#FFFFFF'
+}));
+
+const WithdrawFeeContainer = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between'
+}));
+
+const InfoTabPanelContainer = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '12px'
+}));
+
+const InfoItem = (props: { name: string; address: string }) => {
+  return (
+    <InfoItemContainer>
+      <InfoItemName>{props.name}</InfoItemName>
+      <InfoItemAddress>
+        {props.address.slice(0, 6)}...{props.address.slice(-4)}
+        <ALink link={`https://bscscan.com/address/${props.address}`}>
+          <Launch sx={{ width: '17px', height: '17px' }} />
+        </ALink>
+      </InfoItemAddress>
+    </InfoItemContainer>
+  );
+};
+
+const InfoItemContainer = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  gap: '164px',
+  [theme.breakpoints.down(640)]: {
+    justifyContent: 'space-between',
+    gap: 0
+  }
+}));
+
+const InfoItemName = styled(Box)(({ theme }) => ({
+  fontSize: '14px',
+  fontWeight: '400',
+  color: '#A5A5A5',
+  width: '210px',
+  [theme.breakpoints.down(640)]: {
+    width: '100%'
+  },
+  [theme.breakpoints.down(390)]: {
+    fontSize: '12px'
+  }
+}));
+
+const InfoItemAddress = styled(Box)(({ theme }) => ({
+  fontSize: '14px',
+  fontWeight: '500',
+  color: 'rgba(255, 255, 255, 0.92)',
+  display: 'flex',
+  alignItems: 'center',
+  gap: '17px',
+  [theme.breakpoints.down(390)]: {
+    fontSize: '12px'
   }
 }));
