@@ -1,4 +1,5 @@
 import VoltaLogoSvg from '../assets/logos/volta-logo.svg'
+import VoltaNameLogoSvg from '../assets/logos/volta-name-logo.svg'
 import CRVLogoSvg from '../assets/logos/CRV-logo.svg'
 import Volt2CRVLogoSvg from '../assets/logos/volt2crv-logo.svg'
 import WethLogoSvg from '../assets/logos/weth-logo.svg'
@@ -38,4 +39,4 @@ import SearchIconSvg from '../assets/icons/search.svg'
 // 404 Page
 import Volta404Png from '../assets/png/404.png'
 
-export { VoltaLogoSvg, CRVLogoSvg, Volt2CRVLogoSvg, WethLogoSvg, VoltaIcon, WethIcon, Web3BoostIcon, DecentralizedIcon, VoltaDaoIcon, DatabaseLogoSvg, PercentLogoSvg, AntenaLogoSvg, VoltGNSLogoSvg, GDAILogoSvg, CheckIcon1, CheckIcon2, DiscordLogoSvg, TelegramLogoSvg, TwitterLogoSvg, MediumLogoSvg, GitbookLogoSvg, VoltLogoSvg, ArbitrumLogoSvg, USDCLogoSvg, VoltaTokenSvg, USDTLogoSvg, SearchIconSvg, Volta404Png }
+export { VoltaLogoSvg, VoltaNameLogoSvg, CRVLogoSvg, Volt2CRVLogoSvg, WethLogoSvg, VoltaIcon, WethIcon, Web3BoostIcon, DecentralizedIcon, VoltaDaoIcon, DatabaseLogoSvg, PercentLogoSvg, AntenaLogoSvg, VoltGNSLogoSvg, GDAILogoSvg, CheckIcon1, CheckIcon2, DiscordLogoSvg, TelegramLogoSvg, TwitterLogoSvg, MediumLogoSvg, GitbookLogoSvg, VoltLogoSvg, ArbitrumLogoSvg, USDCLogoSvg, VoltaTokenSvg, USDTLogoSvg, SearchIconSvg, Volta404Png }

@@ -23,7 +23,7 @@ const VoltaLogoContainer = styled(Box)<{ name?: string }>(({ theme, name }) => (
   backgroundClip: 'text',
   WebkitTextFillColor: 'transparent',
   fontWeight: '800',
-  fontFamily: 'Inter-Bold',
+  fontFamily: 'Inter-Black !important',
   fontSize: '20px',
   lineHeight: '28px',
   cursor: 'pointer',

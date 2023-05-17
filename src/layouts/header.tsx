@@ -1,17 +1,27 @@
-import { Box, Button, IconButton, Tab, Tabs } from '@mui/material';
+import { useState } from 'react';
+import { Box, Button, IconButton, ListItem, ListItemButton, ListItemText, Modal, Tab, Tabs } from '@mui/material';
+import Tooltip, { TooltipProps, tooltipClasses } from '@mui/material/Tooltip';
 import { styled } from '@mui/system';
 import { commaSeparators } from '../utils/commaSeparators';
 import { a11yProps } from 'src/components/TabPanel';
 import { useStore } from '../context/StoreContext';
-import { VoltaLogo } from 'src/components/VoltaLogo';
-import { LocalGasStation, Menu } from '@mui/icons-material';
+import { Close, LocalGasStation, Menu } from '@mui/icons-material';
 import { ConnectWalletButton } from 'src/components/Button/ConnectWalletButton';
-import { VoltaLogoSvg } from 'src/config/images';
+import { VoltaLogoSvg, VoltaNameLogoSvg } from 'src/config/images';
 import { useNavigate } from 'react-router-dom';
 import Marquee from 'react-fast-marquee';
 
 export const Header = () => {
   const { page, setPage } = useStore();
+  const [isOpen, setOpen] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setPage(newValue);
@@ -30,8 +40,9 @@ export const Header = () => {
       </TvlDataContainer>
       <HeaderWrapper>
         <VoltaLogoContainer>
-          <MobileNavButton />
-          <VoltaLogo />
+          <MobileNavButton onClick={handleClickOpen} />
+          <VoltaLogo alt="volta-name-logo" onClick={() => navigate('/')} />
+          <MobileNavBar isOpen={isOpen} onClose={handleClose} />
         </VoltaLogoContainer>
         <TabContainer>
           <Tabs
@@ -80,7 +91,8 @@ export const Header = () => {
 const HeaderContainer = styled(Box)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
-  alignItems: 'center'
+  alignItems: 'center',
+  position: 'relative'
 }));
 
 const TvlDataContainer = styled(Box)(({ theme }) => ({
@@ -171,10 +183,12 @@ const HeaderActionContainer = styled(Box)(({ theme }) => ({
 const ShellWalletButton = (props: { value: number }) => {
   const { value } = props;
   return (
-    <ShellWalletButtonContainer>
-      <LocalGasStation />
-      {value}
-    </ShellWalletButtonContainer>
+    <VoltaTooltip title={<TooltipBox />}>
+      <ShellWalletButtonContainer>
+        <LocalGasStation />
+        {value}
+      </ShellWalletButtonContainer>
+    </VoltaTooltip>
   );
 };
 
@@ -226,9 +240,9 @@ const VoltaLogoContainer = styled(Box)(({ theme }) => ({
   }
 }));
 
-const MobileNavButton = () => {
+const MobileNavButton = (props: { onClick: () => void }) => {
   return (
-    <MobileNavButtonContainer>
+    <MobileNavButtonContainer onClick={props.onClick}>
       <Menu />
     </MobileNavButtonContainer>
   );
@@ -242,4 +256,159 @@ const MobileNavButtonContainer = styled(IconButton)(({ theme }) => ({
   [theme.breakpoints.down(1120)]: {
     display: 'block'
   }
+}));
+
+interface MobileNavBarProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+export const MobileNavBar = (props: MobileNavBarProps) => {
+  const { isOpen, onClose } = props;
+  const navigate = useNavigate();
+
+  const handleClose = () => {
+    onClose();
+  };
+
+  const style = {
+    position: 'absolute',
+    top: '0',
+    left: '0',
+    width: 340,
+    maxHeight: '100vh',
+    bgcolor: 'background.paper',
+    boxShadow: 24,
+    overflow: 'auto'
+  };
+
+  const handleNavigate = (nav: string) => {
+    navigate(nav);
+    handleClose();
+  };
+
+  return (
+    <Modal
+      keepMounted
+      open={isOpen}
+      onClose={handleClose}
+      aria-labelledby="keep-mounted-modal-title"
+      aria-describedby="keep-mounted-modal-description"
+    >
+      <Box sx={style}>
+        <ModalHeader>
+          <MobileNavBarLogo src={VoltaNameLogoSvg} alt="volta-logo" onClick={() => handleNavigate('/')} />
+          <IconButton size="small" onClick={handleClose}>
+            <Close fontSize="small" />
+          </IconButton>
+        </ModalHeader>
+        <ModalContent>
+          <ListItem disablePadding>
+            <CustomListItemButton onClick={() => handleNavigate('/wrapper')}>
+              <ListItemText primary="Wrapper" />
+            </CustomListItemButton>
+          </ListItem>
+          <ListItem disablePadding>
+            <CustomListItemButton onClick={() => handleNavigate('/vaults')}>
+              <ListItemText primary="Vaults" />
+            </CustomListItemButton>
+          </ListItem>
+          <ListItem disablePadding>
+            <CustomListItemButton onClick={() => handleNavigate('/swap')}>
+              <ListItemText primary="Swap" />
+            </CustomListItemButton>
+          </ListItem>
+          <ListItem disablePadding>
+            <CustomListItemButton onClick={() => handleNavigate('/staking')}>
+              <ListItemText primary="Stake" />
+            </CustomListItemButton>
+          </ListItem>
+        </ModalContent>
+      </Box>
+    </Modal>
+  );
+};
+
+const ModalHeader = styled(Box)(({ theme }) => ({
+  padding: '21px 31px',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  borderBottom: '1px solid #1D1E1F'
+}));
+
+const VoltaLogo = styled('img')(({ theme }) => ({
+  height: '25px',
+  width: 'auto',
+  cursor: 'pointer',
+  // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+  content: `url(${VoltaNameLogoSvg})`,
+  [theme.breakpoints.down(768)]: {
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+    content: `url(${VoltaLogoSvg})`
+  }
+}));
+
+const MobileNavBarLogo = styled('img')(({ theme }) => ({
+  height: '25px',
+  width: 'auto',
+  cursor: 'pointer'
+}));
+
+const ModalContent = styled(Box)(({ theme }) => ({
+  padding: '25px 31px'
+}));
+
+const CustomListItemButton = styled(ListItemButton)(({ theme }) => ({
+  borderRadius: '8px',
+  '&:hover': {
+    backgroundColor: '#08090A'
+  }
+}));
+
+const VoltaTooltip = styled(({ className, ...props }: TooltipProps) => (
+  <Tooltip {...props} arrow classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.arrow}`]: {
+    color: '#131418'
+  },
+  [`& .${tooltipClasses.tooltip}`]: {
+    backgroundColor: '#131418'
+  }
+}));
+
+const TooltipBox = () => {
+  return (
+    <TooltipBoxContainer>
+      <TooltopBoxContent>
+        <TooltipBoxTitle>Connected to Ethereum</TooltipBoxTitle>
+        <TooltipBoxText>Base fee: 28.87</TooltipBoxText>
+        <TooltipBoxText>Suggeste priority fee: 0.19</TooltipBoxText>
+      </TooltopBoxContent>
+      <Close sx={{ cursor: 'pointer', width: '20px', height: '20px' }} />
+    </TooltipBoxContainer>
+  );
+};
+
+const TooltipBoxContainer = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  gap: '30px',
+  padding: '9px 16px'
+}));
+
+const TooltopBoxContent = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column'
+}));
+
+const TooltipBoxTitle = styled(Box)(({ theme }) => ({
+  fontWeight: '700',
+  fontSize: '14px',
+  lineHeight: '24px'
+}));
+
+const TooltipBoxText = styled(Box)(({ theme }) => ({
+  fontWeight: '400',
+  fontSize: '12px',
+  lineHeight: '20px'
 }));

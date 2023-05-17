@@ -29,6 +29,11 @@ button {
 }
 
 @font-face {
+  font-family: 'Inter-Black';
+  src: url('assets/font/static/Inter-Black.ttf') format('openType');
+}
+
+@font-face {
   font-family: 'Inter-Bold';
   src: url('assets/font/static/Inter-Bold.ttf') format('openType');
 }

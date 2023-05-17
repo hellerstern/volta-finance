@@ -1,14 +1,16 @@
 import { Box } from '@mui/material';
 import { styled } from '@mui/system';
-import { VoltaLogo } from 'src/components/VoltaLogo';
+import { useNavigate } from 'react-router-dom';
+import { VoltaLogoSvg, VoltaNameLogoSvg } from 'src/config/images';
 
 export const Footer = () => {
+  const navigate = useNavigate();
   return (
     <FooterContainer>
       <FooterLine />
       <FooterWrapper>
         <FooterContent>
-          <VoltaLogo size="small" name="footer" />
+          <VoltaLogo alt="volta-name-logo" onClick={() => navigate('/')} />
           <DesktopAllRightReserve>
             © 2023 Volta.finance. All rights reserved | info@voltafinance.com
           </DesktopAllRightReserve>
@@ -104,4 +106,12 @@ const FooterContent = styled(Box)(({ theme }) => ({
     alignItems: 'flex-start',
     gap: '40px'
   }
+}));
+
+const VoltaLogo = styled('img')(({ theme }) => ({
+  height: '25px',
+  width: 'auto',
+  cursor: 'pointer',
+  // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+  content: `url(${VoltaNameLogoSvg})`
 }));
