@@ -11,10 +11,14 @@ interface MaxLogoInputProps {
   logo: string;
   logoText: string;
   type?: string;
+  isError?: boolean;
+  errorText?: string;
 }
 
 export const MaxLogoInput = (props: MaxLogoInputProps) => {
-  const { primaryText, secondaryText, state, setState, onMaxClick, logo, logoText, type } = props;
+  const { primaryText, secondaryText, state, setState, onMaxClick, logo, logoText, type, isError, errorText } = props;
+
+  console.log('errText', errorText);
 
   const stakeRef = useRef<HTMLInputElement>(null);
 
@@ -34,7 +38,7 @@ export const MaxLogoInput = (props: MaxLogoInputProps) => {
         <StakeVoltaInputText>{secondaryText}</StakeVoltaInputText>
       </StakeVoltaInputTitle>
       <StakeVoltaInputArea>
-        <StakeVoltaInputWrapper>
+        <StakeVoltaInputWrapper error={isError === true ? 1 : 0}>
           <StakeVoltaInput
             value={state}
             onChange={handleChangeStakeAmount}
@@ -43,13 +47,14 @@ export const MaxLogoInput = (props: MaxLogoInputProps) => {
           />
           <MaxButton onClick={onMaxClick}>Max</MaxButton>
         </StakeVoltaInputWrapper>
-        <StakeVoltaInputMark>
+        <StakeVoltaInputMark error={isError === true ? 1 : 0}>
           <InputMarkImageContainer>
             <InputMarkImage src={logo} alt="input-mark" />
           </InputMarkImageContainer>
           {logoText}
         </StakeVoltaInputMark>
       </StakeVoltaInputArea>
+      <StakeVoltaInputError>{isError === true && errorText}</StakeVoltaInputError>
     </StakeVoltaInputContainer>
   );
 };
@@ -78,13 +83,13 @@ const StakeVoltaInputArea = styled(Box)(({ theme }) => ({
   height: '50px'
 }));
 
-const StakeVoltaInputWrapper = styled(Box)(({ theme }) => ({
+const StakeVoltaInputWrapper = styled(Box)<{ error: number }>(({ theme, error }) => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
   width: '100%',
   borderRadius: '6px 0 0 6px',
-  border: '1px solid #1D1E1F',
+  border: error === 1 ? '1px solid #F55050' : '1px solid #1D1E1F',
   padding: '13px 16px',
   [theme.breakpoints.down(480)]: {
     padding: '3px 10px'
@@ -115,7 +120,7 @@ const MaxButton = styled(Button)(({ theme }) => ({
   }
 }));
 
-const StakeVoltaInputMark = styled(Box)(({ theme }) => ({
+const StakeVoltaInputMark = styled(Box)<{ error: number }>(({ theme, error }) => ({
   width: 'auto',
   height: '100%',
   padding: '13px 11px',
@@ -126,7 +131,7 @@ const StakeVoltaInputMark = styled(Box)(({ theme }) => ({
   lineHeight: '20px',
   fontWeight: '600',
   borderRadius: '0px 6px 6px 0px',
-  border: '1px solid #1D1E1F',
+  border: error === 1 ? '1px solid #F55050' : '1px solid #1D1E1F',
   borderLeft: '0px'
 }));
 
@@ -145,4 +150,12 @@ const InputMarkImageContainer = styled(Box)(({ theme }) => ({
 const InputMarkImage = styled('img')(({ theme }) => ({
   width: '16px',
   height: '16px'
+}));
+
+const StakeVoltaInputError = styled(Box)(({ theme }) => ({
+  height: '20px',
+  fontSize: '14px',
+  lineHeight: '18px',
+  color: '#F55050',
+  fontWeight: '400'
 }));

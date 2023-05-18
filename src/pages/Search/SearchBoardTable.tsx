@@ -24,9 +24,9 @@ const Row = (props: { state: number; setState: (value: number) => void; id: numb
         <CustomTableCell width={isDesktop ? 150 : 120} about="Asset">
           <AssetField icon={VoltLogoSvg} name="Volt/VoltGNS" />
         </CustomTableCell>
-        <CustomTableCell width={90} about="Claimable">
+        {/* <CustomTableCell width={90} about="Claimable">
           $0
-        </CustomTableCell>
+        </CustomTableCell> */}
         <CustomTableCell width={220} about="APR">
           <APRField aprPro={25.08} proj={30.97} boost={2.5} />
         </CustomTableCell>
@@ -88,9 +88,9 @@ export const SearchBoardTable = () => {
         <TableHeaderField width={isDesktop ? 150 : 120} about="Asset">
           Asset
         </TableHeaderField>
-        <TableHeaderField width={90} about="Claimable">
+        {/* <TableHeaderField width={90} about="Claimable">
           Claimable
-        </TableHeaderField>
+        </TableHeaderField> */}
         <TableHeaderField width={220} about="APR">
           APR
         </TableHeaderField>
@@ -123,16 +123,18 @@ export const DepositTabPanel = () => {
 
   return (
     <TabPanelContainer>
-      <TabletTableFieldContainer>
-        <TabletTableField
+      <TableFieldContainer>
+        <TabletTableFieldContainer>
+          {/* <TabletTableField
           title="Claimable"
           content={<MyDepsoitText>$5.78 Volt{isDesktop && <span>≈ 1.005 GNS</span>}</MyDepsoitText>}
-        />
-        <TabletTableField title="My Deposits" content={<MyDepsoitText>$0</MyDepsoitText>} />
-      </TabletTableFieldContainer>
-      <MobileTableFieldContainer>
-        <TabletTableField title="APR" content={<APRField aprPro={25.08} proj={30.97} boost={2.5} />} />
-      </MobileTableFieldContainer>
+        /> */}
+          <TabletTableField title="My Deposits" content={<MyDepsoitText>$0</MyDepsoitText>} />
+        </TabletTableFieldContainer>
+        <MobileTableFieldContainer>
+          <TabletTableField title="APR" content={<APRField aprPro={25.08} proj={30.97} boost={2.5} />} />
+        </MobileTableFieldContainer>
+      </TableFieldContainer>
       <TabPanelAction>
         <GNSContainer>
           <GetGNSButton>{isDesktop ? 'Get GNS/Volt GNS' : 'Get Volt GNS'}</GetGNSButton>
@@ -173,16 +175,18 @@ export const WithdrawTabPanel = () => {
 
   return (
     <TabPanelContainer>
-      <TabletTableFieldContainer>
-        <TabletTableField
+      <TableFieldContainer>
+        <TabletTableFieldContainer>
+          {/* <TabletTableField
           title="Claimable"
           content={<MyDepsoitText>$5.78 Volt{isDesktop && <span>≈ 1.005 GNS</span>}</MyDepsoitText>}
-        />
-        <TabletTableField title="My Deposits" content={<MyDepsoitText>$0</MyDepsoitText>} />
-      </TabletTableFieldContainer>
-      <MobileTableFieldContainer>
-        <TabletTableField title="APR" content={<APRField aprPro={25.08} proj={30.97} boost={2.5} />} />
-      </MobileTableFieldContainer>
+        /> */}
+          <TabletTableField title="My Deposits" content={<MyDepsoitText>$0</MyDepsoitText>} />
+        </TabletTableFieldContainer>
+        <MobileTableFieldContainer>
+          <TabletTableField title="APR" content={<APRField aprPro={25.08} proj={30.97} boost={2.5} />} />
+        </MobileTableFieldContainer>
+      </TableFieldContainer>
       <TabPanelAction>
         <GNSContainer>
           <GNSTitle>Withdraw VoltGNS:</GNSTitle>
@@ -227,16 +231,18 @@ export const WithdrawTabPanel = () => {
 export const InfoTabPanel = () => {
   return (
     <TabPanelContainer>
-      <TabletTableFieldContainer>
-        <TabletTableField
+      <TableFieldContainer>
+        <TabletTableFieldContainer>
+          {/* <TabletTableField
           title="Claimable"
           content={<MyDepsoitText>$5.78 Volt{isDesktop && <span>≈ 1.005 GNS</span>}</MyDepsoitText>}
-        />
-        <TabletTableField title="My Deposits" content={<MyDepsoitText>$0</MyDepsoitText>} />
-      </TabletTableFieldContainer>
-      <MobileTableFieldContainer>
-        <TabletTableField title="APR" content={<APRField aprPro={25.08} proj={30.97} boost={2.5} />} />
-      </MobileTableFieldContainer>
+        /> */}
+          <TabletTableField title="My Deposits" content={<MyDepsoitText>$0</MyDepsoitText>} />
+        </TabletTableFieldContainer>
+        <MobileTableFieldContainer>
+          <TabletTableField title="APR" content={<APRField aprPro={25.08} proj={30.97} boost={2.5} />} />
+        </MobileTableFieldContainer>
+      </TableFieldContainer>
       <InfoTabPanelContainer>
         <InfoItem name="Vault" address="0xBbD4cC62a2C748206A03Adeb100027872601fc43" />
         <InfoItem name="cvxcrv-crv-f" address="0xBbD4cC62a2C748206A03Adeb100027872601fc43" />
@@ -495,8 +501,7 @@ const TabletTableFieldContainer = styled(Box)(({ theme }) => ({
   [theme.breakpoints.down(1120)]: {
     display: 'flex',
     alignItems: 'center',
-    gap: '36px',
-    padding: '36px 0 0 0'
+    gap: '36px'
   },
   [theme.breakpoints.down(480)]: {
     gap: '32px'
@@ -588,7 +593,8 @@ const TabPanelContent = styled(Box)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'space-between',
-  alignItems: 'center'
+  alignItems: 'center',
+  gap: '54px'
 }));
 
 const WithdrawInfoContainer = styled(Box)(({ theme }) => ({
@@ -673,5 +679,19 @@ const InfoItemAddress = styled(Box)(({ theme }) => ({
   gap: '17px',
   [theme.breakpoints.down(390)]: {
     fontSize: '12px'
+  }
+}));
+
+const TableFieldContainer = styled(Box)(({ theme }) => ({
+  display: 'none',
+  [theme.breakpoints.down(1120)]: {
+    padding: '36px 0 0 0',
+    display: 'flex',
+    alignItems: 'flex-start',
+    gap: '70px'
+  },
+  [theme.breakpoints.down(420)]: {
+    gap: 0,
+    justifyContent: 'space-between'
   }
 }));

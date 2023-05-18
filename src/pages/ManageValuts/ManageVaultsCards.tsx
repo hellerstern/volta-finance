@@ -1,7 +1,7 @@
+import { useState, useEffect } from 'react';
 import { Campaign } from '@mui/icons-material';
 import { Box, Button, ButtonGroup, Slider } from '@mui/material';
 import { styled } from '@mui/system';
-import { useState } from 'react';
 import { MaxLogoInput } from 'src/components/Input/MaxLogoInput';
 import { VoltLogoSvg } from 'src/config/images';
 
@@ -242,10 +242,24 @@ const VoltGNSCardContent = (props: { selected: number }) => {
   const { selected } = props;
   const [deposit, setDeposit] = useState(0);
   const isDesktop = window.matchMedia('(min-width: 480px)').matches;
+  const [errText, setErrText] = useState('');
 
   function valuetext(value: number) {
     return `${value}x`;
   }
+
+  useEffect(() => {
+    if (Number(deposit) === 0) {
+      setErrText('Enter the amount of token first');
+    }
+  }, [deposit]);
+
+  useEffect(() => {
+    if (Number(deposit) !== 0 && errText !== '') {
+      setErrText('');
+    }
+  }, [deposit, errText]);
+
   return (
     <VoltGNSCardContentWrapper>
       <InputContainer>
@@ -259,6 +273,8 @@ const VoltGNSCardContent = (props: { selected: number }) => {
           state={deposit}
           setState={setDeposit}
           logoText={isDesktop ? 'Volt/VoltGNS' : 'Volt'}
+          isError={errText !== ''}
+          errorText={errText}
         />
         <MaxDepositText>
           Max.{selected === 0 ? 'Deposit' : selected === 1 ? 'Borrow' : selected === 2 ? 'Repay' : 'Withdraw'}:{' '}
