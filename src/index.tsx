@@ -15,7 +15,7 @@ import 'react-toastify/dist/ReactToastify.min.css';
 window.Buffer = require('buffer').Buffer;
 
 const { chains, provider } = configureChains(
-  [chain.polygon, chain.arbitrum, chain.arbitrumGoerli],
+  [chain.arbitrum],
   [alchemyProvider({ apiKey: '6mDnh0_FqrDQzdcOCI_O5NkDs70x4VYp' }), publicProvider()]
 );
 

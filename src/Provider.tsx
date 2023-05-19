@@ -4,10 +4,11 @@
  * Martial Color tool: https://material.io/resources/color
  */
 
+import React from 'react';
 import { createTheme, ThemeProvider, CssBaseline } from '@mui/material';
 import { Theme, ThemeOptions } from '@mui/material/styles';
-import React from 'react';
 import StoreProvider from './context/StoreContext';
+import { Web3Provider } from './context/Web3Context';
 /**
  * Material UI theme "front" colors, "back" colors are different for Light and Dark modes
  */
@@ -132,7 +133,9 @@ const AppThemeProvider = (props: propsType) => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline /* Material UI Styles */ />
-      <StoreProvider>{props.children}</StoreProvider>
+      <StoreProvider>
+        <Web3Provider>{props.children}</Web3Provider>
+      </StoreProvider>
     </ThemeProvider>
   );
 };

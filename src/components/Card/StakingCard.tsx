@@ -1,13 +1,23 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Box, Button } from '@mui/material';
 import { styled } from '@mui/system';
 import { Volt2CRVLogoSvg, VoltaLogoSvg } from 'src/config/images';
 import { NorthEast } from '@mui/icons-material';
 import { MaxLogoInput } from '../Input/MaxLogoInput';
+import { useTokenBalance } from 'src/hook/useToken';
+import tokenAddys from '../../contracts/address.json';
 
 export const StakingVoltaCard = () => {
   const [isStake, setStake] = useState(true);
   const [stakeAmount, setStakeAmount] = useState(0);
+  const tokenLiveBalance = useTokenBalance(tokenAddys.tokens.voltGNS.address);
+  const [tokenBalance, setTokenBalance] = useState('Loading...');
+
+  useEffect(() => {
+    setTokenBalance(
+      (Math.floor(((tokenLiveBalance !== undefined ? Number(tokenLiveBalance) : 0) / 10 ** 18) * 100) / 100).toString()
+    );
+  }, [tokenLiveBalance]);
 
   return (
     <StakeVoltaCardContainer>
@@ -35,7 +45,7 @@ export const StakingVoltaCard = () => {
         </StakeVoltaChooserContainer>
         <MaxLogoInput
           primaryText="Amount"
-          secondaryText={`Balance: ${0.789} VoltGNS`}
+          secondaryText={`Balance: ${tokenBalance} VoltGNS`}
           state={stakeAmount}
           setState={setStakeAmount}
           logo={VoltaLogoSvg}
@@ -62,6 +72,14 @@ export const StakingVoltaCard = () => {
 export const StakingVolt2CRVCard = () => {
   const [isStake, setStake] = useState(true);
   const [stakeAmount, setStakeAmount] = useState(0);
+  const tokenLiveBalance = useTokenBalance(tokenAddys.tokens.voltGNS.address);
+  const [tokenBalance, setTokenBalance] = useState('Loading...');
+
+  useEffect(() => {
+    setTokenBalance(
+      (Math.floor(((tokenLiveBalance !== undefined ? Number(tokenLiveBalance) : 0) / 10 ** 18) * 100) / 100).toString()
+    );
+  }, [tokenLiveBalance]);
 
   return (
     <StakeVoltaCardContainer>
@@ -90,7 +108,7 @@ export const StakingVolt2CRVCard = () => {
         </StakeVoltaChooserContainer>
         <MaxLogoInput
           primaryText="Amount"
-          secondaryText={`Balance: ${0.789} VoltGNS`}
+          secondaryText={`Balance: ${tokenBalance} VoltGNS`}
           state={stakeAmount}
           setState={setStakeAmount}
           logo={Volt2CRVLogoSvg}
