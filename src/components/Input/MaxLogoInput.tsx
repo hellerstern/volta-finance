@@ -18,8 +18,6 @@ interface MaxLogoInputProps {
 export const MaxLogoInput = (props: MaxLogoInputProps) => {
   const { primaryText, secondaryText, state, setState, onMaxClick, logo, logoText, type, isError, errorText } = props;
 
-  console.log('errText', errorText);
-
   const stakeRef = useRef<HTMLInputElement>(null);
 
   const handleChangeStakeAmount = (e: any) => {

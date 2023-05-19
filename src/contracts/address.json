@@ -2,85 +2,85 @@
   "tokens": {
     "GNS": {
       "name": "Gains Network",
-      "contract": "18c11FD286C5EC11c3b683Caa813B77f5163A122",
+      "contract": "0x18c11FD286C5EC11c3b683Caa813B77f5163A122",
       "type": "erc20",
       "img": "https://s2.coinmarketcap.com/static/img/coins/128x128/13663.png"
     },
     "voltGNS": {
       "name": "Volt GNS",
-      "address": "39ff5098081FBE1ab241c31Fe0a9974FE9891d04",
+      "address": "0x39ff5098081FBE1ab241c31Fe0a9974FE9891d04",
       "type": "erc20",
       "img": ""
     },
     "GMX": {
       "name": "GMX",
-      "address": "fc5A1A6EB076a2C7aD06eD22C90d7E710E35ad0a",
+      "address": "0xfc5A1A6EB076a2C7aD06eD22C90d7E710E35ad0a",
       "type": "erc20",
       "img": ""
     },
     "voltGMX": {
       "name": "Volt GMX",
-      "address": "b473E16D774314fB49BC2a1d6F5719F10Ca68EE7",
+      "address": "0x0xb473E16D774314fB49BC2a1d6F5719F10Ca68EE7",
       "type": "erc20",
       "img": ""
     },
     "GLP": {
       "name": "GMX LP",
-      "contract": "1aDDD80E6039594eE970E5872D247bf0414C8903",
+      "contract": "0x1aDDD80E6039594eE970E5872D247bf0414C8903",
       "type": "erc20",
       "img": "https://cryptoast.fr/wp-content/uploads/2023/02/gmx-logo.png"
     },
     "voltGLP": {
       "name": "Volt GLP",
-      "address": "9BA21c5E8AF627Db55eADedD796Ce58FfBc9d821",
+      "address": "0x9BA21c5E8AF627Db55eADedD796Ce58FfBc9d821",
       "type": "erc20",
       "img": ""
     },
     "stakedGLP": {
       "name": "Staked GLP",
-      "address": "2F546AD4eDD93B956C8999Be404cdCAFde3E89AE",
+      "address": "0x2F546AD4eDD93B956C8999Be404cdCAFde3E89AE",
       "type": "erc20",
       "img": ""
     },
     "VOLT": {
       "name": "Volt",
-      "address": "b1781BF9C582A71269c6098E4155Ea8b15B35305",
+      "address": "0xb1781BF9C582A71269c6098E4155Ea8b15B35305",
       "type": "erc20",
       "img": ""
     },
     "gDAI": {
       "name": "Gains DAI",
-      "address": "d85E038593d7A098614721EaE955EC2022B9B91B",
+      "address": "0xd85E038593d7A098614721EaE955EC2022B9B91B",
       "type": "erc20",
       "img": ""
     },
     "USDC": {
       "name": "USDC",
-      "address": "FF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+      "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
       "type": "erc20",
       "img": ""
     },
     "USDT": {
       "name": "USDT",
-      "address": "Fd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+      "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
       "type": "erc20",
       "img": ""
     },
     "VOLTA": {
       "name": "VOLTA",
-      "address": "417a1aFD44250314BffB11ff68E989775e990ab6",
+      "address": "0x417a1aFD44250314BffB11ff68E989775e990ab6",
       "type": "erc20",
       "img": ""
     },
     "VOLT2CRV": {
       "name": "VOLT2CRV",
-      "address": "d92Be5A1c565Db5256cDD537B875ED46111Bd8b0",
+      "address": "0xd92Be5A1c565Db5256cDD537B875ED46111Bd8b0",
       "type": "erc20",
       "img": ""
     },
     "DAI": {
       "name": "DAI",
-      "address": "DA10009cBd5D07dd0CeCc66161FC93D7c9000da1",
+      "address": "0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1",
       "type": "erc20",
       "img": ""
     }
@@ -89,39 +89,39 @@
     "gDAI": {
       "id": 0,
       "name": "gDAI",
-      "address": "b4ff7E61F825A5B80E20F6070fCC959Ea136Ed88"
+      "address": "0xb4ff7E61F825A5B80E20F6070fCC959Ea136Ed88"
     },
     "voltGNS": {
       "id": 1,
       "name": "voltGNS",
-      "address": "1Dbd85352b487BF138B3c045226B61e3739AF6C3"
+      "address": "0x1Dbd85352b487BF138B3c045226B61e3739AF6C3"
     },
     "voltGLP": {
       "id": 2,
       "name": "voltGLP",
-      "address": "602b4e6fc385A9f17da0073cfaCFAa2BE58eA49A"
+      "address": "0x602b4e6fc385A9f17da0073cfaCFAa2BE58eA49A"
     },
     "voltGMX": {
       "id": 3,
       "name": "voltGMX",
-      "address": "42CC61492A3850C8fcdf3902c07788ECbA05d7EA"
+      "address": "0x42CC61492A3850C8fcdf3902c07788ECbA05d7EA"
     }
   },
   "presale1": {
-    "address": "5D4F61274FfaD981710B9Bde1B3f6779a9Acda3A"
+    "address": "0x5D4F61274FfaD981710B9Bde1B3f6779a9Acda3A"
   },
   "presale2": {
-    "address": "0D572299054c36a9a22103Cab79c09701fe5091c"
+    "address": "0x0D572299054c36a9a22103Cab79c09701fe5091c"
   },
   "curve": {
-    "router": "4c2Af2Df2a7E567B5155879720619EA06C5BB15D",
-    "pool": "d92Be5A1c565Db5256cDD537B875ED46111Bd8b0"
+    "router": "0x4c2Af2Df2a7E567B5155879720619EA06C5BB15D",
+    "pool": "0xd92Be5A1c565Db5256cDD537B875ED46111Bd8b0"
   },
   "staking": {
-    "voltaPool": "eC1b678cad8d0F85Ee709a46d5572433c7f6Aa13",
-    "curvePool": "7a08E34Dac9a6ee55a95dbdaa444ec9529513F16"
+    "voltaPool": "0xeC1b678cad8d0F85Ee709a46d5572433c7f6Aa13",
+    "curvePool": "0x7a08E34Dac9a6ee55a95dbdaa444ec9529513F16"
   },
-  "anchor": "fddEfBb33cdb7fA6C5c793F2E8dce63744Dce344",
-  "gdaiPriceSource": "415E5bC1a3701A89b2dDcEE2571813d4C183a99a",
-  "gnsStaking": "6B8D3C08072a020aC065c467ce922e3A36D3F9d6"
+  "anchor": "0xfddEfBb33cdb7fA6C5c793F2E8dce63744Dce344",
+  "gdaiPriceSource": "0x415E5bC1a3701A89b2dDcEE2571813d4C183a99a",
+  "gnsStaking": "0x6B8D3C08072a020aC065c467ce922e3A36D3F9d6"
 }
