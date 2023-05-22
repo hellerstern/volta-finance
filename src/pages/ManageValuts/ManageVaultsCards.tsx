@@ -4,6 +4,8 @@ import { Box, Button, ButtonGroup, Slider } from '@mui/material';
 import { styled } from '@mui/system';
 import { MaxLogoInput } from 'src/components/Input/MaxLogoInput';
 import { VoltLogoSvg } from 'src/config/images';
+import { useTokenBalance } from 'src/hook/useToken';
+import tokenAddys from '../../contracts/address.json';
 
 export const ManageVaultsCards = () => {
   return (
@@ -240,25 +242,27 @@ const DepositButton = styled(Button)(({ theme }) => ({
 
 const VoltGNSCardContent = (props: { selected: number }) => {
   const { selected } = props;
-  const [deposit, setDeposit] = useState(0);
+  const [amount, setAmount] = useState(0);
   const isDesktop = window.matchMedia('(min-width: 480px)').matches;
   const [errText, setErrText] = useState('');
+
+  const voltGNSBalance = useTokenBalance(tokenAddys.tokens.voltGNS.address);
 
   function valuetext(value: number) {
     return `${value}x`;
   }
 
   useEffect(() => {
-    if (Number(deposit) === 0) {
+    if (Number(amount) === 0) {
       setErrText('Enter the amount of token first');
     }
-  }, [deposit]);
+  }, [amount]);
 
   useEffect(() => {
-    if (Number(deposit) !== 0 && errText !== '') {
+    if (Number(amount) !== 0 && errText !== '') {
       setErrText('');
     }
-  }, [deposit, errText]);
+  }, [amount, errText]);
 
   return (
     <VoltGNSCardContentWrapper>
@@ -267,11 +271,11 @@ const VoltGNSCardContent = (props: { selected: number }) => {
           primaryText={`${
             selected === 0 ? 'Deposit' : selected === 1 ? 'Borrow' : selected === 2 ? 'Repay' : 'Withdraw'
           } amount`}
-          secondaryText={`Balance: ${0}`}
+          secondaryText={`Balance: ${voltGNSBalance}`}
           type="number"
           logo={VoltLogoSvg}
-          state={deposit}
-          setState={setDeposit}
+          state={amount}
+          setState={setAmount}
           logoText={isDesktop ? 'Volt/VoltGNS' : 'Volt'}
           isError={errText !== ''}
           errorText={errText}

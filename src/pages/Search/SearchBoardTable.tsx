@@ -8,6 +8,8 @@ import { SwitchButton } from 'src/components/Switch';
 import { MaxLogoInput } from 'src/components/Input/MaxLogoInput';
 import { StepConnectButton } from 'src/components/Button/StepConnectButton';
 import { ALink } from 'src/components/ALink';
+import { useTokenBalance } from 'src/hook/useToken';
+import tokenAddys from '../../contracts/address.json';
 
 const isDesktop = window.matchMedia('(min-width: 480px)').matches;
 
@@ -24,9 +26,6 @@ const Row = (props: { state: number; setState: (value: number) => void; id: numb
         <CustomTableCell width={isDesktop ? 150 : 120} about="Asset">
           <AssetField icon={VoltLogoSvg} name="Volt/VoltGNS" />
         </CustomTableCell>
-        {/* <CustomTableCell width={90} about="Claimable">
-          $0
-        </CustomTableCell> */}
         <CustomTableCell width={220} about="APR">
           <APRField aprPro={25.08} proj={30.97} boost={2.5} />
         </CustomTableCell>
@@ -88,9 +87,6 @@ export const SearchBoardTable = () => {
         <TableHeaderField width={isDesktop ? 150 : 120} about="Asset">
           Asset
         </TableHeaderField>
-        {/* <TableHeaderField width={90} about="Claimable">
-          Claimable
-        </TableHeaderField> */}
         <TableHeaderField width={220} about="APR">
           APR
         </TableHeaderField>
@@ -121,14 +117,16 @@ export const DepositTabPanel = () => {
   const [isOptimized, setOptimized] = useState(true);
   const [gnsAmount, setGnsAmount] = useState(0);
 
+  const voltGNSBalance = useTokenBalance(tokenAddys.tokens.voltGNS.address);
+
+  const handleMaxClick = () => {
+    setGnsAmount(parseFloat(voltGNSBalance));
+  };
+
   return (
     <TabPanelContainer>
       <TableFieldContainer>
         <TabletTableFieldContainer>
-          {/* <TabletTableField
-          title="Claimable"
-          content={<MyDepsoitText>$5.78 Volt{isDesktop && <span>≈ 1.005 GNS</span>}</MyDepsoitText>}
-        /> */}
           <TabletTableField title="My Deposits" content={<MyDepsoitText>$0</MyDepsoitText>} />
         </TabletTableFieldContainer>
         <MobileTableFieldContainer>
@@ -146,11 +144,12 @@ export const DepositTabPanel = () => {
         </GNSContainer>
         <MaxLogoInput
           primaryText="Amount GNS"
-          secondaryText={`Balance: ${0}`}
+          secondaryText={`Balance: ${voltGNSBalance}`}
           state={gnsAmount}
           setState={setGnsAmount}
           logo={VoltLogoSvg}
           logoText="Volt/VoltGNS"
+          onMaxClick={handleMaxClick}
         />
         <StepAction buttonName="Deposit & Stake" step={0} />
       </TabPanelAction>
@@ -173,14 +172,16 @@ export const WithdrawTabPanel = () => {
   const [isOptimized, setOptimized] = useState(true);
   const [gnsAmount, setGnsAmount] = useState(0);
 
+  const voltGNSBalance = useTokenBalance(tokenAddys.tokens.voltGNS.address);
+
+  const handleMaxClick = () => {
+    setGnsAmount(parseFloat(voltGNSBalance));
+  };
+
   return (
     <TabPanelContainer>
       <TableFieldContainer>
         <TabletTableFieldContainer>
-          {/* <TabletTableField
-          title="Claimable"
-          content={<MyDepsoitText>$5.78 Volt{isDesktop && <span>≈ 1.005 GNS</span>}</MyDepsoitText>}
-        /> */}
           <TabletTableField title="My Deposits" content={<MyDepsoitText>$0</MyDepsoitText>} />
         </TabletTableFieldContainer>
         <MobileTableFieldContainer>
@@ -203,6 +204,7 @@ export const WithdrawTabPanel = () => {
           setState={setGnsAmount}
           logo={VoltLogoSvg}
           logoText="Volt/VoltGNS"
+          onMaxClick={handleMaxClick}
         />
         <WithdrawInfoContainer>
           <MaxWithdrawContainer>
@@ -233,10 +235,6 @@ export const InfoTabPanel = () => {
     <TabPanelContainer>
       <TableFieldContainer>
         <TabletTableFieldContainer>
-          {/* <TabletTableField
-          title="Claimable"
-          content={<MyDepsoitText>$5.78 Volt{isDesktop && <span>≈ 1.005 GNS</span>}</MyDepsoitText>}
-        /> */}
           <TabletTableField title="My Deposits" content={<MyDepsoitText>$0</MyDepsoitText>} />
         </TabletTableFieldContainer>
         <MobileTableFieldContainer>

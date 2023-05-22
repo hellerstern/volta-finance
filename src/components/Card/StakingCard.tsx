@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Box, Button } from '@mui/material';
 import { styled } from '@mui/system';
 import { Volt2CRVLogoSvg, VoltaLogoSvg } from 'src/config/images';
@@ -10,14 +10,11 @@ import tokenAddys from '../../contracts/address.json';
 export const StakingVoltaCard = () => {
   const [isStake, setStake] = useState(true);
   const [stakeAmount, setStakeAmount] = useState(0);
-  const tokenLiveBalance = useTokenBalance(tokenAddys.tokens.voltGNS.address);
-  const [tokenBalance, setTokenBalance] = useState('Loading...');
+  const voltaBalance = useTokenBalance(tokenAddys.tokens.VOLTA.address);
 
-  useEffect(() => {
-    setTokenBalance(
-      (Math.floor(((tokenLiveBalance !== undefined ? Number(tokenLiveBalance) : 0) / 10 ** 18) * 100) / 100).toString()
-    );
-  }, [tokenLiveBalance]);
+  const handleMaxClick = () => {
+    setStakeAmount(parseFloat(voltaBalance));
+  };
 
   return (
     <StakeVoltaCardContainer>
@@ -45,11 +42,12 @@ export const StakingVoltaCard = () => {
         </StakeVoltaChooserContainer>
         <MaxLogoInput
           primaryText="Amount"
-          secondaryText={`Balance: ${tokenBalance} VoltGNS`}
+          secondaryText={`Balance: ${voltaBalance} Volta`}
           state={stakeAmount}
           setState={setStakeAmount}
           logo={VoltaLogoSvg}
           logoText="Volta"
+          onMaxClick={handleMaxClick}
         />
         <StakeVoltaRewardContainer>
           <StakeVoltaRewardAPR>WETH rewards APR:</StakeVoltaRewardAPR>
@@ -72,14 +70,11 @@ export const StakingVoltaCard = () => {
 export const StakingVolt2CRVCard = () => {
   const [isStake, setStake] = useState(true);
   const [stakeAmount, setStakeAmount] = useState(0);
-  const tokenLiveBalance = useTokenBalance(tokenAddys.tokens.voltGNS.address);
-  const [tokenBalance, setTokenBalance] = useState('Loading...');
+  const voltaBalance = useTokenBalance(tokenAddys.tokens.VOLTA.address);
 
-  useEffect(() => {
-    setTokenBalance(
-      (Math.floor(((tokenLiveBalance !== undefined ? Number(tokenLiveBalance) : 0) / 10 ** 18) * 100) / 100).toString()
-    );
-  }, [tokenLiveBalance]);
+  const handleMaxClick = () => {
+    setStakeAmount(parseFloat(voltaBalance));
+  };
 
   return (
     <StakeVoltaCardContainer>
@@ -108,11 +103,12 @@ export const StakingVolt2CRVCard = () => {
         </StakeVoltaChooserContainer>
         <MaxLogoInput
           primaryText="Amount"
-          secondaryText={`Balance: ${tokenBalance} VoltGNS`}
+          secondaryText={`Balance: ${voltaBalance} Volta`}
           state={stakeAmount}
           setState={setStakeAmount}
           logo={Volt2CRVLogoSvg}
           logoText="Volt2CRV"
+          onMaxClick={handleMaxClick}
         />
         <StakeVoltaRewardContainer>
           <StakeVoltaRewardAPR>VOLTA rewards APR:</StakeVoltaRewardAPR>

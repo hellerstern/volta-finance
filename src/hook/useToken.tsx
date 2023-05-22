@@ -1,7 +1,9 @@
+import { useEffect, useState } from 'react';
 import { erc20ABI, useAccount, useContractRead } from 'wagmi';
 
 export const useTokenBalance = (tokenAddress: string) => {
   const { address } = useAccount();
+  const [tokenBalance, setTokenBalance] = useState('Loading');
 
   const { data } = useContractRead({
     address: tokenAddress as `0x${string}`,
@@ -11,5 +13,9 @@ export const useTokenBalance = (tokenAddress: string) => {
     watch: true
   });
 
-  return data;
+  useEffect(() => {
+    setTokenBalance((Math.floor(((data !== undefined ? Number(data) : 0) / 10 ** 18) * 100) / 100).toString());
+  }, [data]);
+
+  return tokenBalance;
 };

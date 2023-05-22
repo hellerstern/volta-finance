@@ -6,11 +6,22 @@ import { SwapInput } from 'src/components/Input/SwapInput';
 import { CRVLogoSvg, VoltaTokenSvg } from 'src/config/images';
 import { swapCoinArray } from 'src/constant/array';
 import { ReceiveInput } from 'src/components/Input/ReceiveInput';
+import tokenAddys from '../../contracts/address.json';
+import { useTokenBalance } from 'src/hook/useToken';
 
 export const VoltaSwap = () => {
-  const [swapValue, setSwapValue] = useState(5.607);
+  const [swapValue, setSwapValue] = useState(0);
   const [coin, setCoin] = useState(swapCoinArray[0]);
-  const [receiveValue, setReceiveValue] = useState(7.89023);
+  const [receiveValue, setReceiveValue] = useState(0);
+
+  const coinBalance = useTokenBalance(
+    coin.name === 'USDC' ? tokenAddys.tokens.USDC.address : tokenAddys.tokens.USDT.address
+  );
+
+  const handleMaxClick = () => {
+    setReceiveValue(parseFloat(coinBalance));
+  };
+
   return (
     <VoltaSwapContainer>
       <VoltaSwapModal>
@@ -38,12 +49,13 @@ export const VoltaSwap = () => {
           <SwapInputContainer>
             <SwapInput
               primaryText={`${coin.name} amount`}
-              secondaryText={`Balance: $${10.256} ${coin.name}`}
+              secondaryText={`Balance: $${receiveValue} ${coin.name}`}
               state={swapValue}
               setState={setSwapValue}
               coinState={coin}
               setCoinState={setCoin}
               coinArray={swapCoinArray}
+              onMaxClick={handleMaxClick}
               type="number"
             />
           </SwapInputContainer>
