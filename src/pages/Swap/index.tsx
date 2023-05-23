@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { CurrencyExchange, SwapHoriz } from '@mui/icons-material';
 import { Box, Button, IconButton } from '@mui/material';
 import { styled } from '@mui/system';
@@ -18,9 +18,15 @@ export const VoltaSwap = () => {
     coin.name === 'USDC' ? tokenAddys.tokens.USDC.address : tokenAddys.tokens.USDT.address
   );
 
+  console.log('coinBalance', coinBalance);
+
   const handleMaxClick = () => {
-    setReceiveValue(parseFloat(coinBalance));
+    setSwapValue(parseFloat(coinBalance));
   };
+
+  useEffect(() => {
+    setSwapValue(0);
+  }, [coin]);
 
   return (
     <VoltaSwapContainer>
@@ -49,7 +55,7 @@ export const VoltaSwap = () => {
           <SwapInputContainer>
             <SwapInput
               primaryText={`${coin.name} amount`}
-              secondaryText={`Balance: $${receiveValue} ${coin.name}`}
+              secondaryText={`Balance: $${coinBalance} ${coin.name}`}
               state={swapValue}
               setState={setSwapValue}
               coinState={coin}

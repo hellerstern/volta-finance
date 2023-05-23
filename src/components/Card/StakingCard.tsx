@@ -70,10 +70,10 @@ export const StakingVoltaCard = () => {
 export const StakingVolt2CRVCard = () => {
   const [isStake, setStake] = useState(true);
   const [stakeAmount, setStakeAmount] = useState(0);
-  const voltaBalance = useTokenBalance(tokenAddys.tokens.VOLTA.address);
+  const volt2CRVBalance = useTokenBalance(tokenAddys.tokens.VOLT2CRV.address);
 
   const handleMaxClick = () => {
-    setStakeAmount(parseFloat(voltaBalance));
+    setStakeAmount(parseFloat(volt2CRVBalance));
   };
 
   return (
@@ -103,7 +103,7 @@ export const StakingVolt2CRVCard = () => {
         </StakeVoltaChooserContainer>
         <MaxLogoInput
           primaryText="Amount"
-          secondaryText={`Balance: ${voltaBalance} Volta`}
+          secondaryText={`Balance: ${volt2CRVBalance} Volt2CRV`}
           state={stakeAmount}
           setState={setStakeAmount}
           logo={Volt2CRVLogoSvg}
