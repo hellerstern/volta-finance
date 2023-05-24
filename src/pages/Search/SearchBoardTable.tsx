@@ -40,7 +40,7 @@ const rowData: rowDataProps[] = [
     deposit: '5.78',
     tvl: '5325657',
     network: ArbitrumLogoSvg,
-    address: tokenAddys.tokens.voltGNS.address
+    address: tokenAddys.tokens.GNS.contract
   },
   {
     id: 2,
@@ -53,7 +53,7 @@ const rowData: rowDataProps[] = [
     deposit: '2.65',
     tvl: '6548952',
     network: ArbitrumLogoSvg,
-    address: tokenAddys.tokens.voltGLP.address
+    address: tokenAddys.tokens.GLP.contract
   },
   {
     id: 3,
@@ -66,7 +66,7 @@ const rowData: rowDataProps[] = [
     deposit: '3.65',
     tvl: '4562589',
     network: ArbitrumLogoSvg,
-    address: tokenAddys.tokens.voltGMX.address
+    address: tokenAddys.tokens.GMX.address
   }
 ];
 
