@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Box, Button, Collapse, Step, StepLabel, Stepper, Tab, TableContainer, Tabs } from '@mui/material';
 import { styled } from '@mui/system';
 import { ArbitrumLogoSvg, VoltGNSLogoSvg, VoltLogoSvg, VoltaLogoSvg } from 'src/config/images';
-import { ArrowDropDown, ArrowDropUp, DataObject, HelpOutline, Launch } from '@mui/icons-material';
+import { ArrowDropDown, ArrowDropUp, HelpOutline, Launch } from '@mui/icons-material';
 import { TabPanel, a11yProps } from 'src/components/TabPanel';
 import { SwitchButton } from 'src/components/Switch';
 import { MaxLogoInput } from 'src/components/Input/MaxLogoInput';
@@ -25,6 +25,7 @@ interface rowDataProps {
   deposit: string;
   tvl: string;
   network: string;
+  address: string;
 }
 
 const rowData: rowDataProps[] = [
@@ -38,11 +39,12 @@ const rowData: rowDataProps[] = [
     boost: '2.5',
     deposit: '5.78',
     tvl: '5325657',
-    network: ArbitrumLogoSvg
+    network: ArbitrumLogoSvg,
+    address: tokenAddys.tokens.voltGNS.address
   },
   {
     id: 2,
-    assetIcon: VoltGNSLogoSvg,
+    assetIcon: tokenAddys.tokens.GLP.img,
     assetPrimary: 'GLP',
     assetSecondary: 'VoltGLP',
     apr: '36.25',
@@ -50,11 +52,12 @@ const rowData: rowDataProps[] = [
     boost: '3.5',
     deposit: '2.65',
     tvl: '6548952',
-    network: ArbitrumLogoSvg
+    network: ArbitrumLogoSvg,
+    address: tokenAddys.tokens.voltGLP.address
   },
   {
     id: 3,
-    assetIcon: VoltaLogoSvg,
+    assetIcon: tokenAddys.tokens.GLP.img,
     assetPrimary: 'GMX',
     assetSecondary: 'VoltGMX',
     apr: '52.65',
@@ -62,7 +65,8 @@ const rowData: rowDataProps[] = [
     boost: '1.5',
     deposit: '3.65',
     tvl: '4562589',
-    network: ArbitrumLogoSvg
+    network: ArbitrumLogoSvg,
+    address: tokenAddys.tokens.voltGMX.address
   }
 ];
 
@@ -174,12 +178,12 @@ export const SearchBoardTable = () => {
 export const DepositTabPanel = (props: { item: rowDataProps }) => {
   const { item } = props;
   const [isOptimized, setOptimized] = useState(true);
-  const [gnsAmount, setGnsAmount] = useState(0);
+  const [tokenAmount, setTokenAmount] = useState(0);
 
-  const voltGNSBalance = useTokenBalance(tokenAddys.tokens.voltGNS.address);
+  const tokenBalance = useTokenBalance(item.address);
 
   const handleMaxClick = () => {
-    setGnsAmount(parseFloat(voltGNSBalance));
+    setTokenAmount(parseFloat(tokenBalance));
   };
 
   return (
@@ -208,9 +212,9 @@ export const DepositTabPanel = (props: { item: rowDataProps }) => {
         </GNSContainer>
         <MaxLogoInput
           primaryText={`Amount ${item.assetPrimary}`}
-          secondaryText={`Balance: ${voltGNSBalance}`}
-          state={gnsAmount}
-          setState={setGnsAmount}
+          secondaryText={`Balance: ${tokenAmount}`}
+          state={tokenAmount}
+          setState={setTokenAmount}
           logo={item.assetIcon}
           logoText={`${item.assetPrimary}/${item.assetSecondary}`}
           onMaxClick={handleMaxClick}
@@ -235,12 +239,12 @@ export const DepositTabPanel = (props: { item: rowDataProps }) => {
 export const WithdrawTabPanel = (props: { item: rowDataProps }) => {
   const { item } = props;
   const [isOptimized, setOptimized] = useState(true);
-  const [gnsAmount, setGnsAmount] = useState(0);
+  const [tokenAmount, setTokenAmount] = useState(0);
 
-  const voltGNSBalance = useTokenBalance(tokenAddys.tokens.voltGNS.address);
+  const tokenBalance = useTokenBalance(item.address);
 
   const handleMaxClick = () => {
-    setGnsAmount(parseFloat(voltGNSBalance));
+    setTokenAmount(parseFloat(tokenBalance));
   };
 
   return (
@@ -267,9 +271,9 @@ export const WithdrawTabPanel = (props: { item: rowDataProps }) => {
         </GNSContainer>
         <MaxLogoInput
           primaryText={`Amount ${item.assetPrimary}`}
-          secondaryText={`Balance: ${0}`}
-          state={gnsAmount}
-          setState={setGnsAmount}
+          secondaryText={`Balance: ${tokenBalance}`}
+          state={tokenAmount}
+          setState={setTokenAmount}
           logo={item.assetIcon}
           logoText={`${item.assetPrimary}/${item.assetSecondary}`}
           onMaxClick={handleMaxClick}
