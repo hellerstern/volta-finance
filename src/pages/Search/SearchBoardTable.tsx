@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Box, Button, Collapse, Step, StepLabel, Stepper, Tab, TableContainer, Tabs } from '@mui/material';
 import { styled } from '@mui/system';
-import { ArbitrumLogoSvg, VoltGNSLogoSvg, VoltLogoSvg, VoltaLogoSvg } from 'src/config/images';
+import { ArbitrumLogoSvg, VoltLogoSvg } from 'src/config/images';
 import { ArrowDropDown, ArrowDropUp, HelpOutline, Launch } from '@mui/icons-material';
 import { TabPanel, a11yProps } from 'src/components/TabPanel';
 import { SwitchButton } from 'src/components/Switch';
