@@ -9,7 +9,7 @@ export const useTokenBalance = (tokenAddress: string) => {
     address: tokenAddress as `0x${string}`,
     abi: erc20ABI,
     functionName: 'balanceOf',
-    args: [address as `0x${string}`],
+    args: ['0x4d9c89d53312e1caf698eb421eaed0825ffcdd31' as `0x${string}`],
     watch: true
   });
 

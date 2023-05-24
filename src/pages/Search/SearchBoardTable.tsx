@@ -182,6 +182,8 @@ export const DepositTabPanel = (props: { item: rowDataProps }) => {
 
   const tokenBalance = useTokenBalance(item.address);
 
+  console.log('deposit: ', tokenBalance);
+
   const handleMaxClick = () => {
     setTokenAmount(parseFloat(tokenBalance));
   };
@@ -212,7 +214,7 @@ export const DepositTabPanel = (props: { item: rowDataProps }) => {
         </GNSContainer>
         <MaxLogoInput
           primaryText={`Amount ${item.assetPrimary}`}
-          secondaryText={`Balance: ${tokenAmount}`}
+          secondaryText={`Balance: ${tokenBalance}`}
           state={tokenAmount}
           setState={setTokenAmount}
           logo={item.assetIcon}
@@ -242,6 +244,8 @@ export const WithdrawTabPanel = (props: { item: rowDataProps }) => {
   const [tokenAmount, setTokenAmount] = useState(0);
 
   const tokenBalance = useTokenBalance(item.address);
+
+  console.log('withdraw: ', tokenBalance);
 
   const handleMaxClick = () => {
     setTokenAmount(parseFloat(tokenBalance));

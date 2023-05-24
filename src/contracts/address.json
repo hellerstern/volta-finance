@@ -20,7 +20,7 @@
     },
     "voltGMX": {
       "name": "Volt GMX",
-      "address": "0x0xb473E16D774314fB49BC2a1d6F5719F10Ca68EE7",
+      "address": "0xb473E16D774314fB49BC2a1d6F5719F10Ca68EE7",
       "type": "erc20",
       "img": ""
     },
