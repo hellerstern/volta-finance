@@ -1,4 +1,5 @@
-import { useState } from 'react';
+/* eslint-disable @typescript-eslint/no-misused-promises */
+import { useState, useEffect } from 'react';
 import { Box, Button, Collapse, Step, StepLabel, Stepper, Tab, TableContainer, Tabs } from '@mui/material';
 import { styled } from '@mui/system';
 import { ArbitrumLogoSvg, VoltLogoSvg } from 'src/config/images';
@@ -11,6 +12,9 @@ import { ALink } from 'src/components/ALink';
 import { useTokenBalance } from 'src/hook/useToken';
 import tokenAddys from '../../contracts/address.json';
 import { commaSeparators } from 'src/utils/commaSeparators';
+import { isApproved, tokenApprove, tokenDeposit } from 'src/contracts';
+import { useAccount } from 'wagmi';
+import { handleAsync } from 'src/utils/handleAsync';
 
 const isDesktop = window.matchMedia('(min-width: 480px)').matches;
 
@@ -25,6 +29,7 @@ interface rowDataProps {
   deposit: string;
   tvl: string;
   network: string;
+  contract: string;
   address: string;
 }
 
@@ -40,7 +45,8 @@ const rowData: rowDataProps[] = [
     deposit: '5.78',
     tvl: '5325657',
     network: ArbitrumLogoSvg,
-    address: tokenAddys.tokens.GNS.contract
+    contract: tokenAddys.tokens.GNS.contract,
+    address: tokenAddys.tokens.voltGNS.address
   },
   {
     id: 2,
@@ -53,7 +59,8 @@ const rowData: rowDataProps[] = [
     deposit: '2.65',
     tvl: '6548952',
     network: ArbitrumLogoSvg,
-    address: tokenAddys.tokens.GLP.contract
+    contract: tokenAddys.tokens.GLP.contract,
+    address: tokenAddys.tokens.voltGLP.address
   },
   {
     id: 3,
@@ -66,7 +73,8 @@ const rowData: rowDataProps[] = [
     deposit: '3.65',
     tvl: '4562589',
     network: ArbitrumLogoSvg,
-    address: tokenAddys.tokens.GMX.address
+    contract: tokenAddys.tokens.GMX.address,
+    address: tokenAddys.tokens.voltGMX.address
   }
 ];
 
@@ -179,13 +187,18 @@ export const DepositTabPanel = (props: { item: rowDataProps }) => {
   const { item } = props;
   const [isOptimized, setOptimized] = useState(true);
   const [tokenAmount, setTokenAmount] = useState(0);
+  const [isLoad, setLoad] = useState(false);
 
-  const tokenBalance = useTokenBalance(item.address);
+  const tokenBalance = useTokenBalance(item.contract);
 
   console.log('deposit: ', tokenBalance);
 
   const handleMaxClick = () => {
     setTokenAmount(parseFloat(tokenBalance));
+  };
+
+  const handleDeposit = async () => {
+    await tokenDeposit(tokenAmount, item.address);
   };
 
   return (
@@ -221,7 +234,11 @@ export const DepositTabPanel = (props: { item: rowDataProps }) => {
           logoText={`${item.assetPrimary}/${item.assetSecondary}`}
           onMaxClick={handleMaxClick}
         />
-        <StepAction buttonName="Deposit & Stake" step={0} />
+        <StepAction
+          buttonName={isLoad ? 'Loading...' : 'Deposit & Stake'}
+          item={item}
+          onClick={() => handleAsync(async () => await handleDeposit(), setLoad, 'Successfully deposited')}
+        />
       </TabPanelAction>
       <TabPanelText>
         <p>
@@ -243,7 +260,7 @@ export const WithdrawTabPanel = (props: { item: rowDataProps }) => {
   const [isOptimized, setOptimized] = useState(true);
   const [tokenAmount, setTokenAmount] = useState(0);
 
-  const tokenBalance = useTokenBalance(item.address);
+  const tokenBalance = useTokenBalance(item.contract);
 
   console.log('withdraw: ', tokenBalance);
 
@@ -300,7 +317,7 @@ export const WithdrawTabPanel = (props: { item: rowDataProps }) => {
             sufficient funds to cover any associated fees.
           </p>
         </TabPanelText>
-        <StepAction buttonName="Withdraw" step={0} />
+        <StepAction buttonName="Withdraw" item={item} />
       </TabPanelContent>
     </TabPanelContainer>
   );
@@ -625,16 +642,45 @@ const MobileTableFieldContainer = styled(Box)(({ theme }) => ({
   }
 }));
 
-const StepAction = (props: { buttonName: string; step: number }) => {
+interface StepActionProps {
+  buttonName: string;
+  item: rowDataProps;
+  onClick?: () => void;
+}
+
+const StepAction = (props: StepActionProps) => {
+  const { buttonName, item } = props;
+  const [isApprove, setApprove] = useState(true);
+  const { address } = useAccount();
+  const [isLoad, setLoad] = useState(false);
+
+  const handleTokenApprove = async () => {
+    await tokenApprove(item.address, item.contract);
+    setApprove(true);
+  };
+
+  const handleCheckApprove = async () => {
+    const isProved = await isApproved(address, item.address, item.contract);
+    setApprove(isProved ?? false);
+  };
+
+  useEffect(() => {
+    handleCheckApprove();
+  }, []);
+
   const steps = [
     // eslint-disable-next-line react/jsx-key
-    <StepConnectButton isApproved={false} />,
+    <StepConnectButton
+      isApproved={isApprove}
+      isLoad={isLoad}
+      onClick={() => handleAsync(async () => await handleTokenApprove(), setLoad, 'Successfully approved')}
+    />,
     // eslint-disable-next-line react/jsx-key
-    <StepActionButton>{props.buttonName}</StepActionButton>
+    <StepActionButton disabled={!isApprove}>{buttonName}</StepActionButton>
   ];
   return (
     <StepActionContainer>
-      <Stepper alternativeLabel activeStep={props.step}>
+      <Stepper alternativeLabel activeStep={!isApprove ? 0 : 1}>
         {steps.map((item, index) => (
           <Step key={index}>
             <StepLabel>{item}</StepLabel>

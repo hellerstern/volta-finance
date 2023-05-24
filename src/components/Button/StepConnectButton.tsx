@@ -2,7 +2,7 @@ import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { styled } from '@mui/system';
 import { Button } from '@mui/material';
 
-export const StepConnectButton = (props: { onClick?: () => void; isApproved: boolean }) => {
+export const StepConnectButton = (props: { onClick?: () => void; isApproved: boolean; isLoad: boolean }) => {
   return (
     <ConnectButton.Custom>
       {({ account, chain, openAccountModal, openChainModal, openConnectModal, authenticationStatus, mounted }) => {
@@ -102,7 +102,7 @@ export const StepConnectButton = (props: { onClick?: () => void; isApproved: boo
                           </div>
                         )}
                       </ConnectButtonIcon> */}
-                    <span>{props.isApproved ? 'Approved' : 'Approve'}</span>
+                    <span>{!props.isLoad ? (props.isApproved ? 'Approved' : 'Approve') : 'Loading...'}</span>
                   </StepButtonContainer>
                 </div>
               );
@@ -130,5 +130,8 @@ const StepButtonContainer = styled(Button)<{ status: string }>(({ theme, status 
   [theme.breakpoints.down(768)]: {
     width: '140px',
     fontSize: '14px'
+  },
+  span: {
+    color: '#000000'
   }
 }));
