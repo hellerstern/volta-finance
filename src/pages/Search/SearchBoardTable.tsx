@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Box, Button, Collapse, Step, StepLabel, Stepper, Tab, TableContainer, Tabs } from '@mui/material';
 import { styled } from '@mui/system';
-import { ArbitrumLogoSvg, VoltLogoSvg } from 'src/config/images';
-import { ArrowDropDown, ArrowDropUp, HelpOutline, Launch } from '@mui/icons-material';
+import { ArbitrumLogoSvg, VoltGNSLogoSvg, VoltLogoSvg, VoltaLogoSvg } from 'src/config/images';
+import { ArrowDropDown, ArrowDropUp, DataObject, HelpOutline, Launch } from '@mui/icons-material';
 import { TabPanel, a11yProps } from 'src/components/TabPanel';
 import { SwitchButton } from 'src/components/Switch';
 import { MaxLogoInput } from 'src/components/Input/MaxLogoInput';
@@ -10,11 +10,71 @@ import { StepConnectButton } from 'src/components/Button/StepConnectButton';
 import { ALink } from 'src/components/ALink';
 import { useTokenBalance } from 'src/hook/useToken';
 import tokenAddys from '../../contracts/address.json';
+import { commaSeparators } from 'src/utils/commaSeparators';
 
 const isDesktop = window.matchMedia('(min-width: 480px)').matches;
 
-const Row = (props: { state: number; setState: (value: number) => void; id: number }) => {
-  const { state, setState, id } = props;
+interface rowDataProps {
+  id: number;
+  assetIcon: string;
+  assetPrimary: string;
+  assetSecondary: string;
+  apr: string;
+  aprProj: string;
+  boost: string;
+  deposit: string;
+  tvl: string;
+  network: string;
+}
+
+const rowData: rowDataProps[] = [
+  {
+    id: 1,
+    assetIcon: VoltLogoSvg,
+    assetPrimary: 'GNS',
+    assetSecondary: 'VoltGNS',
+    apr: '25.08',
+    aprProj: '30.97',
+    boost: '2.5',
+    deposit: '5.78',
+    tvl: '5325657',
+    network: ArbitrumLogoSvg
+  },
+  {
+    id: 2,
+    assetIcon: VoltGNSLogoSvg,
+    assetPrimary: 'GLP',
+    assetSecondary: 'VoltGLP',
+    apr: '36.25',
+    aprProj: '84.36',
+    boost: '3.5',
+    deposit: '2.65',
+    tvl: '6548952',
+    network: ArbitrumLogoSvg
+  },
+  {
+    id: 3,
+    assetIcon: VoltaLogoSvg,
+    assetPrimary: 'GMX',
+    assetSecondary: 'VoltGMX',
+    apr: '52.65',
+    aprProj: '89.56',
+    boost: '1.5',
+    deposit: '3.65',
+    tvl: '4562589',
+    network: ArbitrumLogoSvg
+  }
+];
+
+interface rowProps {
+  state: number;
+  setState: (value: number) => void;
+  id: number;
+  data: rowDataProps;
+}
+
+const Row = (props: rowProps) => {
+  const { state, setState, id, data } = props;
 
   const [value, setValue] = useState(0);
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -24,21 +84,21 @@ const Row = (props: { state: number; setState: (value: number) => void; id: numb
     <RowContainer>
       <CustomTableRow onClick={() => setState(state === id ? -1 : id)}>
         <CustomTableCell width={isDesktop ? 150 : 120} about="Asset">
-          <AssetField icon={VoltLogoSvg} name="Volt/VoltGNS" />
+          <AssetField icon={data.assetIcon} name={`${data.assetPrimary}/${data.assetSecondary}`} />
         </CustomTableCell>
         <CustomTableCell width={220} about="APR">
-          <APRField aprPro={25.08} proj={30.97} boost={2.5} />
+          <APRField name={data.assetSecondary} aprPro={data.apr} proj={data.aprProj} boost={data.boost} />
         </CustomTableCell>
-        <CustomTableCell width={220} about="My Deposits">
+        <CustomTableCell width={225} about="My Deposits">
           <MyDepsoitText>
-            $5.78 Volt ≈ <span>1.005 GNS</span>
+            ${data.deposit} {data.assetPrimary} ≈ <span>1.005 {data.assetSecondary}</span>
           </MyDepsoitText>
         </CustomTableCell>
         <CustomTableCell width={isDesktop ? 100 : 75} about="TVL">
-          $5,325,657
+          ${commaSeparators(data.tvl)}
         </CustomTableCell>
         <CustomTableCell width={isDesktop ? 70 : 20} about="Network" sx={{ textAlign: 'center' }}>
-          <NetworkLogo src={ArbitrumLogoSvg} alt="network-logo" />
+          <NetworkLogo src={data.network} alt="network-logo" />
         </CustomTableCell>
         <CustomTableCell width={20} about="Collapse">
           {state === id ? <ArrowDropUp /> : <ArrowDropDown />}
@@ -64,13 +124,13 @@ const Row = (props: { state: number; setState: (value: number) => void; id: numb
             </Tabs>
           </Box>
           <TabPanel value={value} index={0}>
-            <DepositTabPanel />
+            <DepositTabPanel item={data} />
           </TabPanel>
           <TabPanel value={value} index={1}>
-            <WithdrawTabPanel />
+            <WithdrawTabPanel item={data} />
           </TabPanel>
           <TabPanel value={value} index={2}>
-            <InfoTabPanel />
+            <InfoTabPanel item={data} />
           </TabPanel>
         </AdditionContainer>
         <TableRowLine />
@@ -103,17 +163,16 @@ export const SearchBoardTable = () => {
       </CustomTableHeader>
       <TableRowLine />
       <CustomTableBody>
-        <Row state={state} setState={setState} id={0} />
-        <Row state={state} setState={setState} id={1} />
-        <Row state={state} setState={setState} id={2} />
-        <Row state={state} setState={setState} id={3} />
-        <Row state={state} setState={setState} id={4} />
+        {rowData.map((item: rowDataProps) => (
+          <Row state={state} setState={setState} id={item.id} data={item} key={item.id} />
+        ))}
       </CustomTableBody>
     </SearchBoardTableContainer>
   );
 };
 
-export const DepositTabPanel = () => {
+export const DepositTabPanel = (props: { item: rowDataProps }) => {
+  const { item } = props;
   const [isOptimized, setOptimized] = useState(true);
   const [gnsAmount, setGnsAmount] = useState(0);
 
@@ -130,12 +189,17 @@ export const DepositTabPanel = () => {
           <TabletTableField title="My Deposits" content={<MyDepsoitText>$0</MyDepsoitText>} />
         </TabletTableFieldContainer>
         <MobileTableFieldContainer>
-          <TabletTableField title="APR" content={<APRField aprPro={25.08} proj={30.97} boost={2.5} />} />
+          <TabletTableField
+            title="APR"
+            content={<APRField name={item.assetSecondary} aprPro={25.08} proj={30.97} boost={2.5} />}
+          />
         </MobileTableFieldContainer>
       </TableFieldContainer>
       <TabPanelAction>
         <GNSContainer>
-          <GetGNSButton>{isDesktop ? 'Get GNS/Volt GNS' : 'Get Volt GNS'}</GetGNSButton>
+          <GetGNSButton>
+            {isDesktop ? `Get ${item.assetPrimary}/${item.assetSecondary}` : `Get ${item.assetSecondary}`}
+          </GetGNSButton>
           <GasOptimizeContainer>
             <GasOptimizeTitle>GAS OPTIMIZED</GasOptimizeTitle>
             <HelpOutline sx={{ width: '13px', height: '13px' }} />
@@ -143,23 +207,23 @@ export const DepositTabPanel = () => {
           </GasOptimizeContainer>
         </GNSContainer>
         <MaxLogoInput
-          primaryText="Amount GNS"
+          primaryText={`Amount ${item.assetPrimary}`}
           secondaryText={`Balance: ${voltGNSBalance}`}
           state={gnsAmount}
           setState={setGnsAmount}
-          logo={VoltLogoSvg}
-          logoText="Volt/VoltGNS"
+          logo={item.assetIcon}
+          logoText={`${item.assetPrimary}/${item.assetSecondary}`}
           onMaxClick={handleMaxClick}
         />
         <StepAction buttonName="Deposit & Stake" step={0} />
       </TabPanelAction>
       <TabPanelText>
         <p>
-          Deposit liquidity into the Volt GNS pool (without staking in the GNS gauge), and then stake your tokens here
-          to earn VoltGNS on top of native rewards.
+          Deposit liquidity into the {item.assetSecondary} pool (without staking in the GNS gauge), and then stake your
+          tokens here to earn {item.assetSecondary} on top of native rewards.
         </p>
         <p>
-          Performance fee : 15% of GNS rewards <br />
+          Performance fee : 15% of {item.assetPrimary} rewards <br />
           Harvest fee: 1% <br />
           No withdrawal fee, no management fee
         </p>
@@ -168,7 +232,8 @@ export const DepositTabPanel = () => {
   );
 };
 
-export const WithdrawTabPanel = () => {
+export const WithdrawTabPanel = (props: { item: rowDataProps }) => {
+  const { item } = props;
   const [isOptimized, setOptimized] = useState(true);
   const [gnsAmount, setGnsAmount] = useState(0);
 
@@ -182,15 +247,18 @@ export const WithdrawTabPanel = () => {
     <TabPanelContainer>
       <TableFieldContainer>
         <TabletTableFieldContainer>
-          <TabletTableField title="My Deposits" content={<MyDepsoitText>$0</MyDepsoitText>} />
+          <TabletTableField title="My Deposits" content={<MyDepsoitText>{item.deposit}</MyDepsoitText>} />
         </TabletTableFieldContainer>
         <MobileTableFieldContainer>
-          <TabletTableField title="APR" content={<APRField aprPro={25.08} proj={30.97} boost={2.5} />} />
+          <TabletTableField
+            title="APR"
+            content={<APRField name={item.assetSecondary} aprPro={item.apr} proj={item.aprProj} boost={item.boost} />}
+          />
         </MobileTableFieldContainer>
       </TableFieldContainer>
       <TabPanelAction>
         <GNSContainer>
-          <GNSTitle>Withdraw VoltGNS:</GNSTitle>
+          <GNSTitle>Withdraw {item.assetSecondary}:</GNSTitle>
           <GasOptimizeContainer>
             <GasOptimizeTitle>GAS OPTIMIZED</GasOptimizeTitle>
             <HelpOutline sx={{ width: '13px', height: '13px' }} />
@@ -198,18 +266,18 @@ export const WithdrawTabPanel = () => {
           </GasOptimizeContainer>
         </GNSContainer>
         <MaxLogoInput
-          primaryText="Amount GNS"
+          primaryText={`Amount ${item.assetPrimary}`}
           secondaryText={`Balance: ${0}`}
           state={gnsAmount}
           setState={setGnsAmount}
-          logo={VoltLogoSvg}
-          logoText="Volt/VoltGNS"
+          logo={item.assetIcon}
+          logoText={`${item.assetPrimary}/${item.assetSecondary}`}
           onMaxClick={handleMaxClick}
         />
         <WithdrawInfoContainer>
           <MaxWithdrawContainer>
             <WithdrawInfoName>Max.withdraw: </WithdrawInfoName>
-            <WithdrawInfoValue>1.878 VoltGNS </WithdrawInfoValue>
+            <WithdrawInfoValue>1.878 {item.assetSecondary} </WithdrawInfoValue>
           </MaxWithdrawContainer>
           <WithdrawFeeContainer>
             <WithdrawInfoName>Max.withdraw: </WithdrawInfoName>
@@ -230,15 +298,19 @@ export const WithdrawTabPanel = () => {
   );
 };
 
-export const InfoTabPanel = () => {
+export const InfoTabPanel = (props: { item: rowDataProps }) => {
+  const { item } = props;
   return (
     <TabPanelContainer>
       <TableFieldContainer>
         <TabletTableFieldContainer>
-          <TabletTableField title="My Deposits" content={<MyDepsoitText>$0</MyDepsoitText>} />
+          <TabletTableField title="My Deposits" content={<MyDepsoitText>{item.deposit}</MyDepsoitText>} />
         </TabletTableFieldContainer>
         <MobileTableFieldContainer>
-          <TabletTableField title="APR" content={<APRField aprPro={25.08} proj={30.97} boost={2.5} />} />
+          <TabletTableField
+            title="APR"
+            content={<APRField name={item.assetSecondary} aprPro={item.apr} proj={item.aprProj} boost={item.boost} />}
+          />
         </MobileTableFieldContainer>
       </TableFieldContainer>
       <InfoTabPanelContainer>
@@ -294,16 +366,26 @@ const AssetFieldName = styled(Box)(({ theme }) => ({
   }
 }));
 
-const APRField = (props: { aprPro: number; proj: number; boost: number }) => {
+interface APRFieldProps {
+  name: string;
+  aprPro: number | string;
+  proj: number | string;
+  boost: number | string;
+}
+
+const APRField = (props: APRFieldProps) => {
   return (
     <APRFieldContainer>
       <AprProContainer>
         <AprProValue>{props.aprPro}%</AprProValue>
         <ProjValue>
-          <span>(proj.</span>30.97%<span>)</span>
+          <span>(proj.</span>
+          {props.proj}%<span>)</span>
         </ProjValue>
       </AprProContainer>
-      <BoostText>VoltGNS: Boost {props.boost}x</BoostText>
+      <BoostText>
+        {props.name}: Boost {props.boost}x
+      </BoostText>
     </APRFieldContainer>
   );
 };

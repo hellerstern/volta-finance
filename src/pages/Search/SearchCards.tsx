@@ -4,9 +4,9 @@ import { styled } from '@mui/system';
 export const SearchCards = () => {
   return (
     <SearchCardsContainer>
-      <SearchCard name="Total Deposit" value="$56,483 VoltGNS" />
-      <SearchCard name="Total Value locked" value="$310,818 VoltGNS" />
-      <SearchCard name="Total Claimable" value="$117,689 VoltGNS" />
+      <SearchCard name="Total Deposit" value="$56,483" />
+      <SearchCard name="Total Value locked" value="$310,818" />
+      <SearchCard name="Total Claimable" value="$117,689" />
       <SearchCard name="Collateral to debt" value="171%" />
     </SearchCardsContainer>
   );
