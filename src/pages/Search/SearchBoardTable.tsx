@@ -649,7 +649,7 @@ interface StepActionProps {
 }
 
 const StepAction = (props: StepActionProps) => {
-  const { buttonName, item } = props;
+  const { buttonName, item, onClick } = props;
   const [isApprove, setApprove] = useState(true);
   const { address } = useAccount();
   const [isLoad, setLoad] = useState(false);
@@ -676,7 +676,9 @@ const StepAction = (props: StepActionProps) => {
       onClick={() => handleAsync(async () => await handleTokenApprove(), setLoad, 'Successfully approved')}
     />,
     // eslint-disable-next-line react/jsx-key
-    <StepActionButton disabled={!isApprove}>{buttonName}</StepActionButton>
+    <StepActionButton disabled={!isApprove} onClick={onClick}>
+      {buttonName}
+    </StepActionButton>
   ];
   return (
     <StepActionContainer>
