@@ -26,9 +26,9 @@ export const isApproved = async (owner: string | undefined, spender: string, tok
     return isAllow;
 }
 
-export const tokenDeposit = async (amount: number, spender: string) => {
+export const tokenDeposit = async (amount: number, spender: string, tokenAddy: string) => {
     const stakingABI = ABI.token.abi;
     const stakingContract = new ethers.Contract(spender, stakingABI, signer);
-    const tx = await stakingContract.deposit((amount * (10 ** 18)).toString());
+    const tx = await stakingContract.deposit((amount * (10 ** 18)).toString(), tokenAddy);
     await tx.wait();
 }

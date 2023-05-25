@@ -78,7 +78,7 @@ export const StepConnectButton = (props: { onClick?: () => void; isApproved: boo
                     onClick={props.onClick}
                     type="button"
                     status="connected"
-                    disabled={props.isApproved}
+                    disabled={props.isApproved || props.isLoad}
                   >
                     {/* <ConnectButtonIcon>
                         {chain.hasIcon && (

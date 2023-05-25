@@ -198,7 +198,7 @@ export const DepositTabPanel = (props: { item: rowDataProps }) => {
   };
 
   const handleDeposit = async () => {
-    await tokenDeposit(tokenAmount, item.address);
+    await tokenDeposit(tokenAmount, item.address, item.contract);
   };
 
   return (
@@ -650,7 +650,7 @@ interface StepActionProps {
 
 const StepAction = (props: StepActionProps) => {
   const { buttonName, item, onClick } = props;
-  const [isApprove, setApprove] = useState(true);
+  const [isApprove, setApprove] = useState(false);
   const { address } = useAccount();
   const [isLoad, setLoad] = useState(false);
 
