@@ -9,7 +9,7 @@ import { SwitchButton } from 'src/components/Switch';
 import { MaxLogoInput } from 'src/components/Input/MaxLogoInput';
 import { StepConnectButton } from 'src/components/Button/StepConnectButton';
 import { ALink } from 'src/components/ALink';
-import { useTokenBalance } from 'src/hook/useToken';
+import { useTokenBalance, useTokenPrice } from 'src/hook/useToken';
 import tokenAddys from '../../contracts/address.json';
 import { commaSeparators } from 'src/utils/commaSeparators';
 import { isApproved, tokenApprove, tokenDeposit } from 'src/contracts';
@@ -95,6 +95,7 @@ const Row = (props: rowProps) => {
   };
 
   const depositedValue = useDepositBalance(data.contract);
+  const voltValue = Math.floor(Number(depositedValue) * useTokenPrice(data.contract) * 100) / 100;
 
   return (
     <RowContainer>
@@ -107,7 +108,10 @@ const Row = (props: rowProps) => {
         </CustomTableCell>
         <CustomTableCell width={225} about="My Deposits">
           <MyDepsoitText>
-            ${depositedValue} {data.assetPrimary} ≈ <span>1.005 {data.assetSecondary}</span>
+            ${depositedValue} {data.assetPrimary} ≈{' '}
+            <span>
+              {voltValue} {data.assetSecondary}
+            </span>
           </MyDepsoitText>
         </CustomTableCell>
         <CustomTableCell width={isDesktop ? 100 : 75} about="TVL">
