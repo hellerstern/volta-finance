@@ -15,7 +15,7 @@ import { commaSeparators } from 'src/utils/commaSeparators';
 import { isApproved, tokenApprove, tokenDeposit } from 'src/contracts';
 import { useAccount } from 'wagmi';
 import { handleAsync } from 'src/utils/handleAsync';
-import { useDepositBalance } from 'src/hook/useData';
+import { useDepositBalance, useTvlBalance } from 'src/hook/useData';
 
 const isDesktop = window.matchMedia('(min-width: 480px)').matches;
 
@@ -111,7 +111,7 @@ const Row = (props: rowProps) => {
           </MyDepsoitText>
         </CustomTableCell>
         <CustomTableCell width={isDesktop ? 100 : 75} about="TVL">
-          ${commaSeparators(data.tvl)}
+          ${commaSeparators(useTvlBalance(data.contract))}
         </CustomTableCell>
         <CustomTableCell width={isDesktop ? 70 : 20} about="Network" sx={{ textAlign: 'center' }}>
           <NetworkLogo src={data.network} alt="network-logo" />
