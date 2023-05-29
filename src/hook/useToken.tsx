@@ -21,7 +21,7 @@ export const useTokenBalance = (tokenAddress: string) => {
   });
 
   const decimals = decimalsData !== undefined ? Number(decimalsData) : 18; // Default to 18 if decimals data is unavailable
-  console.log('decimals: ', decimals);
+  console.log('tokenAddress: ', tokenAddress, 'decimals: ', decimals);
 
   useEffect(() => {
     const balance = data !== undefined ? Number(data) : 0;

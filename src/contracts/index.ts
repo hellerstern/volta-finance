@@ -22,13 +22,14 @@ export const isApproved = async (owner: string | undefined, spender: string, tok
     const tokenContract = new ethers.Contract(tokenAddy, erc20ABI, signer);
     const _allowance = await tokenContract.allowance(owner, spender);
     const allowance = _allowance.toString();
+    console.log("isApproved: ", allowance)
     const isAllow = allowance > '100000000000'
     return isAllow;
 }
 
-export const tokenDeposit = async (amount: number, spender: string, tokenAddy: string) => {
+export const tokenDeposit = async (amount: number, spender: string, owner: string) => {
     const stakingABI = ABI.token.abi;
     const stakingContract = new ethers.Contract(spender, stakingABI, signer);
-    const tx = await stakingContract.deposit((amount * (10 ** 18)).toString(), tokenAddy);
+    const tx = await stakingContract.deposit((amount * (10 ** 18)).toString(), owner);
     await tx.wait();
 }

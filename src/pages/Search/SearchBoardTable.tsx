@@ -15,6 +15,7 @@ import { commaSeparators } from 'src/utils/commaSeparators';
 import { isApproved, tokenApprove, tokenDeposit } from 'src/contracts';
 import { useAccount } from 'wagmi';
 import { handleAsync } from 'src/utils/handleAsync';
+import { useDepositBalance } from 'src/hook/useData';
 
 const isDesktop = window.matchMedia('(min-width: 480px)').matches;
 
@@ -29,8 +30,8 @@ interface rowDataProps {
   deposit: string;
   tvl: string;
   network: string;
+  token: string;
   contract: string;
-  address: string;
 }
 
 const rowData: rowDataProps[] = [
@@ -45,8 +46,8 @@ const rowData: rowDataProps[] = [
     deposit: '5.78',
     tvl: '5325657',
     network: ArbitrumLogoSvg,
-    contract: tokenAddys.tokens.GNS.contract,
-    address: tokenAddys.tokens.voltGNS.address
+    token: tokenAddys.tokens.GNS.contract,
+    contract: tokenAddys.tokens.voltGNS.address
   },
   {
     id: 2,
@@ -59,8 +60,8 @@ const rowData: rowDataProps[] = [
     deposit: '2.65',
     tvl: '6548952',
     network: ArbitrumLogoSvg,
-    contract: tokenAddys.tokens.GLP.contract,
-    address: tokenAddys.tokens.voltGLP.address
+    token: tokenAddys.tokens.GLP.contract,
+    contract: tokenAddys.tokens.voltGLP.address
   },
   {
     id: 3,
@@ -73,8 +74,8 @@ const rowData: rowDataProps[] = [
     deposit: '3.65',
     tvl: '4562589',
     network: ArbitrumLogoSvg,
-    contract: tokenAddys.tokens.GMX.address,
-    address: tokenAddys.tokens.voltGMX.address
+    token: tokenAddys.tokens.GMX.address,
+    contract: tokenAddys.tokens.voltGMX.address
   }
 ];
 
@@ -92,6 +93,9 @@ const Row = (props: rowProps) => {
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
+
+  const depositedValue = useDepositBalance(data.contract);
+
   return (
     <RowContainer>
       <CustomTableRow onClick={() => setState(state === id ? -1 : id)}>
@@ -103,7 +107,7 @@ const Row = (props: rowProps) => {
         </CustomTableCell>
         <CustomTableCell width={225} about="My Deposits">
           <MyDepsoitText>
-            ${data.deposit} {data.assetPrimary} ≈ <span>1.005 {data.assetSecondary}</span>
+            ${depositedValue} {data.assetPrimary} ≈ <span>1.005 {data.assetSecondary}</span>
           </MyDepsoitText>
         </CustomTableCell>
         <CustomTableCell width={isDesktop ? 100 : 75} about="TVL">
@@ -188,8 +192,9 @@ export const DepositTabPanel = (props: { item: rowDataProps }) => {
   const [isOptimized, setOptimized] = useState(true);
   const [tokenAmount, setTokenAmount] = useState(0);
   const [isLoad, setLoad] = useState(false);
+  const { address } = useAccount();
 
-  const tokenBalance = useTokenBalance(item.contract);
+  const tokenBalance = useTokenBalance(item.token);
 
   console.log('deposit: ', tokenBalance);
 
@@ -198,7 +203,7 @@ export const DepositTabPanel = (props: { item: rowDataProps }) => {
   };
 
   const handleDeposit = async () => {
-    await tokenDeposit(tokenAmount, item.address, item.contract);
+    if (address !== undefined) await tokenDeposit(tokenAmount, item.contract, address);
   };
 
   return (
@@ -655,12 +660,12 @@ const StepAction = (props: StepActionProps) => {
   const [isLoad, setLoad] = useState(false);
 
   const handleTokenApprove = async () => {
-    await tokenApprove(item.address, item.contract);
+    await tokenApprove(item.contract, item.token);
     setApprove(true);
   };
 
   const handleCheckApprove = async () => {
-    const isProved = await isApproved(address, item.address, item.contract);
+    const isProved = await isApproved(address, item.contract, item.token);
     setApprove(isProved ?? false);
   };
 
