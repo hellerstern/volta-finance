@@ -16,7 +16,7 @@ const StoreProvider = (props: propsType) => {
   const [page, setPage] = useState<number>(localStorageGet('page'));
 
   const loadPage = () => {
-    setPage(localStorageGet('page') === '' ? 0 : localStorageGet('page'));
+    setPage(localStorageGet('page') === '' ? -1 : localStorageGet('page'));
   };
 
   const setPageNumber = (num: number) => {

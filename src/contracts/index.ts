@@ -2,12 +2,12 @@ import { ethers } from "ethers";
 import { erc20ABI } from "wagmi";
 import ABI from './abi.json'
 
-let provider: any = null;
+let provider: any = new ethers.providers.JsonRpcProvider("https://arb1.arbitrum.io/rpc");
 let signer: any = null
 
 export const initializeWeb3 = async (provider_: any, signer_: any) => {
-    provider =  provider_;
-    signer =  await signer_;
+    provider = provider_;
+    signer =  signer_;
 };
 
 export const tokenApprove = async (spender: string, tokenAddy: string) => {
@@ -22,7 +22,6 @@ export const isApproved = async (owner: string | undefined, spender: string, tok
     const tokenContract = new ethers.Contract(tokenAddy, erc20ABI, signer);
     const _allowance = await tokenContract.allowance(owner, spender);
     const allowance = _allowance.toString();
-    console.log("isApproved: ", allowance)
     const isAllow = allowance > '100000000000'
     return isAllow;
 }

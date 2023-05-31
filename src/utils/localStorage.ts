@@ -33,6 +33,8 @@ export function localStorageSet(name: string, value: any) {
     valueAsString = String(value);
   }
 
+  console.log("valueAsString", valueAsString)
+
   localStorage.setItem(name, valueAsString);
   // console.log(`localStorageSet(${name}, ${valueAsString})`);
 }

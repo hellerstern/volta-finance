@@ -18,7 +18,6 @@ import { useAccount } from 'wagmi';
 import { handleAsync } from 'src/utils/handleAsync';
 import { useDepositBalance, useTvlBalance } from 'src/hook/useData';
 import { rowDataProps } from 'src/constant/interface';
-import { useWeb3Store } from 'src/context/Web3Context';
 
 const isDesktop = window.matchMedia('(min-width: 480px)').matches;
 
@@ -85,7 +84,6 @@ const Row = (props: rowProps) => {
   const [gnsPrice, setGnsPrice] = useState(0);
   const [gmxPrice, setGmxPrice] = useState(0);
   const [glpPrice, setGlpPrice] = useState(0);
-  const { isConnected, isInitialized } = useWeb3Store();
 
   const handleGNSPrice = async () => {
     const price = await getGNSPrice();
@@ -106,7 +104,7 @@ const Row = (props: rowProps) => {
     handleGNSPrice();
     handleGMXPrice();
     handleGLPPrice();
-  }, [isConnected, isInitialized]);
+  }, []);
 
   const tokenPrice =
     data.assetPrimary === 'GNS'
@@ -118,8 +116,6 @@ const Row = (props: rowProps) => {
       : 0;
 
   const depositedValue = useDepositBalance(data.contract);
-  console.log('depositedValue: ', Number(depositedValue));
-  console.log('tokenPrice: ', tokenPrice);
   const voltValue = Math.floor(Number(depositedValue) * tokenPrice * 100) / 100;
 
   return (
@@ -224,8 +220,6 @@ export const DepositTabPanel = (props: { item: rowDataProps }) => {
   const { address } = useAccount();
 
   const tokenBalance = useTokenBalance(item.token);
-
-  console.log('deposit: ', tokenBalance);
 
   const handleMaxClick = () => {
     setTokenAmount(parseFloat(tokenBalance));

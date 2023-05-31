@@ -55,25 +55,25 @@ export const Header = () => {
               label="Wrapper"
               {...a11yProps(0)}
               onClick={() => navigate('/wrapper')}
-              style={{ color: page === 0 ? '#FFFFFF' : '#B1B5C3', fontWeight: page === 0 ? 500 : 400 }}
+              style={{ color: page === 0 ? '#FFFFFF' : '#B0B5C3', fontWeight: page === 0 ? 500 : 400 }}
             />
             <CustomTab
               label="Vaults"
               {...a11yProps(1)}
               onClick={() => navigate('/vaults')}
-              style={{ color: page === 1 ? '#FFFFFF' : '#B1B5C3', fontWeight: page === 0 ? 500 : 400 }}
+              style={{ color: page === 1 ? '#FFFFFF' : '#B1B5C3', fontWeight: page === 1 ? 500 : 400 }}
             />
             <CustomTab
               label="Swap"
               onClick={() => navigate('/swap')}
               {...a11yProps(2)}
-              style={{ color: page === 2 ? '#FFFFFF' : '#B1B5C3', fontWeight: page === 0 ? 500 : 400 }}
+              style={{ color: page === 2 ? '#FFFFFF' : '#B1B5C3', fontWeight: page === 2 ? 500 : 400 }}
             />
             <CustomTab
               label="Stake"
               {...a11yProps(3)}
               onClick={() => navigate('/staking')}
-              style={{ color: page === 3 ? '#FFFFFF' : '#B1B5C3', fontWeight: page === 0 ? 500 : 400 }}
+              style={{ color: page === 3 ? '#FFFFFF' : '#B1B5C3', fontWeight: page === 3 ? 500 : 400 }}
             />
           </Tabs>
         </TabContainer>

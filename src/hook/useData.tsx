@@ -3,7 +3,6 @@ import { useAccount, useContractRead } from 'wagmi';
 import ABI from '../contracts/abi.json';
 import { rowDataProps } from 'src/constant/interface';
 import { getGLPPrice, getGMXPrice, getGNSPrice } from 'src/contracts';
-import { useWeb3Store } from 'src/context/Web3Context';
 
 export const useDepositBalance = (contractAddy: string) => {
   const { address } = useAccount();
@@ -14,7 +13,7 @@ export const useDepositBalance = (contractAddy: string) => {
     address: contractAddy as `0x${string}`,
     abi: ABI.contract.abi,
     functionName: 'balanceOf',
-    args: [address as `0x${string}`],
+    args: [address ?? ('0x0000000000000000000000000000000000000000' as `0x${string}`)],
     watch: true
   });
 
@@ -33,7 +32,6 @@ export const useTvlBalance = (item: rowDataProps) => {
   const [gnsPrice, setGnsPrice] = useState(0);
   const [gmxPrice, setGmxPrice] = useState(0);
   const [glpPrice, setGlpPrice] = useState(0);
-  const { isConnected, isInitialized } = useWeb3Store();
   const decimals = 18;
 
   const { data } = useContractRead({
@@ -69,7 +67,7 @@ export const useTvlBalance = (item: rowDataProps) => {
     handleGNSPrice();
     handleGMXPrice();
     handleGLPPrice();
-  }, [isConnected, isInitialized]);
+  }, []);
 
   const tokenPrice =
     item.assetPrimary === 'GNS'

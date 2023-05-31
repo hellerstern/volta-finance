@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { erc20ABI, useAccount, useContractRead } from 'wagmi';
-import ABI from '../contracts/abi.json';
 
 export const useTokenBalance = (tokenAddress: string) => {
   const { address } = useAccount();
@@ -10,7 +9,7 @@ export const useTokenBalance = (tokenAddress: string) => {
     address: tokenAddress as `0x${string}`,
     abi: erc20ABI,
     functionName: 'balanceOf',
-    args: [address as `0x${string}`],
+    args: [address ?? ('0x0000000000000000000000000000000000000000' as `0x${string}`)],
     watch: true
   });
 
