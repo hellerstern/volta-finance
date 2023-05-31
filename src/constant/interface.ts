@@ -12,3 +12,18 @@ export interface VaultsDataProps {
   collateralUSD: number;
   dept: number;
 }
+
+export interface rowDataProps {
+  id: number;
+  assetIcon: string;
+  assetPrimary: string;
+  assetSecondary: string;
+  apr: string;
+  aprProj: string;
+  boost: string;
+  deposit: string;
+  tvl: string;
+  network: string;
+  token: string;
+  contract: string;
+}

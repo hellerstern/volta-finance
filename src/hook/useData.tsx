@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useAccount, useContractRead } from 'wagmi';
 import ABI from '../contracts/abi.json';
-import { useTokenPrice } from './useToken';
+import { rowDataProps } from 'src/constant/interface';
+import { getGLPPrice, getGMXPrice, getGNSPrice } from 'src/contracts';
+import { useWeb3Store } from 'src/context/Web3Context';
 
 export const useDepositBalance = (contractAddy: string) => {
   const { address } = useAccount();
@@ -26,12 +28,16 @@ export const useDepositBalance = (contractAddy: string) => {
   return deposited;
 };
 
-export const useTvlBalance = (contractAddy: string) => {
+export const useTvlBalance = (item: rowDataProps) => {
   const [totalAssets, setTotalAssets] = useState(0);
+  const [gnsPrice, setGnsPrice] = useState(0);
+  const [gmxPrice, setGmxPrice] = useState(0);
+  const [glpPrice, setGlpPrice] = useState(0);
+  const { isConnected, isInitialized } = useWeb3Store();
   const decimals = 18;
 
   const { data } = useContractRead({
-    address: contractAddy as `0x${string}`,
+    address: item.contract as `0x${string}`,
     abi: ABI.contract.abi,
     functionName: 'totalAssets',
     watch: true
@@ -44,8 +50,37 @@ export const useTvlBalance = (contractAddy: string) => {
     setTotalAssets(formattedAssets);
   }, [data]);
 
-  const price = useTokenPrice(contractAddy);
-  const tvl = Math.floor(totalAssets * price * 100) / 100;
+  const handleGNSPrice = async () => {
+    const price = await getGNSPrice();
+    setGnsPrice(price);
+  };
+
+  const handleGMXPrice = async () => {
+    const price = await getGMXPrice();
+    setGmxPrice(price);
+  };
+
+  const handleGLPPrice = async () => {
+    const price = await getGLPPrice();
+    setGlpPrice(price);
+  };
+
+  useEffect(() => {
+    handleGNSPrice();
+    handleGMXPrice();
+    handleGLPPrice();
+  }, [isConnected, isInitialized]);
+
+  const tokenPrice =
+    item.assetPrimary === 'GNS'
+      ? gnsPrice
+      : item.assetPrimary === 'GMX'
+      ? gmxPrice
+      : item.assetPrimary === 'GLP'
+      ? glpPrice
+      : 0;
+
+  const tvl = Math.floor(totalAssets * tokenPrice * 100) / 100;
 
   return tvl;
 };

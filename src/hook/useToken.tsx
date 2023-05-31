@@ -32,23 +32,3 @@ export const useTokenBalance = (tokenAddress: string) => {
 
   return tokenBalance;
 };
-
-export const useTokenPrice = (contractAddy: string) => {
-  const [tokenPrice, setTokenPrice] = useState(0);
-
-  const { data } = useContractRead({
-    address: contractAddy as `0x${string}`,
-    abi: ABI.contract.abi,
-    functionName: 'price',
-    watch: true
-  });
-
-  useEffect(() => {
-    const price = data !== undefined ? Number(data) : 0;
-    const adjustedPrice = price / 10 ** 18;
-    const formattedPrice = Math.floor(adjustedPrice * 100) / 100;
-    setTokenPrice(formattedPrice);
-  }, [data]);
-
-  return tokenPrice;
-};

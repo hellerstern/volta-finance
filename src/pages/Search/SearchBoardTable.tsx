@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
 import { useState, useEffect } from 'react';
 import { Box, Button, Collapse, Step, StepLabel, Stepper, Tab, TableContainer, Tabs } from '@mui/material';
 import { styled } from '@mui/system';
@@ -9,30 +10,17 @@ import { SwitchButton } from 'src/components/Switch';
 import { MaxLogoInput } from 'src/components/Input/MaxLogoInput';
 import { StepConnectButton } from 'src/components/Button/StepConnectButton';
 import { ALink } from 'src/components/ALink';
-import { useTokenBalance, useTokenPrice } from 'src/hook/useToken';
+import { useTokenBalance } from 'src/hook/useToken';
 import tokenAddys from '../../contracts/address.json';
 import { commaSeparators } from 'src/utils/commaSeparators';
-import { isApproved, tokenApprove, tokenDeposit } from 'src/contracts';
+import { getGLPPrice, getGMXPrice, getGNSPrice, isApproved, tokenApprove, tokenDeposit } from 'src/contracts';
 import { useAccount } from 'wagmi';
 import { handleAsync } from 'src/utils/handleAsync';
 import { useDepositBalance, useTvlBalance } from 'src/hook/useData';
+import { rowDataProps } from 'src/constant/interface';
+import { useWeb3Store } from 'src/context/Web3Context';
 
 const isDesktop = window.matchMedia('(min-width: 480px)').matches;
-
-interface rowDataProps {
-  id: number;
-  assetIcon: string;
-  assetPrimary: string;
-  assetSecondary: string;
-  apr: string;
-  aprProj: string;
-  boost: string;
-  deposit: string;
-  tvl: string;
-  network: string;
-  token: string;
-  contract: string;
-}
 
 const rowData: rowDataProps[] = [
   {
@@ -94,8 +82,45 @@ const Row = (props: rowProps) => {
     setValue(newValue);
   };
 
+  const [gnsPrice, setGnsPrice] = useState(0);
+  const [gmxPrice, setGmxPrice] = useState(0);
+  const [glpPrice, setGlpPrice] = useState(0);
+  const { isConnected, isInitialized } = useWeb3Store();
+
+  const handleGNSPrice = async () => {
+    const price = await getGNSPrice();
+    setGnsPrice(price);
+  };
+
+  const handleGMXPrice = async () => {
+    const price = await getGMXPrice();
+    setGmxPrice(price);
+  };
+
+  const handleGLPPrice = async () => {
+    const price = await getGLPPrice();
+    setGlpPrice(price);
+  };
+
+  useEffect(() => {
+    handleGNSPrice();
+    handleGMXPrice();
+    handleGLPPrice();
+  }, [isConnected, isInitialized]);
+
+  const tokenPrice =
+    data.assetPrimary === 'GNS'
+      ? gnsPrice
+      : data.assetPrimary === 'GMX'
+      ? gmxPrice
+      : data.assetPrimary === 'GLP'
+      ? glpPrice
+      : 0;
+
   const depositedValue = useDepositBalance(data.contract);
-  const voltValue = Math.floor(Number(depositedValue) * useTokenPrice(data.contract) * 100) / 100;
+  console.log('depositedValue: ', Number(depositedValue));
+  console.log('tokenPrice: ', tokenPrice);
+  const voltValue = Math.floor(Number(depositedValue) * tokenPrice * 100) / 100;
 
   return (
     <RowContainer>
@@ -115,7 +140,7 @@ const Row = (props: rowProps) => {
           </MyDepsoitText>
         </CustomTableCell>
         <CustomTableCell width={isDesktop ? 100 : 75} about="TVL">
-          ${commaSeparators(useTvlBalance(data.contract))}
+          ${commaSeparators(useTvlBalance(data))}
         </CustomTableCell>
         <CustomTableCell width={isDesktop ? 70 : 20} about="Network" sx={{ textAlign: 'center' }}>
           <NetworkLogo src={data.network} alt="network-logo" />
