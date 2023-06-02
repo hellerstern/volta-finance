@@ -19,10 +19,7 @@ export interface rowDataProps {
   assetPrimary: string;
   assetSecondary: string;
   apr: string;
-  aprProj: string;
   boost: string;
-  deposit: string;
-  tvl: string;
   network: string;
   token: string;
   contract: string;

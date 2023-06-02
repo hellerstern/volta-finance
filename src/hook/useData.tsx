@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useAccount, useContractRead } from 'wagmi';
-import ABI from '../contracts/abi.json';
+import ABIS from 'src/contracts/ABI/abis';
 import { rowDataProps } from 'src/constant/interface';
 import { getGLPPrice, getGMXPrice, getGNSPrice } from 'src/contracts';
 
@@ -11,7 +11,7 @@ export const useDepositBalance = (contractAddy: string) => {
 
   const { data } = useContractRead({
     address: contractAddy as `0x${string}`,
-    abi: ABI.contract.abi,
+    abi: ABIS.voltaGNS.contract.abi,
     functionName: 'balanceOf',
     args: [address ?? ('0x0000000000000000000000000000000000000000' as `0x${string}`)],
     watch: true
@@ -36,7 +36,7 @@ export const useTvlBalance = (item: rowDataProps) => {
 
   const { data } = useContractRead({
     address: item.contract as `0x${string}`,
-    abi: ABI.contract.abi,
+    abi: ABIS.voltaGNS.contract.abi,
     functionName: 'totalAssets',
     watch: true
   });

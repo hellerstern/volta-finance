@@ -18,8 +18,17 @@ import { useAccount } from 'wagmi';
 import { handleAsync } from 'src/utils/handleAsync';
 import { useDepositBalance, useTvlBalance } from 'src/hook/useData';
 import { rowDataProps } from 'src/constant/interface';
+import { useVoltGNSBoost, useVoltGNSCap } from 'src/hook/useGNS';
+import { ethers } from 'ethers';
 
 const isDesktop = window.matchMedia('(min-width: 480px)').matches;
+
+interface rowProps {
+  state: number;
+  setState: (value: number) => void;
+  id: number;
+  data: rowDataProps;
+}
 
 const rowData: rowDataProps[] = [
   {
@@ -28,10 +37,7 @@ const rowData: rowDataProps[] = [
     assetPrimary: 'GNS',
     assetSecondary: 'VoltGNS',
     apr: '25.08',
-    aprProj: '30.97',
-    boost: '2.5',
-    deposit: '5.78',
-    tvl: '5325657',
+    boost: '0',
     network: ArbitrumLogoSvg,
     token: tokenAddys.tokens.GNS.contract,
     contract: tokenAddys.tokens.voltGNS.address
@@ -41,11 +47,8 @@ const rowData: rowDataProps[] = [
     assetIcon: tokenAddys.tokens.GLP.img,
     assetPrimary: 'GLP',
     assetSecondary: 'VoltGLP',
-    apr: '36.25',
-    aprProj: '84.36',
+    apr: '22.21',
     boost: '3.5',
-    deposit: '2.65',
-    tvl: '6548952',
     network: ArbitrumLogoSvg,
     token: tokenAddys.tokens.GLP.contract,
     contract: tokenAddys.tokens.voltGLP.address
@@ -55,23 +58,13 @@ const rowData: rowDataProps[] = [
     assetIcon: tokenAddys.tokens.GLP.img,
     assetPrimary: 'GMX',
     assetSecondary: 'VoltGMX',
-    apr: '52.65',
-    aprProj: '89.56',
+    apr: '5.46',
     boost: '1.5',
-    deposit: '3.65',
-    tvl: '4562589',
     network: ArbitrumLogoSvg,
     token: tokenAddys.tokens.GMX.address,
     contract: tokenAddys.tokens.voltGMX.address
   }
 ];
-
-interface rowProps {
-  state: number;
-  setState: (value: number) => void;
-  id: number;
-  data: rowDataProps;
-}
 
 const Row = (props: rowProps) => {
   const { state, setState, id, data } = props;
@@ -125,7 +118,7 @@ const Row = (props: rowProps) => {
           <AssetField icon={data.assetIcon} name={`${data.assetPrimary}/${data.assetSecondary}`} />
         </CustomTableCell>
         <CustomTableCell width={220} about="APR">
-          <APRField name={data.assetSecondary} aprPro={data.apr} proj={data.aprProj} boost={data.boost} />
+          <APRField name={data.assetSecondary} aprPro={data.apr} boost={data.boost} />
         </CustomTableCell>
         <CustomTableCell width={225} about="My Deposits">
           <MyDepsoitText>
@@ -182,6 +175,53 @@ const Row = (props: rowProps) => {
 
 export const SearchBoardTable = () => {
   const [state, setState] = useState(-1);
+  const [itemData, setItemData] = useState<rowDataProps[]>(rowData);
+  const [apr, setApr] = useState<string>('0.0000');
+  const [cap, setCap] = useState<number>(0);
+  const [voltgnsBoost, setVoltGNSBoost] = useState<string>('0');
+
+  const voltGNSLiveBoost = useVoltGNSBoost();
+  const capLive = useVoltGNSCap();
+
+  useEffect(() => {
+    updateApr();
+    const interval = setInterval(updateApr, 10000);
+    return () => clearInterval(interval);
+  }, []);
+
+  function updateApr() {
+    fetch('https://backend-arbitrum.gains.trade/apr')
+      .then((res: any) => res.json())
+      .then((data) => {
+        try {
+          setApr((data.sssApr * (1 - 0.075)).toFixed(4));
+        } catch (error) {
+          console.error(error);
+        }
+      })
+      .catch(console.error);
+  }
+
+  useEffect(() => {
+    setVoltGNSBoost(
+      ethers.utils.formatEther(voltGNSLiveBoost !== undefined ? (voltGNSLiveBoost as ethers.BigNumberish) : 0)
+    );
+  }, [voltGNSLiveBoost]);
+
+  useEffect(() => {
+    setCap(Number(capLive));
+  }, [capLive]);
+
+  useEffect(() => {
+    console.log('asdfasdf');
+    const updatedItemData = [...itemData];
+    updatedItemData[0].apr = (Number(apr) * (1 + Number(voltgnsBoost) / (cap / 1e18)))
+      .toFixed(2)
+      .replace('NaN%', 'Loading...');
+    updatedItemData[0].boost = voltgnsBoost;
+    setItemData(updatedItemData);
+  }, [apr, capLive, voltgnsBoost]);
+
   return (
     <SearchBoardTableContainer>
       <CustomTableHeader>
@@ -204,7 +244,7 @@ export const SearchBoardTable = () => {
       </CustomTableHeader>
       <TableRowLine />
       <CustomTableBody>
-        {rowData.map((item: rowDataProps) => (
+        {itemData.map((item: rowDataProps) => (
           <Row state={state} setState={setState} id={item.id} data={item} key={item.id} />
         ))}
       </CustomTableBody>
@@ -229,16 +269,18 @@ export const DepositTabPanel = (props: { item: rowDataProps }) => {
     if (address !== undefined) await tokenDeposit(tokenAmount, item.contract, address);
   };
 
+  const depositedValue = useDepositBalance(item.contract);
+
   return (
     <TabPanelContainer>
       <TableFieldContainer>
         <TabletTableFieldContainer>
-          <TabletTableField title="My Deposits" content={<MyDepsoitText>$0</MyDepsoitText>} />
+          <TabletTableField title="My Deposits" content={<MyDepsoitText>{depositedValue}</MyDepsoitText>} />
         </TabletTableFieldContainer>
         <MobileTableFieldContainer>
           <TabletTableField
             title="APR"
-            content={<APRField name={item.assetSecondary} aprPro={25.08} proj={30.97} boost={2.5} />}
+            content={<APRField name={item.assetSecondary} aprPro={item.apr} boost={item.boost} />}
           />
         </MobileTableFieldContainer>
       </TableFieldContainer>
@@ -296,16 +338,18 @@ export const WithdrawTabPanel = (props: { item: rowDataProps }) => {
     setTokenAmount(parseFloat(tokenBalance));
   };
 
+  const depositedValue = useDepositBalance(item.contract);
+
   return (
     <TabPanelContainer>
       <TableFieldContainer>
         <TabletTableFieldContainer>
-          <TabletTableField title="My Deposits" content={<MyDepsoitText>{item.deposit}</MyDepsoitText>} />
+          <TabletTableField title="My Deposits" content={<MyDepsoitText>{depositedValue}</MyDepsoitText>} />
         </TabletTableFieldContainer>
         <MobileTableFieldContainer>
           <TabletTableField
             title="APR"
-            content={<APRField name={item.assetSecondary} aprPro={item.apr} proj={item.aprProj} boost={item.boost} />}
+            content={<APRField name={item.assetSecondary} aprPro={item.apr} boost={item.boost} />}
           />
         </MobileTableFieldContainer>
       </TableFieldContainer>
@@ -353,16 +397,17 @@ export const WithdrawTabPanel = (props: { item: rowDataProps }) => {
 
 export const InfoTabPanel = (props: { item: rowDataProps }) => {
   const { item } = props;
+  const depositedValue = useDepositBalance(item.contract);
   return (
     <TabPanelContainer>
       <TableFieldContainer>
         <TabletTableFieldContainer>
-          <TabletTableField title="My Deposits" content={<MyDepsoitText>{item.deposit}</MyDepsoitText>} />
+          <TabletTableField title="My Deposits" content={<MyDepsoitText>{depositedValue}</MyDepsoitText>} />
         </TabletTableFieldContainer>
         <MobileTableFieldContainer>
           <TabletTableField
             title="APR"
-            content={<APRField name={item.assetSecondary} aprPro={item.apr} proj={item.aprProj} boost={item.boost} />}
+            content={<APRField name={item.assetSecondary} aprPro={item.apr} boost={item.boost} />}
           />
         </MobileTableFieldContainer>
       </TableFieldContainer>
@@ -422,7 +467,6 @@ const AssetFieldName = styled(Box)(({ theme }) => ({
 interface APRFieldProps {
   name: string;
   aprPro: number | string;
-  proj: number | string;
   boost: number | string;
 }
 
@@ -431,10 +475,6 @@ const APRField = (props: APRFieldProps) => {
     <APRFieldContainer>
       <AprProContainer>
         <AprProValue>{props.aprPro}%</AprProValue>
-        <ProjValue>
-          <span>(proj.</span>
-          {props.proj}%<span>)</span>
-        </ProjValue>
       </AprProContainer>
       <BoostText>
         {props.name}: Boost {props.boost}x

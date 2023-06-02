@@ -18,8 +18,6 @@ export const VoltaSwap = () => {
     coin.name === 'USDC' ? tokenAddys.tokens.USDC.address : tokenAddys.tokens.USDT.address
   );
 
-  console.log('coinBalance', coinBalance);
-
   const handleMaxClick = () => {
     setSwapValue(parseFloat(coinBalance));
   };

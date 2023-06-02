@@ -1,6 +1,6 @@
 import { ethers } from "ethers";
 import { erc20ABI } from "wagmi";
-import ABI from './abi.json'
+import ABIS from "./ABI/abis";
 
 let provider: any = new ethers.providers.JsonRpcProvider("https://arb1.arbitrum.io/rpc");
 let signer: any = null
@@ -27,7 +27,7 @@ export const isApproved = async (owner: string | undefined, spender: string, tok
 }
 
 export const tokenDeposit = async (amount: number, spender: string, owner: string) => {
-    const stakingABI = ABI.token.abi;
+    const stakingABI = ABIS.voltaGNS.token.abi;
     const stakingContract = new ethers.Contract(spender, stakingABI, signer);
     const tx = await stakingContract.deposit((amount * (10 ** 18)).toString(), owner);
     await tx.wait();

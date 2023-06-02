@@ -1,5 +1,5 @@
 import { KeyboardArrowLeft } from '@mui/icons-material';
-import { Box, Breadcrumbs, Link, Typography } from '@mui/material';
+import { Box, Breadcrumbs, Link } from '@mui/material';
 import { styled } from '@mui/system';
 import { useNavigate } from 'react-router-dom';
 
