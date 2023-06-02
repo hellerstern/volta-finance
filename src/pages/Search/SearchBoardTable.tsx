@@ -36,7 +36,7 @@ const rowData: rowDataProps[] = [
     assetIcon: VoltLogoSvg,
     assetPrimary: 'GNS',
     assetSecondary: 'VoltGNS',
-    apr: '25.08',
+    apr: '0',
     boost: '0',
     network: ArbitrumLogoSvg,
     token: tokenAddys.tokens.GNS.contract,
